@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.androidtown.myapplication.StartActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/car_management"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:background="#1478FF"
+            android:text="내차관리"
+            android:textColor="#ffff"
+            android:textSize="30dp"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/group"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:background="#1478FF"
+            android:textColor="#ffff"
+            android:text="그룹관리"
+            android:textSize="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/car_management" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:background="@drawable/carinfo"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/carname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BMW"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#FFFF"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            />
+
+        <ImageView
+            android:id="@+id/carkind"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:src="@drawable/car1"
+            android:padding="0sp"
+            android:background="@android:color/transparent"
+            android:layout_below="@+id/carname"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/distance_driven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20dddd"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="170dp"/>
+        <TextView
+            android:id="@+id/my_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20dddd"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="215dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="등록된 차량관리"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#cccccc"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/t"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ImageButton
+            android:id="@+id/addCar1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="200dp"
+            android:background="@android:color/transparent"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/plus"
+
+            />
+    </FrameLayout>
+
+
+
+</LinearLayout>
