@@ -105,7 +105,15 @@ public class Server {
             }
         }.start();
     }
-
+    public HttpURLConnection getConnectionurl(String str) {
+        try {
+            URL url = new URL(str);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            return con;
+        } catch (Exception e) {
+            return null;
+        }
+    }
     public HttpURLConnection getConnection(String method, String path) {
         try {
             URL url = new URL("http://192.168.0.42:3000" + path);
