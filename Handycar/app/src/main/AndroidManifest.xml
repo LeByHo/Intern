@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAR03YIFEVkC-xrh9BXzkguU3wfhpxzyjg"/>
         <activity android:name=".Mainactivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +26,7 @@
         <activity android:name=".modify_group"/>
         <activity android:name=".Carinfo"/>
         <activity android:name=".StartActivity"/>
+        <activity android:name=".f_offers"/>
         <receiver
             android:name=".MyBroadcastReceiver"
             android:enabled="true"

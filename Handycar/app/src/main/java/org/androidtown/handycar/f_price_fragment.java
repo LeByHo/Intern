@@ -25,8 +25,9 @@ public class f_price_fragment extends Fragment {
 
         extra = getArguments();
         Log.d("ASD",extra+"");
-        t1.setText(extra.getString("Allavg").toString());
-        t2.setText(extra.getString("Silavg").toString());
+        t1.setText(extra.getString("Allavg").toString()+"원");
+        t2.setText(extra.getString("Silavg").toString()+"원");
+        t3.setText(extra.getString("sum").toString()+"원");
         return rootView;
     }
 }

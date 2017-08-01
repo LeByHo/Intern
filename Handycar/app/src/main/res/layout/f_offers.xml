@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:text="Report"
+        android:textSize="8sp"
+        android:id="@+id/button1"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btn_shape"/>
+    <Button
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:text="Offers"
+        android:textSize="8sp"
+        android:id="@+id/button2"
+        android:background="@drawable/btn_shape"
+        android:layout_toRightOf="@+id/button1"/>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_above="@+id/textView9"
+        android:layout_below="@+id/button1" />
+</RelativeLayout>
