@@ -19,7 +19,7 @@ public class m_main extends AppCompatActivity {
     Button btn1,btn2,btn3,btn4;
     TextView text1,text2;
     m_repair_fragment Frag;
-  m_Record_fragment Frag2;
+    m_Record_fragment Frag2;
     Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

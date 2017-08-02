@@ -19,7 +19,7 @@ public class Mainactivity extends AppCompatActivity {
     Button btn1, btn2, btn3, btn4;
     Intent intent;
     PullToRefreshView mPullToRefreshView;
-
+    public static int chk=0;
    MainViewAdapter adapter;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

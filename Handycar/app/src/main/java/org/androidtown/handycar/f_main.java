@@ -37,8 +37,11 @@ public class f_main extends AppCompatActivity {
     Intent intent;
     Server server = new Server();
     String str1, str2, str3, str4;
-    String Allavg="", Siavg="";
-    double sum=0.0;
+    String Allavg = "", Siavg = "";
+    public static Double dis[] = new Double[10];
+    public static int pri[] = new int[10];
+    double sum = 0.0, csum=0.0;
+    int cnt=0;
     public static HashMap<String, String> location = new HashMap<String, String>();
 
     @Override
@@ -58,28 +61,11 @@ public class f_main extends AppCompatActivity {
         str3 = "http://www.opinet.co.kr/api/avgRecentPrice.do?out=json&prodcd=B027&code=F191170721";
         str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x="+katec_pt.getX()+"&y="+katec_pt.getY()+"&radius=500&sort=1&prodcd=B027&out=json";
 
-        final Handler handler = new Handler() {
-            public void handleMessage(Message msg) {
-                fm = getFragmentManager();
-                FragmentTransaction tr = fm.beginTransaction();
-                Bundle bundle = new Bundle();
-                bundle.putString("Allavg", Allavg);
-                bundle.putString("Silavg", Siavg);
-                String tem = String.format("%.2f", sum / 7);
-                bundle.putString("sum", tem);
-                Frag.setArguments(bundle);
-                tr.add(R.id.Linear, Frag, "repair");
-                for (int i = 0; i < 2; i++) {
-                    Frag2 = new f_Record_fragment();
-                    tr.add(R.id.Linear2, Frag2, "RECENT");
-                }
-                tr.commit();
-            }
-        };
         new Thread() {
             @Override
             public void run() {
                 try {
+                    Message message = handler.obtainMessage();
                     InputStream in = new BufferedInputStream(server.getConnectionurl(str1).getInputStream());
                     JSONObject json = new JSONObject(getStringFromInputStream(in));
                     Log.d("ASD", json + "");
@@ -99,8 +85,6 @@ public class f_main extends AppCompatActivity {
                     JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
                     Log.d("ASD3", json3 + "");
                     parseJSON(json3, 4);
-
-                    Message message = handler.obtainMessage();
                     handler.sendMessage(message);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -123,7 +107,26 @@ public class f_main extends AppCompatActivity {
             }
         });
     }
-
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            fm = getFragmentManager();
+            FragmentTransaction tr = fm.beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putString("Allavg", Allavg);
+            bundle.putString("Silavg", Siavg);
+            String tem = String.format("%.2f", sum / 7);
+            bundle.putString("sum", tem);
+            String ctem = String.format("%.2f", csum / cnt);
+            bundle.putString("csum", ctem);
+            Frag.setArguments(bundle);
+            tr.add(R.id.Linear, Frag, "repair");
+            for (int i = 0; i < 2; i++) {
+                Frag2 = new f_Record_fragment();
+                tr.add(R.id.Linear2, Frag2, "RECENT");
+            }
+            tr.commit();
+        }
+    };
     public void setup() {
         Frag = new f_price_fragment();
         btn1 = (Button) findViewById(R.id.button1);
@@ -140,9 +143,13 @@ public class f_main extends AppCompatActivity {
     private void arrayToobject(JSONArray jsonArray, int num) throws JSONException {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
-            if(num==4)
-                location.put(order.getString("OS_NM"),order.getInt("GIS_X_COOR")+" "+order.getInt("GIS_Y_COOR"));
-            else {
+            if (num == 4) {
+                location.put(order.getString("OS_NM"), order.getInt("GIS_X_COOR") + " " + order.getInt("GIS_Y_COOR"));
+                dis[cnt] = order.getDouble("DISTANCE");
+                pri[cnt] = order.getInt("PRICE");
+                csum+= order.getInt("PRICE");
+                cnt++;
+            }else {
                 if (order.getString("PRODCD").equals("B027")) {
                     if (num == 1)
                         Allavg = order.getString("PRICE");

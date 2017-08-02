@@ -28,6 +28,7 @@ public class f_price_fragment extends Fragment {
         t1.setText(extra.getString("Allavg").toString()+"원");
         t2.setText(extra.getString("Silavg").toString()+"원");
         t3.setText(extra.getString("sum").toString()+"원");
+        t4.setText(extra.getString("csum").toString()+"원");
         return rootView;
     }
 }
