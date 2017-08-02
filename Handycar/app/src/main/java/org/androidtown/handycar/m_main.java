@@ -5,10 +5,19 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.text.DecimalFormat;
 
 /**
  * Created by LEE on 2017-07-27.
@@ -21,17 +30,39 @@ public class m_main extends AppCompatActivity {
     m_repair_fragment Frag;
     m_Record_fragment Frag2;
     Intent intent;
+    Server server = new Server();
+    SpendAdapter adapter;
+    ListView listview;
+    String car="0866224021558365";
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_main);
         setup();
         text1.setBackgroundColor(Color.rgb(25,147,168));
         text2.setBackgroundColor(Color.rgb(25,147,168));
+
+        adapter = new SpendAdapter();
+        listview = (ListView) findViewById(R.id.listview);
+        listview.setAdapter(adapter);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpURLConnection con = server.getConnection("GET", "/info/"+car+"/fix");
+                System.out.println("Connection donee");
+                try {
+                    con.getResponseCode();
+                    infoarrayToobject(server.readJson(con));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
         fm = getFragmentManager();
 
         FragmentTransaction tr = fm.beginTransaction();
         tr.add(R.id.Linear,Frag,"repair");
-
+        tr.commit();
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,11 +71,7 @@ public class m_main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        for(int i =0 ; i<2;i++){
-            Frag2 = new m_Record_fragment();
-            tr.add(R.id.Linear2,Frag2,"RECENT");
-        }
-        tr.commit();
+
     }
     public void setup(){
         Frag= new m_repair_fragment();
@@ -54,5 +81,15 @@ public class m_main extends AppCompatActivity {
         btn4 = (Button)findViewById(R.id.button4);
         text1 =(TextView)findViewById(R.id.text);
         text2=(TextView)findViewById(R.id.text2);
+    }
+    private void  infoarrayToobject(JSONArray jsonArray) throws JSONException {
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject order = jsonArray.getJSONObject(i);
+            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings), order.getString("date"),order.getString("place"),toNumFormat(Integer.parseInt(order.getString("price")))+"원");
+        }
+    }
+    public static String toNumFormat(int num) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        return df.format(num);
     }
 }

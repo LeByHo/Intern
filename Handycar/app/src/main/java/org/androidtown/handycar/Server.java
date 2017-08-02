@@ -17,7 +17,7 @@ import java.util.Set;
  */
 
 public class Server {
-    public void Insertfuel(final String name,final String date, final String price) {
+    public void Insertfuel(final String name,final String cate,final String place,final String date, final String price) {
         new Thread() {
             @Override
             public void run() {
@@ -25,6 +25,8 @@ public class Server {
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("name",name);
+                    jsonObject.put("cate",cate);
+                    jsonObject.put("place",place);
                     jsonObject.put("date",date);
                     jsonObject.put("price",price);
                 } catch (Exception e) {

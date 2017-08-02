@@ -41,8 +41,6 @@ public class StartActivity extends FragmentActivity {
                 startActivity(intent);
             }
         });
-        //String name= intent.getExtras().getString("ddd");
-        //carname.setText(name);
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction tr = fm.beginTransaction();

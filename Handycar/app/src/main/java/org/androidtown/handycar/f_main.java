@@ -7,10 +7,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -22,6 +24,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 /**
@@ -37,13 +41,11 @@ public class f_main extends AppCompatActivity {
     Intent intent;
     Server server = new Server();
     String str1, str2, str3, str4;
-    String Allavg = "", Siavg = "";
-    public static Double dis[] = new Double[10];
-    public static int pri[] = new int[10];
-    double sum = 0.0, csum=0.0;
-    int cnt=0;
     public static HashMap<String, String> location = new HashMap<String, String>();
 
+    SpendAdapter adapter;
+    ListView listview;
+    String car="0866224021558365";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,46 +53,69 @@ public class f_main extends AppCompatActivity {
         setup();
         text1.setBackgroundColor(Color.rgb(25, 147, 168));
         text2.setBackgroundColor(Color.rgb(25, 147, 168));
-
-        GeoPoint in_pt = new GeoPoint(127.112140,37.400741);
-        GeoPoint tm_pt = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, in_pt);
-        GeoPoint katec_pt = GeoTrans.convert(GeoTrans.TM, GeoTrans.KATEC, tm_pt);
-
-        str1 = "http://www.opinet.co.kr/api/avgAllPrice.do?out=json&code=F191170721";
-        str2 = "http://www.opinet.co.kr/api/avgSidoPrice.do?out=json&prodcd=B027&sido=01&code=F191170721";
-        str3 = "http://www.opinet.co.kr/api/avgRecentPrice.do?out=json&prodcd=B027&code=F191170721";
-        str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x="+katec_pt.getX()+"&y="+katec_pt.getY()+"&radius=500&sort=1&prodcd=B027&out=json";
+        adapter = new SpendAdapter();
+        listview = (ListView) findViewById(R.id.listview);
+        listview.setAdapter(adapter);
 
         new Thread() {
             @Override
             public void run() {
+                HttpURLConnection con = server.getConnection("GET", "/info/"+car+"/fuel");
+                System.out.println("Connection donee");
                 try {
-                    Message message = handler.obtainMessage();
-                    InputStream in = new BufferedInputStream(server.getConnectionurl(str1).getInputStream());
-                    JSONObject json = new JSONObject(getStringFromInputStream(in));
-                    Log.d("ASD", json + "");
-                    parseJSON(json, 1);
-
-                    InputStream in1 = new BufferedInputStream(server.getConnectionurl(str2).getInputStream());
-                    JSONObject json1 = new JSONObject(getStringFromInputStream(in1));
-                    Log.d("ASD2", json1 + "");
-                    parseJSON(json1, 2);
-
-                    InputStream in2 = new BufferedInputStream(server.getConnectionurl(str3).getInputStream());
-                    JSONObject json2 = new JSONObject(getStringFromInputStream(in2));
-                    Log.d("ASD2", json2 + "");
-                    parseJSON(json2, 3);
-
-                    InputStream in3 = new BufferedInputStream(server.getConnectionurl(str4).getInputStream());
-                    JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
-                    Log.d("ASD3", json3 + "");
-                    parseJSON(json3, 4);
-                    handler.sendMessage(message);
+                    con.getResponseCode();
+                    infoarrayToobject(server.readJson(con));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }.start();
+
+        if(Mainactivity.chk==0) {
+            GeoPoint in_pt = new GeoPoint(127.112140,37.400741);
+            GeoPoint tm_pt = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, in_pt);
+            GeoPoint katec_pt = GeoTrans.convert(GeoTrans.TM, GeoTrans.KATEC, tm_pt);
+
+            str1 = "http://www.opinet.co.kr/api/avgAllPrice.do?out=json&code=F191170721";
+            str2 = "http://www.opinet.co.kr/api/avgSidoPrice.do?out=json&prodcd=B027&sido=01&code=F191170721";
+            str3 = "http://www.opinet.co.kr/api/avgRecentPrice.do?out=json&prodcd=B027&code=F191170721";
+            str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x="+katec_pt.getX()+"&y="+katec_pt.getY()+"&radius=500&sort=1&prodcd=B027&out=json";
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Message message = handler.obtainMessage();
+                        InputStream in = new BufferedInputStream(server.getConnectionurl(str1).getInputStream());
+                        JSONObject json = new JSONObject(getStringFromInputStream(in));
+                        Log.d("ASD", json + "");
+                        parseJSON(json, 1);
+
+                        InputStream in1 = new BufferedInputStream(server.getConnectionurl(str2).getInputStream());
+                        JSONObject json1 = new JSONObject(getStringFromInputStream(in1));
+                        Log.d("ASD2", json1 + "");
+                        parseJSON(json1, 2);
+
+                        InputStream in2 = new BufferedInputStream(server.getConnectionurl(str3).getInputStream());
+                        JSONObject json2 = new JSONObject(getStringFromInputStream(in2));
+                        Log.d("ASD2", json2 + "");
+                        parseJSON(json2, 3);
+
+                        InputStream in3 = new BufferedInputStream(server.getConnectionurl(str4).getInputStream());
+                        JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
+                        Log.d("ASD3", json3 + "");
+                        parseJSON(json3, 4);
+                        handler.sendMessage(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+            Mainactivity.chk++;
+        }
+        else{
+            Message message = handler.obtainMessage();
+            handler.sendMessage(message);
+        }
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,21 +137,24 @@ public class f_main extends AppCompatActivity {
             fm = getFragmentManager();
             FragmentTransaction tr = fm.beginTransaction();
             Bundle bundle = new Bundle();
-            bundle.putString("Allavg", Allavg);
-            bundle.putString("Silavg", Siavg);
-            String tem = String.format("%.2f", sum / 7);
+            bundle.putString("Allavg", f_offers.Allavg);
+            bundle.putString("Silavg", f_offers.Siavg);
+            String tem = String.format("%.2f", f_offers.sum / 7);
             bundle.putString("sum", tem);
-            String ctem = String.format("%.2f", csum / cnt);
+            String ctem = String.format("%.2f", f_offers.csum / f_offers.cnut);
             bundle.putString("csum", ctem);
             Frag.setArguments(bundle);
             tr.add(R.id.Linear, Frag, "repair");
-            for (int i = 0; i < 2; i++) {
-                Frag2 = new f_Record_fragment();
-                tr.add(R.id.Linear2, Frag2, "RECENT");
-            }
             tr.commit();
         }
     };
+
+    private void  infoarrayToobject(JSONArray jsonArray) throws JSONException {
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject order = jsonArray.getJSONObject(i);
+            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gas_station), order.getString("date"),order.getString("place"),toNumFormat(Integer.parseInt(order.getString("price")))+"원");
+        }
+    }
     public void setup() {
         Frag = new f_price_fragment();
         btn1 = (Button) findViewById(R.id.button1);
@@ -145,18 +173,18 @@ public class f_main extends AppCompatActivity {
             JSONObject order = jsonArray.getJSONObject(i);
             if (num == 4) {
                 location.put(order.getString("OS_NM"), order.getInt("GIS_X_COOR") + " " + order.getInt("GIS_Y_COOR"));
-                dis[cnt] = order.getDouble("DISTANCE");
-                pri[cnt] = order.getInt("PRICE");
-                csum+= order.getInt("PRICE");
-                cnt++;
+                f_offers.dis[f_offers.cnut] = order.getDouble("DISTANCE");
+                f_offers.pri[f_offers.cnut] = order.getInt("PRICE");
+                f_offers.csum+= order.getInt("PRICE");
+                f_offers.cnut++;
             }else {
                 if (order.getString("PRODCD").equals("B027")) {
                     if (num == 1)
-                        Allavg = order.getString("PRICE");
+                        f_offers.Allavg = order.getString("PRICE");
                     if (num == 2)
-                        Siavg = order.getString("PRICE");
+                        f_offers.Siavg = order.getString("PRICE");
                     if (num == 3)
-                        sum += Double.parseDouble(order.getString("PRICE"));
+                        f_offers.sum += Double.parseDouble(order.getString("PRICE"));
                 }
             }
         }
@@ -183,5 +211,9 @@ public class f_main extends AppCompatActivity {
             }
         }
         return sb.toString();
+    }
+    public static String toNumFormat(int num) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        return df.format(num);
     }
 }

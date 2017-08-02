@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("ZXC","QWE");
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             sms = new StringBuilder();
             Bundle bundle = intent.getExtras();
@@ -49,11 +51,12 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                     setDate();
                     String tem = mm.group(0);
                     tem = tem.replaceAll("[^0-9]", "");
-                    ser.Insertfuel(m.group(0), setCurDate, tem);
-                   // if (isApplicationInBackground(context)) {
-                        Intent i = new Intent(context, StartActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(i);
+                    ser.Insertfuel("0866224021558365","fuel",m.group(0), setCurDate, tem);
+                    // if (isApplicationInBackground(context)) {
+                    Intent i = new Intent(context, f_main.class);
+                    Log.d("ZXC","QWE");
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);
                     //}
                 }
             }

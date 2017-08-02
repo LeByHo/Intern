@@ -7,22 +7,34 @@ import android.graphics.drawable.Drawable;
  */
 
 public class ListViewItem {
-    private Drawable icon ;
-    private String text ;
+    private Drawable icon;
+    private String text;
+    private String place;
+    private String price;
 
     public void setIcon(Drawable icon) {
 
         this.icon = icon ;
     }
-    public void setText(String text) {
-        this.text = text ;
-    }
     public Drawable getIcon() {
         return this.icon ;
+    }
+    public void setText(String text) {
+        this.text = text ;
     }
     public String getText() {
         return this.text ;
     }
-
-
+    public void setPlace(String text) {
+        this.place = text ;
+    }
+    public String getPlace() {
+        return this.place ;
+    }
+    public void setPrice(String text) {
+        this.price = text ;
+    }
+    public String getPrice() {
+        return this.price ;
+    }
 }

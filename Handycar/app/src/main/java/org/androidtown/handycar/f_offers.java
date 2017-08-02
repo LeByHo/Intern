@@ -4,10 +4,8 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,7 +13,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Iterator;
@@ -32,6 +29,11 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
     Double pointX[] = new Double[10];
     Double pointY[] = new Double[10];
     int cnt = 0;
+    public static int cnut=0;
+    public static String Allavg = "", Siavg = "";
+    public static Double dis[] = new Double[10];
+    public static int pri[] = new int[10];
+    public static double sum = 0.0, csum=0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,6 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
 
             GeoPoint katec_pt = new GeoPoint(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
             GeoPoint out_pt = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, katec_pt);
-            //Log.d("QWE",s+" "+str[0]+" "+str[1]);
-            //Log.d("ASD3","geo out : xGeo=" + out_pt.getY() + ", yGeo=" + out_pt.getX());
             pointX[cnt] = out_pt.getY();
             pointY[cnt] = out_pt.getX();
             cnt++;
@@ -79,7 +79,7 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
             makerOptions // LatLng에 대한 어레이를 만들어서 이용할 수도 있다.
                     .position(new LatLng(pointX[idx], pointY[idx]))
                     .title(name[idx]) // 타이틀.
-                    .snippet(f_main.dis[cnt - idx - 1] + "m" + " / " + f_main.pri[cnt - idx - 1] + "원");
+                    .snippet(dis[cnt - idx - 1] + "m" + " / " + pri[cnt - idx - 1] + "원");
             // 2. 마커 생성 (마커를 나타냄)
             googleMap.addMarker(makerOptions);
         }

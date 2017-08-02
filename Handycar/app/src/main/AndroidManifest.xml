@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.androidtown.handycar">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,13 +25,14 @@
         </activity>
         <activity android:name=".totalmain"/>
         <activity android:name=".m_main"/>
-        <activity android:name=".f_main"/>
+        <activity android:name=".f_main" />
         <activity android:name=".Group"/>
         <activity android:name=".Group_total"/>
         <activity android:name=".modify_group"/>
         <activity android:name=".Carinfo"/>
         <activity android:name=".StartActivity"/>
         <activity android:name=".f_offers"/>
+
         <receiver
             android:name=".MyBroadcastReceiver"
             android:enabled="true"
