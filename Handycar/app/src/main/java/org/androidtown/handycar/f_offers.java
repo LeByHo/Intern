@@ -2,7 +2,10 @@ package org.androidtown.handycar;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +25,7 @@ import java.util.Iterator;
  */
 
 public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
-    Button b1;
+    Button b1,b2;
     Intent intent;
     String arr = "";
     String name[] = new String[10];
@@ -39,8 +42,12 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f_offers);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         b1 = (Button) findViewById(R.id.button1);
-
+b2 = (Button)findViewById(R.id.button2);
+            b2.setBackgroundColor(Color.rgb(25,147,168));
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

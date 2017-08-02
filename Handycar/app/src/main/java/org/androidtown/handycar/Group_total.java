@@ -2,7 +2,9 @@ package org.androidtown.handycar;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
@@ -18,6 +20,9 @@ public class Group_total extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
         fm = getFragmentManager();
         FragmentTransaction tr = fm.beginTransaction();

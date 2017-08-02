@@ -2,9 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
+    <Button
+        android:id="@+id/car_management"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape"
+        android:text="내차관리"
+        android:textSize="20sp"
+        />
 
+    <Button
+        android:id="@+id/group"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape"
+        android:text="그룹관리"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/car_management" />
     <ListView
+        android:background="@drawable/btn_shape"
+        android:layout_below="@+id/group"
+        android:layout_marginTop="5sp"
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="400dp"/>

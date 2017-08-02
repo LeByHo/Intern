@@ -3,8 +3,12 @@ package org.androidtown.handycar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,21 +19,26 @@ import android.widget.TextView;
  * Created by GE62 on 2017-07-28.
  */
 
-public class StartActivity extends FragmentActivity {
+public class StartActivity extends AppCompatActivity {
     fragment_a Frag;
     Button Group;
+    Button management;
     ImageView carimg;
     TextView distance;
     TextView point;
     TextView carname;
     public static Intent intent;
 
-
     ImageButton plus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
+        management=(Button)findViewById(R.id.car_management);
+        management.setBackgroundColor(Color.rgb(25,147,168));
         distance=(TextView)findViewById(R.id.distance_driven);
         point=(TextView)findViewById(R.id.my_point);
         carimg=(ImageView)findViewById(R.id.carkind);

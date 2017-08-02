@@ -4,10 +4,12 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +36,7 @@ import java.util.HashMap;
 
 public class f_main extends AppCompatActivity {
     FragmentManager fm;
-    Button btn1, btn2, btn3, btn4;
+    Button btn1, btn2, btn4;
     TextView text1, text2;
     f_price_fragment Frag;
     f_Record_fragment Frag2;
@@ -50,6 +52,9 @@ public class f_main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f_main);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
         text1.setBackgroundColor(Color.rgb(25, 147, 168));
         text2.setBackgroundColor(Color.rgb(25, 147, 168));
@@ -158,6 +163,7 @@ public class f_main extends AppCompatActivity {
     public void setup() {
         Frag = new f_price_fragment();
         btn1 = (Button) findViewById(R.id.button1);
+        btn1.setBackgroundColor(Color.rgb(25,147,168));
         btn2 = (Button) findViewById(R.id.button2);
         btn4 = (Button) findViewById(R.id.button4);
         text1 = (TextView) findViewById(R.id.text);

@@ -13,24 +13,22 @@
 
         <Button
             android:id="@+id/car_management"
-            android:layout_width="210dp"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
-            android:background="#1478FF"
+            android:background="@drawable/btn_shape"
             android:text="내차관리"
-            android:textColor="#ffff"
-            android:textSize="30dp"
-            android:layout_alignParentStart="true" />
+            android:textSize="20sp"
+          />
 
         <Button
             android:id="@+id/group"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:background="#1478FF"
-            android:textColor="#ffff"
+            android:background="@drawable/btn_shape"
             android:text="그룹관리"
-            android:textSize="30dp"
+            android:textSize="20sp"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/car_management" />
+            android:layout_toRightOf="@+id/car_management" />
     </RelativeLayout>
 
 
