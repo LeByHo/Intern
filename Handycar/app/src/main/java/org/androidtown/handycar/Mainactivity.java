@@ -1,8 +1,10 @@
 package org.androidtown.handycar;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,14 +26,16 @@ public class Mainactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         ListView listview = (ListView) findViewById(R.id.list_view) ;
         adapter = new MainViewAdapter() ;
         listview.setAdapter(adapter);
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.m_car),"내차관리");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil),"주유");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings),"정비");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.graph),"통계");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.m_car));
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil));
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings));
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.graph));
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

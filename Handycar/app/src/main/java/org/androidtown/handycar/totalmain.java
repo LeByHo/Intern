@@ -30,7 +30,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class totalmain extends AppCompatActivity {
-
     RelativeLayout relativeLayout;
     RadioButton 주유,정비,통합;
     RadioGroup radioGroup;
@@ -47,6 +46,9 @@ public class totalmain extends AppCompatActivity {
     Intent intent;
     int flag = 1;
     int b6=0;
+    Bundle bundle = new Bundle();
+    ArrayList fuel = new ArrayList();
+    ArrayList maintenacne = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class totalmain extends AppCompatActivity {
         intent= getIntent();
         flag=intent.getFlags();
         fm = getFragmentManager();
+        Frag.setArguments(bundle);
 
         FragmentTransaction tr = fm.beginTransaction();
         tr.add(R.id.fragment,Frag,"fuel");
@@ -63,7 +66,6 @@ public class totalmain extends AppCompatActivity {
         tr.add(R.id.relativelayout2,Frag6,"info");
         tr.add(R.id.relativelayout2,Frag7,"info");
         relativeLayout.setBackgroundColor(Color.rgb(246,246,246));
-        int radioId = radioGroup.getCheckedRadioButtonId();
         if(flag==1){
             주유.setChecked(true);
             tr.hide(Frag2);
@@ -151,7 +153,7 @@ public class totalmain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 b6++;
-                if(b6%2==0)
+                if(b6%2==1)
                     btn6.setBackgroundResource(R.drawable.btn_shape);
                 else
                     btn6.setBackgroundColor(Color.rgb(25,147,168));
@@ -165,6 +167,7 @@ public class totalmain extends AppCompatActivity {
         btn4 = (Button) findViewById(R.id.button4);
         btn5 = (Button) findViewById(R.id.button5);
         btn6 = (Button) findViewById(R.id.button6);
+        btn6.setBackgroundColor(Color.rgb(25,147,168));
         Frag = new fuel_Fragment();
         Frag2= new maintenacne_fragment();
         Frag3= new total_Fragment();

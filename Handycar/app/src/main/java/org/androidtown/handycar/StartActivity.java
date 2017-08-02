@@ -24,6 +24,7 @@ public class StartActivity extends FragmentActivity {
     TextView carname;
     public static Intent intent;
 
+
     ImageButton plus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,21 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
+        android:layout_height="250dp"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/bg_day_9"
+        android:scaleType="centerCrop"
         android:id="@+id/imageView"/>
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="세팅"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="25dp" />
-</RelativeLayout>
+
+</LinearLayout>

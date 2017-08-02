@@ -10,6 +10,7 @@
         android:layout_height="match_parent">
 
         <ListView
+            android:layout_marginTop="30dp"
             android:id="@+id/list_view"
             android:divider="@null"
             android:dividerHeight="0dp"
