@@ -2,6 +2,7 @@ package org.androidtown.handycar;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class ListViewAdapter extends BaseAdapter {
         item.setIcon(icon);
         item.setText(title);
         listViewItemList.add(item);
+        Log.d("ADD","QWE");
     }
 }
 

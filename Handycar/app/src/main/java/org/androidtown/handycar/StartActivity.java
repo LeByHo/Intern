@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,25 +26,27 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by GE62 on 2017-07-28.
  */
 
 public class StartActivity extends AppCompatActivity {
-    fragment_a Frag;
     Button Group;
     Button management;
     ImageView carimg;
     TextView distance;
     TextView point;
     TextView carname;
-    //public static Intent intent;
+
     ListViewAdapter adapter;
     ListView listview;
+
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     ImageButton plus;
-
+    int cnt=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +73,17 @@ public class StartActivity extends AppCompatActivity {
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = name.getText().toString();
+                        FirebaseCar car;
                         if (!(adapter.listViewItemList.contains(str)) && str.length() > 0) {
-                            if (adapter.getCount() == 0) {
+                            if (adapter.getCount() == 0&&cnt==0) {
                                 carname.setText(str);
-                                FirebaseCar car = new FirebaseCar(str, 1);
-                                mDatebase.child("cinform").push().setValue(car);
+                                car = new FirebaseCar(str, 1);
                             } else {
-                                FirebaseCar car = new FirebaseCar(str, 0);
-                                mDatebase.child("cinform").push().setValue(car);
+                                car = new FirebaseCar(str, 0);
                             }
+                            mDatebase.child("cinform").push().setValue(car);
                         }
+
                     }
                 });
                 alert.setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -89,12 +93,14 @@ public class StartActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+
         mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseCar fire = dataSnapshot.getValue(FirebaseCar.class);
                 if (fire.getCheck() == 1) {
                     carname.setText(fire.getName());
+                    ++cnt;
                 }
                 if (fire.getCheck() == 0) {
                     adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), fire.getName());
@@ -152,12 +158,29 @@ public class StartActivity extends AppCompatActivity {
             case R.id.select:
                 break;
             case R.id.delete:
-               mDatebase.child("cinform").child("name").equalTo(tem);
+                Query applesQuery =  mDatebase.child("cinform").orderByChild("name").equalTo(tem);
+                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().removeValue();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
                 adapter.listViewItemList.remove(index);
                 adapter.notifyDataSetChanged();
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
 
