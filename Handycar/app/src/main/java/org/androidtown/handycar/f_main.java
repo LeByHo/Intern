@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 /**
@@ -40,14 +38,12 @@ public class f_main extends AppCompatActivity {
     TextView text1, text2;
     f_price_fragment Frag;
     f_Record_fragment Frag2;
-    Intent intent;
+    Intent intent, gintent;
     Server server = new Server();
     String str1, str2, str3, str4;
     public static HashMap<String, String> location = new HashMap<String, String>();
-
-    SpendAdapter adapter;
     ListView listview;
-    String car="0866224021558365";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +54,14 @@ public class f_main extends AppCompatActivity {
         setup();
         text1.setBackgroundColor(Color.rgb(25, 147, 168));
         text2.setBackgroundColor(Color.rgb(25, 147, 168));
-        adapter = new SpendAdapter();
+
         listview = (ListView) findViewById(R.id.listview);
-        listview.setAdapter(adapter);
+        listview.setAdapter(Mainactivity.fadapter);
 
         new Thread() {
             @Override
             public void run() {
-                HttpURLConnection con = server.getConnection("GET", "/info/"+car+"/fuel");
+                HttpURLConnection con = server.getConnection("GET", "/info/" + Mainactivity.car + "/fuel");
                 System.out.println("Connection donee");
                 try {
                     con.getResponseCode();
@@ -76,15 +72,15 @@ public class f_main extends AppCompatActivity {
             }
         }.start();
 
-        if(Mainactivity.chk==0) {
-            GeoPoint in_pt = new GeoPoint(127.112140,37.400741);
+        if (Mainactivity.chk == 0) {
+            GeoPoint in_pt = new GeoPoint(127.112140, 37.400741);
             GeoPoint tm_pt = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, in_pt);
             GeoPoint katec_pt = GeoTrans.convert(GeoTrans.TM, GeoTrans.KATEC, tm_pt);
 
             str1 = "http://www.opinet.co.kr/api/avgAllPrice.do?out=json&code=F191170721";
             str2 = "http://www.opinet.co.kr/api/avgSidoPrice.do?out=json&prodcd=B027&sido=01&code=F191170721";
             str3 = "http://www.opinet.co.kr/api/avgRecentPrice.do?out=json&prodcd=B027&code=F191170721";
-            str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x="+katec_pt.getX()+"&y="+katec_pt.getY()+"&radius=500&sort=1&prodcd=B027&out=json";
+            str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x=" + katec_pt.getX() + "&y=" + katec_pt.getY() + "&radius=500&sort=1&prodcd=B027&out=json";
             new Thread() {
                 @Override
                 public void run() {
@@ -116,8 +112,7 @@ public class f_main extends AppCompatActivity {
                 }
             }.start();
             Mainactivity.chk++;
-        }
-        else{
+        } else {
             Message message = handler.obtainMessage();
             handler.sendMessage(message);
         }
@@ -137,6 +132,7 @@ public class f_main extends AppCompatActivity {
             }
         });
     }
+
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             fm = getFragmentManager();
@@ -154,16 +150,17 @@ public class f_main extends AppCompatActivity {
         }
     };
 
-    private void  infoarrayToobject(JSONArray jsonArray) throws JSONException {
+    private void infoarrayToobject(JSONArray jsonArray) throws JSONException {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
-            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gas_station), order.getString("date"),order.getString("place"),toNumFormat(Integer.parseInt(order.getString("price")))+"원");
+            //fadapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil), order.getString("date"), order.getString("place"), toNumFormat(Integer.parseInt(order.getString("price"))) + "원");
         }
     }
+
     public void setup() {
         Frag = new f_price_fragment();
         btn1 = (Button) findViewById(R.id.button1);
-        btn1.setBackgroundColor(Color.rgb(25,147,168));
+        btn1.setBackgroundColor(Color.rgb(25, 147, 168));
         btn2 = (Button) findViewById(R.id.button2);
         btn4 = (Button) findViewById(R.id.button4);
         text1 = (TextView) findViewById(R.id.text);
@@ -181,9 +178,9 @@ public class f_main extends AppCompatActivity {
                 location.put(order.getString("OS_NM"), order.getInt("GIS_X_COOR") + " " + order.getInt("GIS_Y_COOR"));
                 f_offers.dis[f_offers.cnut] = order.getDouble("DISTANCE");
                 f_offers.pri[f_offers.cnut] = order.getInt("PRICE");
-                f_offers.csum+= order.getInt("PRICE");
+                f_offers.csum += order.getInt("PRICE");
                 f_offers.cnut++;
-            }else {
+            } else {
                 if (order.getString("PRODCD").equals("B027")) {
                     if (num == 1)
                         f_offers.Allavg = order.getString("PRICE");
@@ -217,9 +214,5 @@ public class f_main extends AppCompatActivity {
             }
         }
         return sb.toString();
-    }
-    public static String toNumFormat(int num) {
-        DecimalFormat df = new DecimalFormat("#,###");
-        return df.format(num);
     }
 }

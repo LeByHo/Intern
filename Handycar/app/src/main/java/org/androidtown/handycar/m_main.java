@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,9 +32,9 @@ public class m_main extends AppCompatActivity {
     m_Record_fragment Frag2;
     Intent intent;
     Server server = new Server();
-    SpendAdapter adapter;
+    //SpendAdapter adapter;
     ListView listview;
-    String car="0866224021558365";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +46,13 @@ public class m_main extends AppCompatActivity {
         text1.setBackgroundColor(Color.rgb(25,147,168));
         text2.setBackgroundColor(Color.rgb(25,147,168));
 
-        adapter = new SpendAdapter();
+        //adapter = new SpendAdapter();
         listview = (ListView) findViewById(R.id.listview);
-        listview.setAdapter(adapter);
+        listview.setAdapter(Mainactivity.madapter);
         new Thread() {
             @Override
             public void run() {
-                HttpURLConnection con = server.getConnection("GET", "/info/"+car+"/fix");
+                HttpURLConnection con = server.getConnection("GET", "/info/"+ Mainactivity.car+"/fix");
                 System.out.println("Connection donee");
                 try {
                     con.getResponseCode();
@@ -91,7 +90,7 @@ public class m_main extends AppCompatActivity {
     private void  infoarrayToobject(JSONArray jsonArray) throws JSONException {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
-            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings), order.getString("date"),order.getString("place"),toNumFormat(Integer.parseInt(order.getString("price")))+"원");
+           // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings), order.getString("date"),order.getString("place"),toNumFormat(Integer.parseInt(order.getString("price")))+"원");
         }
     }
     public static String toNumFormat(int num) {

@@ -25,18 +25,18 @@ import java.util.Iterator;
  */
 
 public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
-    Button b1,b2;
+    Button b1, b2;
     Intent intent;
     String arr = "";
     String name[] = new String[10];
     Double pointX[] = new Double[10];
     Double pointY[] = new Double[10];
     int cnt = 0;
-    public static int cnut=0;
+    public static int cnut = 0;
     public static String Allavg = "", Siavg = "";
     public static Double dis[] = new Double[10];
     public static int pri[] = new int[10];
-    public static double sum = 0.0, csum=0.0;
+    public static double sum = 0.0, csum = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         b1 = (Button) findViewById(R.id.button1);
-b2 = (Button)findViewById(R.id.button2);
-            b2.setBackgroundColor(Color.rgb(25,147,168));
+        b2 = (Button) findViewById(R.id.button2);
+        b2.setBackgroundColor(Color.rgb(25, 147, 168));
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

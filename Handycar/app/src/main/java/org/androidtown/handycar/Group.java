@@ -75,7 +75,7 @@ public class Group extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = name.getText().toString();
                         if(!(adapter.listViewItemList.contains(str))&& str.length() > 0){
-                            adapter.addItem(ContextCompat.getDrawable(Group.this, R.drawable.car), str);
+                            adapter.addItem(ContextCompat.getDrawable(Group.this, R.drawable.car2), str);
                             server.insertcol(str);
                         }
                         adapter.notifyDataSetChanged();

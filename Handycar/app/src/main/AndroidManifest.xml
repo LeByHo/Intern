@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -32,7 +33,7 @@
         <activity android:name=".Carinfo"/>
         <activity android:name=".StartActivity"/>
         <activity android:name=".f_offers"/>
-
+        <activity android:name=".Firebase"/>
         <receiver
             android:name=".MyBroadcastReceiver"
             android:enabled="true"

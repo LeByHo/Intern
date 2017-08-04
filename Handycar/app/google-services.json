@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "51453844849",
+    "firebase_url": "https://handycar-c8cf9.firebaseio.com",
+    "project_id": "handycar-c8cf9",
+    "storage_bucket": "handycar-c8cf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51453844849:android:5d009ff3bdb6c8bc",
+        "android_client_info": {
+          "package_name": "org.androidtown.handycar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51453844849-g0kaos8j646mco7nb84hpsgimmk8g5lt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.androidtown.handycar",
+            "certificate_hash": "45184548966837f66d261ff623300b8fbc4ee207"
+          }
+        },
+        {
+          "client_id": "51453844849-fmii37k0ou11loafqujlovgjka36s040.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51453844849-fmii37k0ou11loafqujlovgjka36s040.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

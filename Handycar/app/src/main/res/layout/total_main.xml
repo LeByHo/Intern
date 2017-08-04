@@ -111,19 +111,9 @@
         android:layout_below="@+id/relativelayout"
         >
     </RelativeLayout>
-    <ScrollView
-        android:layout_marginTop="5sp"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarThumbVertical="@android:color/background_light"
-        android:id="@+id/scroll"
-        android:layout_below="@+id/relativelayout2"
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativelayout2" />
 </RelativeLayout>
