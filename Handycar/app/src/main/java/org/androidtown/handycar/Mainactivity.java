@@ -87,6 +87,7 @@ public class Mainactivity extends AppCompatActivity {
                 Firebaseinfo fire = dataSnapshot.getValue(Firebaseinfo.class);
                 if (fire.getCate().equals("fuel")) {
                     fadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원");
+                    fadapter.addf(fire.getDate(),fire.getPrice());
                     tadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원");
                 }
                 if (fire.getCate().equals("fix")) {

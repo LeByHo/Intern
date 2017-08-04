@@ -10,18 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by GE62 on 2017-08-02.
  */
 
 public class SpendAdapter extends BaseAdapter {
+    //주유 가격
+    public static Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+    public static TreeMap<String, Integer> tm ;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     public ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
     // ListViewAdapter의 생성자
     public SpendAdapter() {
-
+        setup();
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -81,5 +87,27 @@ public class SpendAdapter extends BaseAdapter {
         item.setPlace(place);
         item.setPrice(price);
         listViewItemList.add(item);
+    }
+    public void addf(String date, String price){
+        String temp;
+        temp = date.substring(0,7);
+        int i = hashMap.get(temp);
+        i= i + Integer.parseInt(price);
+        hashMap.put(temp,i);
+        tm = new TreeMap<String, Integer>(hashMap);
+    }
+    public void setup(){
+        //디비에서 여기서 불러오면 될듯
+        hashMap.put("2017.01",44440);
+        hashMap.put("2017.02",55550);
+        hashMap.put("2017.03",32320);
+        hashMap.put("2017.04",123240);
+        hashMap.put("2017.05",5550);
+        hashMap.put("2017.06",66660);
+        hashMap.put("2017.07",77070);
+        hashMap.put("2017.08",7470);
+        hashMap.put("2017.09",10000);
+        hashMap.put("2017.10",100100);
+        tm = new TreeMap<String, Integer>(hashMap);
     }
 }
