@@ -49,7 +49,7 @@ public class fuel_Fragment extends Fragment{
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry(SpendAdapter.tm.get(s),i));
+            group1.add(new BarEntry((Integer)SpendAdapter.tm.get(s),i));
             i++;
         }
 

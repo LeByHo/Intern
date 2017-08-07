@@ -49,20 +49,17 @@ public class total_Fragment extends Fragment { BarChart barChart;
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry(SpendAdapter.tm.get(s),i));
+            group1.add(new BarEntry((Integer) SpendAdapter.tm.get(s),i));
             i++;
         }
         ArrayList<BarEntry> group2 = new ArrayList<>();
-        group2.add(new BarEntry(10000, 0));
-        group2.add(new BarEntry(100000, 1));
-        group2.add(new BarEntry(40000, 2));
-        group2.add(new BarEntry(6400, 3));
-        group2.add(new BarEntry(12999, 4));
-        group2.add(new BarEntry(100000, 5));
-        group2.add(new BarEntry(40000, 2));
-        group2.add(new BarEntry(6400, 3));
-        group2.add(new BarEntry(12999, 4));
-        group2.add(new BarEntry(100000, 5));
+        Iterator<String> iterator2 = SpendAdapter.tm2.keySet().iterator();
+        i =0 ;
+        while (iterator2.hasNext()) {
+            String s = (String) iterator2.next();
+            group2.add(new BarEntry((Integer) SpendAdapter.tm2.get(s),i));
+            i++;
+        }
 
         final BarDataSet barDataSet1 = new BarDataSet(group1, "주유");
         barDataSet1.setColor(Color.rgb(032, 178, 170));
