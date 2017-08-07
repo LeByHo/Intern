@@ -118,7 +118,7 @@ public class Server {
     }
     public HttpURLConnection getConnection(String method, String path) {
         try {
-            URL url = new URL("http://192.168.0.42:3000" + path);
+            URL url = new URL("http://192.168.219.194:3000" + path);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(method);
             con.setRequestProperty("Content-Type", "application/json");

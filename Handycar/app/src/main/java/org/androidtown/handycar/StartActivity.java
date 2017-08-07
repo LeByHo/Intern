@@ -74,7 +74,17 @@ public class StartActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = name.getText().toString();
                         FirebaseCar car;
-                        if (!(adapter.listViewItemList.contains(str)) && str.length() > 0) {
+                        int check=0;
+                        if(str.length()>0) {
+                            for (int a = 0; a < adapter.getCount(); a++) {
+                                if (adapter.listViewItemList.get(a).getText().equals(str))
+                                    break;
+                                else {
+                                    check++;
+                                }
+                            }
+                        }
+                        if(check==adapter.getCount()){
                             if (adapter.getCount() == 0&&cnt==0) {
                                 carname.setText(str);
                                 car = new FirebaseCar(str, 1);
@@ -83,7 +93,6 @@ public class StartActivity extends AppCompatActivity {
                             }
                             mDatebase.child("cinform").push().setValue(car);
                         }
-
                     }
                 });
                 alert.setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -156,6 +165,10 @@ public class StartActivity extends AppCompatActivity {
         String tem  = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.select:
+                adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString());
+                carname.setText(tem);
+                adapter.listViewItemList.remove(index);
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.delete:
                 Query applesQuery =  mDatebase.child("cinform").orderByChild("name").equalTo(tem);

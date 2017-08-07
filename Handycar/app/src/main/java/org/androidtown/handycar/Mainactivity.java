@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,7 +27,6 @@ import java.text.DecimalFormat;
  */
 
 public class Mainactivity extends AppCompatActivity {
-    Button btn1, btn2, btn3, btn4;
     Intent intent;
     PullToRefreshView mPullToRefreshView;
     public static int chk = 0;
@@ -106,7 +106,6 @@ public class Mainactivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
