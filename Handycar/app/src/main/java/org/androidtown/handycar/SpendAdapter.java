@@ -23,12 +23,18 @@ public class SpendAdapter extends BaseAdapter {
     public static Map<String, Integer> hashMap =  new HashMap<String, Integer>();
     public static TreeMap<String, Integer> tm ;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    public ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    public ArrayList<ListViewItem> listViewItemList;
 
     // ListViewAdapter의 생성자
-    public SpendAdapter() {
+    public SpendAdapter(ArrayList<ListViewItem> itemList) {
+        if (itemList == null) {
+            listViewItemList = new ArrayList<ListViewItem>() ;
+        } else {
+            listViewItemList = itemList ;
+        }
         setup();
     }
+
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override

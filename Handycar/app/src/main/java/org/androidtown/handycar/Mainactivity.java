@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by LEE on 2017-07-27.
@@ -34,13 +37,17 @@ public class Mainactivity extends AppCompatActivity {
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     public static String car;
     public static SpendAdapter fadapter,madapter,tadapter;
+    ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>() ;
+    ArrayList<ListViewItem> itemList1 = new ArrayList<ListViewItem>() ;
+    ArrayList<ListViewItem> itemList2 = new ArrayList<ListViewItem>() ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fadapter = new SpendAdapter();
-        madapter = new SpendAdapter();
-        tadapter = new SpendAdapter();
+        fadapter = new SpendAdapter(itemList);
+        madapter = new SpendAdapter(itemList1);
+        tadapter = new SpendAdapter(itemList2);
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
@@ -89,10 +96,30 @@ public class Mainactivity extends AppCompatActivity {
                     fadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원");
                     fadapter.addf(fire.getDate(),fire.getPrice());
                     tadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원");
+                    Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
+                        @Override
+                        public int compare(ListViewItem item1, ListViewItem item2) {
+                            return (item2.getText().compareTo(item1.getText())) ;
+                        }
+                    } ;
+                    Collections.sort(itemList, noDesc) ;
+                    Collections.sort(itemList2, noDesc) ;
+                    fadapter.notifyDataSetChanged() ;
+                    tadapter.notifyDataSetChanged() ;
                 }
                 if (fire.getCate().equals("fix")) {
                     madapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.settings), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원");
                     tadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.settings), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원");
+                    Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
+                        @Override
+                        public int compare(ListViewItem item1, ListViewItem item2) {
+                            return (item2.getText().compareTo(item1.getText())) ;
+                        }
+                    } ;
+                    Collections.sort(itemList1, noDesc) ;
+                    Collections.sort(itemList2, noDesc) ;
+                    madapter.notifyDataSetChanged() ;
+                    tadapter.notifyDataSetChanged() ;
                 }
             }
             @Override
@@ -109,6 +136,7 @@ public class Mainactivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     protected void onStart() {
