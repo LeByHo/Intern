@@ -13,7 +13,6 @@ public class ListViewItem {
     private String price;
 
     public void setIcon(Drawable icon) {
-
         this.icon = icon ;
     }
     public Drawable getIcon() {

@@ -2,6 +2,7 @@ package org.androidtown.handycar;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.util.Log;
@@ -50,11 +51,11 @@ public class maintenacne_fragment extends Fragment {
         labels.add("Oct");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
-        Iterator<String> iterator = SpendAdapter.tm.keySet().iterator();
+        Iterator<String> iterator = SpendAdapter.tm2.keySet().iterator();
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry(SpendAdapter.tm.get(s),i));
+            group1.add(new BarEntry((Integer) SpendAdapter.tm2.get(s),i));
             i++;
         }
 
@@ -68,7 +69,7 @@ public class maintenacne_fragment extends Fragment {
         BarData data = new BarData(labels, dataset);
         // dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
         barChart.setData(data);
-        barChart.animateY(3000);
+        barChart.animateY(1000);
 
         return rootView;
     }

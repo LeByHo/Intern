@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,7 +22,10 @@ import java.util.TreeMap;
 public class SpendAdapter extends BaseAdapter {
     //주유 가격
     public static Map<String, Integer> hashMap =  new HashMap<String, Integer>();
-    public static TreeMap<String, Integer> tm ;
+    public static TreeMap tm;
+    //정비 가격
+    public static Map<String, Integer> hashMap2 =  new HashMap<String, Integer>();
+    public static TreeMap tm2;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     public ArrayList<ListViewItem> listViewItemList;
 
@@ -100,7 +104,15 @@ public class SpendAdapter extends BaseAdapter {
         int i = hashMap.get(temp);
         i= i + Integer.parseInt(price);
         hashMap.put(temp,i);
-        tm = new TreeMap<String, Integer>(hashMap);
+        tm= new TreeMap<String, Integer>(hashMap);;
+    }
+    public void addr(String date, String price){
+        String temp;
+        temp = date.substring(0,7);
+        int i = hashMap2.get(temp);
+        i= i + Integer.parseInt(price);
+        hashMap2.put(temp,i);
+       tm2= new TreeMap<String, Integer>(hashMap2);
     }
     public void setup(){
         //디비에서 여기서 불러오면 될듯
@@ -114,6 +126,17 @@ public class SpendAdapter extends BaseAdapter {
         hashMap.put("2017.08",7470);
         hashMap.put("2017.09",10000);
         hashMap.put("2017.10",100100);
-        tm = new TreeMap<String, Integer>(hashMap);
+        tm= new TreeMap<String, Integer>(hashMap);;
+        hashMap2.put("2017.01",50000);
+        hashMap2.put("2017.02",100000);
+        hashMap2.put("2017.03",30000);
+        hashMap2.put("2017.04",150040);
+        hashMap2.put("2017.05",30000);
+        hashMap2.put("2017.06",60000);
+        hashMap2.put("2017.07",77000);
+        hashMap2.put("2017.08",74700);
+        hashMap2.put("2017.09",10000);
+        hashMap2.put("2017.10",10000);
+        tm2= new TreeMap<String, Integer>(hashMap2);
     }
 }
