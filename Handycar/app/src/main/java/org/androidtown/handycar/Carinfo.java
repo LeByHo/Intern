@@ -42,6 +42,7 @@ public class Carinfo extends AppCompatActivity {
         mDatebase.child("group").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                hashMap.clear();
                 Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
                 if(ginfo.getGname().equals(gname)){
                     hashMap = ginfo.getHashMap();

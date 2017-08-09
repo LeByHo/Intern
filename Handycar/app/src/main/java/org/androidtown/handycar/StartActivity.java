@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,10 +31,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by GE62 on 2017-07-28.
@@ -63,6 +60,7 @@ public class StartActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
 
+
         Group.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Group.class);
@@ -76,7 +74,10 @@ public class StartActivity extends AppCompatActivity {
                 final EditText name = new EditText(StartActivity.this);
                 alert.setTitle("Input your Car name");
                 alert.setMessage("No Space, Special character!");
-                alert.setView(name);
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.customdialog, null);
+                //alert.setView(name);
+                alert.setView(dialogView);
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = name.getText().toString();
@@ -94,9 +95,9 @@ public class StartActivity extends AppCompatActivity {
                         if(check==adapter.getCount()){
                             if (adapter.getCount() == 0&&cnt==0) {
                                 carname.setText(str);
-                                car = new FirebaseCar(str, 1);
+                                car = new FirebaseCar(str, 1,0);
                             } else {
-                                car = new FirebaseCar(str, 0);
+                                car = new FirebaseCar(str, 0,0);
                             }
                             mDatebase.child("cinform").push().setValue(car);
                         }
@@ -174,7 +175,7 @@ public class StartActivity extends AppCompatActivity {
             case R.id.select:
                 adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString());
                 Query applesQuery1 =  mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
-                final FirebaseCar car = new FirebaseCar(carname.getText().toString(),0);
+                final FirebaseCar car = new FirebaseCar(carname.getText().toString(),0,0);
                 applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -191,7 +192,7 @@ public class StartActivity extends AppCompatActivity {
                 org.androidtown.handycar.Group.carchk++;
                 org.androidtown.handycar.Group.scar=tem;
                 Query applesQuery2 =  mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
-                final FirebaseCar car1 = new FirebaseCar(tem,1);
+                final FirebaseCar car1 = new FirebaseCar(tem,1,0);
                 applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -253,23 +254,28 @@ public class StartActivity extends AppCompatActivity {
         }
         return true;
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 }
 
 class FirebaseCar {
     String name;
     int check = 0;
-
+    int score =0;
     public FirebaseCar() {
     }
 
-    public FirebaseCar(String name, int check) {
+
+    public FirebaseCar(String name, int check, int score) {
         this.name = name;
         this.check = check;
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public String getName() {

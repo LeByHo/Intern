@@ -51,11 +51,11 @@ public class maintenacne_fragment extends Fragment {
         labels.add("Oct");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
-        Iterator<String> iterator = SpendAdapter.tm2.keySet().iterator();
+        Iterator<String> iterator = Mainactivity.tm2.keySet().iterator();
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry((Integer) SpendAdapter.tm2.get(s),i));
+            group1.add(new BarEntry((Integer)Mainactivity.tm2.get(s),i));
             i++;
         }
 

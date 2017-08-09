@@ -23,6 +23,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -40,12 +43,14 @@ public class Mainactivity extends AppCompatActivity {
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
     ArrayList<ListViewItem> itemList1 = new ArrayList<ListViewItem>();
     ArrayList<ListViewItem> itemList2 = new ArrayList<ListViewItem>();
-    String Temp="";
+    public static Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+    public static TreeMap tm;
+    public static Map<String, Integer> hashMap2 =  new HashMap<String, Integer>();
+    public static TreeMap tm2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
@@ -95,6 +100,7 @@ public class Mainactivity extends AppCompatActivity {
         itemList.clear();
         itemList1.clear();
         itemList2.clear();
+        setup();
         mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -133,12 +139,13 @@ public class Mainactivity extends AppCompatActivity {
                 if(fire.getName().equals(car)) {
                     if (fire.getCate().equals("fuel")) {
                         fadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원",0);
-                        fadapter.addf(fire.getDate(), fire.getPrice());
+                        addf(fire.getDate(), fire.getPrice());
                         tadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원",0);
                     }
 
                     if (fire.getCate().equals("fix")) {
                         madapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.settings), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원",0);
+                        addr(fire.getDate(), fire.getPrice());
                         tadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.settings), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원",0);
                     }
                 }
@@ -173,7 +180,48 @@ public class Mainactivity extends AppCompatActivity {
             }
         });
     }
-
+    public void addf(String date, String price){
+        String temp;
+        temp = date.substring(0,7);
+        int i = hashMap.get(temp);
+        i= i + Integer.parseInt(price);
+        Log.d("price",price);
+        hashMap.put(temp,i);
+        tm= new TreeMap<String, Integer>(hashMap);
+    }
+    public void addr(String date, String price){
+        String temp;
+        temp = date.substring(0,7);
+        int i = hashMap2.get(temp);
+        i= i + Integer.parseInt(price);
+        hashMap2.put(temp,i);
+        tm2= new TreeMap<String, Integer>(hashMap2);
+    }
+    public void setup(){
+        //디비에서 여기서 불러오면 될듯
+        hashMap.put("2017.01",0);
+        hashMap.put("2017.02",0);
+        hashMap.put("2017.03",0);
+        hashMap.put("2017.04",0);
+        hashMap.put("2017.05",0);
+        hashMap.put("2017.06",0);
+        hashMap.put("2017.07",0);
+        hashMap.put("2017.08",0);
+        hashMap.put("2017.09",0);
+        hashMap.put("2017.10",0);
+        tm= new TreeMap<String, Integer>(hashMap);
+        hashMap2.put("2017.01",0);
+        hashMap2.put("2017.02",0);
+        hashMap2.put("2017.03",0);
+        hashMap2.put("2017.04",0);
+        hashMap2.put("2017.05",0);
+        hashMap2.put("2017.06",0);
+        hashMap2.put("2017.07",0);
+        hashMap2.put("2017.08",0);
+        hashMap2.put("2017.09",0);
+        hashMap2.put("2017.10",0);
+        tm2= new TreeMap<String, Integer>(hashMap2);
+    }
     public static String toNumFormat(int num) {
         DecimalFormat df = new DecimalFormat("#,###");
         return df.format(num);

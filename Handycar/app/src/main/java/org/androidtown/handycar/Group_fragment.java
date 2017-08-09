@@ -42,7 +42,7 @@ public class Group_fragment extends Fragment{
 
         BarDataSet dataset = new BarDataSet(entries, "Score");
 
-      ArrayList<String> labels = new ArrayList<String>();
+        ArrayList<String> labels = new ArrayList<String>();
         labels.add("January");
         labels.add("February");
         labels.add("March");

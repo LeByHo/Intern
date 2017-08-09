@@ -15,7 +15,6 @@ public class info_fragment2 extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.info_fragment2, container, false);
 
-
         return rootView;
     }
 }

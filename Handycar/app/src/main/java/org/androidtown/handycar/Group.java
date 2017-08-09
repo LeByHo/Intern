@@ -30,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -102,32 +101,6 @@ public class Group extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-        mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
-                hashMap.put(car1.getName(),0);
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
             }
         });
         mDatebase.child("group").addChildEventListener(new ChildEventListener() {
@@ -217,6 +190,33 @@ public class Group extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // TODO Auto-generated method stub
             Intent intent = new Intent(Group.this, Group_total.class);
+            final String str = adapter.listViewItemList.get(position).getText();
+            mDatebase.child("group").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
+                    if(ginfo.getGname().equals(str)){
+                        Group_total.totalMap = ginfo.getHashMap();
+                    }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             startActivity(intent);
         }
     };

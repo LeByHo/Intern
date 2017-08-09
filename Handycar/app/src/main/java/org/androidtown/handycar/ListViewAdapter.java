@@ -79,7 +79,6 @@ public class ListViewAdapter extends BaseAdapter {
         item.setIcon(icon);
         item.setText(title);
         listViewItemList.add(item);
-        Log.d("ADD","QWE");
     }
 }
 
