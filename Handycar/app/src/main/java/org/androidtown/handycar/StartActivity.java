@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by GE62 on 2017-07-28.
@@ -47,10 +49,11 @@ public class StartActivity extends AppCompatActivity {
 
     ListViewAdapter adapter;
     ListView listview;
-
+    ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     ImageButton plus;
     int cnt=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,7 @@ public class StartActivity extends AppCompatActivity {
 
         Group.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), org.androidtown.handycar.Group.class);
+                Intent intent = new Intent(getApplicationContext(), Group.class);
                 startActivity(intent);
             }
         });
@@ -149,7 +152,7 @@ public class StartActivity extends AppCompatActivity {
         carname = (TextView) findViewById(R.id.carname);
         Group = (Button) findViewById(R.id.group);
         plus = (ImageButton) findViewById(R.id.addCar1);
-        adapter = new ListViewAdapter();
+        adapter = new ListViewAdapter(itemList);
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(adapter);
         registerForContextMenu(listview);
@@ -170,13 +173,69 @@ public class StartActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.select:
                 adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString());
+                Query applesQuery1 =  mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
+                final FirebaseCar car = new FirebaseCar(carname.getText().toString(),0);
+                applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().setValue(car);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
                 carname.setText(tem);
+                org.androidtown.handycar.Group.carchk++;
+                org.androidtown.handycar.Group.scar=tem;
+                Query applesQuery2 =  mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
+                final FirebaseCar car1 = new FirebaseCar(tem,1);
+                applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().setValue(car1);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
                 adapter.listViewItemList.remove(index);
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.delete:
-                Query applesQuery =  mDatebase.child("cinform").orderByChild("name").equalTo(tem);
+                Query applesQuery = mDatebase.child("cinform").orderByChild("name").equalTo(tem);
+                Query informQuery = mDatebase.child("inform").orderByChild("name").equalTo(tem);
+                Query groupQuery = mDatebase.child("group").orderByChild("cname").equalTo(tem);
                 applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().removeValue();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
+                informQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().removeValue();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
+                groupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {

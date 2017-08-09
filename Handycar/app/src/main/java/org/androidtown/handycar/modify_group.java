@@ -4,10 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,13 +32,14 @@ import java.util.Map;
  */
 
 public class modify_group extends AppCompatActivity {
-    Server server = new Server();
     Button b1, b2;
     TextView t1;
     int check = 0;
     String gname;
     ListView listview;
     CustomChoiceListViewAdapter adapter;
+    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,19 +52,7 @@ public class modify_group extends AppCompatActivity {
         adapter = new CustomChoiceListViewAdapter() ;
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(adapter);
-        new Thread() {
-            @Override
-            public void run() {
-                HttpURLConnection con = server.getConnection("GET", "/car/" + gname);
-                System.out.println("Connection done");
-                try {
-                    con.getResponseCode();
-                    arrayToobject(server.readJson(con));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,11 +66,26 @@ public class modify_group extends AppCompatActivity {
                     else
                         list.put(listViewItem.getText(),0);
                 }
-                server.updategrp(gname, list);
+                Query applesQuery1 =  mDatebase.child("group").orderByChild("gname").equalTo(gname);
+                final Groupinfo ginfo = new Groupinfo(gname,list);
+                applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            //Log.d("zxcc","AA");
+                            appleSnapshot.getRef().setValue(ginfo);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
                 adapter.notifyDataSetChanged();
                 finish();
             }
         });
+
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,22 +102,52 @@ public class modify_group extends AppCompatActivity {
                 }
             }
         });
+
+        mDatebase.child("group").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+                int i=0;
+                Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
+                if(ginfo.getGname().equals(gname)){
+                    hashMap = ginfo.getHashMap();
+                }
+                for ( String key : hashMap.keySet() ) {
+                    Log.d("zxc","방법1) key : " + key +" / value : " + hashMap.get(key));
+                    if (hashMap.get(key) == 1)
+                        listview.setItemChecked(i, true);
+                    else
+                        listview.setItemChecked(i, false);
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car), key);
+                    ++i;
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void setup() {
         b1 = (Button) findViewById(R.id.add);
         b2 = (Button) findViewById(R.id.selectAll);
         t1 = (TextView)findViewById(R.id.textView);
-    }
-
-    private void arrayToobject(JSONArray jsonArray) throws JSONException {
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject order = jsonArray.getJSONObject(i);
-            if (order.getInt(gname) == 1)
-                listview.setItemChecked(i, true);
-            else
-                listview.setItemChecked(i, false);
-            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.car), order.getString("name"));
-        }
     }
 }

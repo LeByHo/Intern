@@ -18,12 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by GE62 on 2017-07-24.
@@ -32,9 +41,13 @@ import java.net.HttpURLConnection;
 public class Group extends AppCompatActivity {
     ListViewAdapter adapter;
     ListView listview;
-    Server server = new Server();
     ImageButton i1;
     Button b1,b2;
+    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
+    Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+    public static String scar;
+    public static int carchk=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +57,11 @@ public class Group extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
-        adapter = new ListViewAdapter();
+        adapter = new ListViewAdapter(itemList);
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(listener);
         registerForContextMenu(listview);
-
-        new Thread() {
-            @Override
-            public void run() {
-                HttpURLConnection con = server.getConnection("GET", "/grp");
-                System.out.println("Connection done");
-                try {
-                    con.getResponseCode();
-                    arrayToobject(server.readJson(con));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
 
         i1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,12 +74,21 @@ public class Group extends AppCompatActivity {
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = name.getText().toString();
-                        if(!(adapter.listViewItemList.contains(str))&& str.length() > 0){
-                            adapter.addItem(ContextCompat.getDrawable(Group.this, R.drawable.car2), str);
-                            server.insertcol(str);
+                        Groupinfo ginfo;
+                        int check=0;
+                        if(str.length()>0) {
+                            for (int a = 0; a < adapter.getCount(); a++) {
+                                if (adapter.listViewItemList.get(a).getText().equals(str))
+                                    break;
+                                else {
+                                    check++;
+                                }
+                            }
                         }
-                        adapter.notifyDataSetChanged();
-
+                        if(check==adapter.getCount()){
+                            ginfo = new Groupinfo(str,hashMap);
+                            mDatebase.child("group").push().setValue(ginfo);
+                        }
                     }
                 });
                 alert.setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -94,6 +102,57 @@ public class Group extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
+                hashMap.put(car1.getName(),0);
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mDatebase.child("group").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
+                adapter.addItem(ContextCompat.getDrawable(Group.this, R.drawable.car), ginfo.getGname());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -126,7 +185,19 @@ public class Group extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.delete:
-                server.deletecol(tem);
+                Query applesQuery = mDatebase.child("group").orderByChild("gname").equalTo(tem);
+                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().removeValue();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("TAG", "onCancelled", databaseError.toException());
+                    }
+                });
                 adapter.listViewItemList.remove(index);
                 adapter.notifyDataSetChanged();
                 break;
@@ -149,11 +220,32 @@ public class Group extends AppCompatActivity {
             startActivity(intent);
         }
     };
+}
+class Groupinfo{
+    String gname;
+    Map<String, Integer> hashMap =  new HashMap<String, Integer>();
 
-    private void arrayToobject(JSONArray jsonArray) throws JSONException {
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject order = jsonArray.getJSONObject(i);
-            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.car), order.getString("name"));
-        }
+    public Groupinfo() {
+    }
+
+    public Groupinfo(String gname, Map<String, Integer> hashMap) {
+        this.gname = gname;
+        this.hashMap = hashMap;
+    }
+
+    public Map<String, Integer> getHashMap() {
+        return hashMap;
+    }
+
+    public void setHashMap(Map<String, Integer> hashMap) {
+        this.hashMap = hashMap;
+    }
+
+    public String getGname() {
+        return gname;
+    }
+
+    public void setGname(String gname) {
+        this.gname = gname;
     }
 }

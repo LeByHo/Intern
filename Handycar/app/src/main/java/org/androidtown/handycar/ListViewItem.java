@@ -11,6 +11,15 @@ public class ListViewItem {
     private String text;
     private String place;
     private String price;
+    private int setting;
+
+    public int getSetting() {
+        return setting;
+    }
+
+    public void setSetting(int setting) {
+        this.setting = setting;
+    }
 
     public void setIcon(Drawable icon) {
         this.icon = icon ;

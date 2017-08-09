@@ -7,7 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,7 +30,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     StringBuilder sms;
     String setCurDate;
-    Server ser = new Server();
+    String car;
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -45,72 +49,69 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 sms.toString();
             }
         }
+        mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
+                if (car1.getCheck() == 1) {
+                    car = car1.getName();
+                    Log.d("car",car);
+                    insert(car);
+                }
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    public void insert(String car){
         Matcher m = p.matcher(sms);
         Matcher mm = pp.matcher(sms);
         Matcher mmm = ppp.matcher(sms);
         for (int a = 0; a < s.length; a++) {
             if (tem.equals(s[a])) {
+                Log.d("car1",car);
                 if (m.find() && mm.find()) {
+                    Log.d("car2",car);
                     setDate();
                     String tem = mm.group(0);
                     tem = tem.replaceAll("[^0-9]", "");
-                    //ser.Insertfuel("0866224021558365","fuel",m.group(0), setCurDate, tem);
-                    Firebaseinfo fire = new Firebaseinfo("0866224021558365", "fuel", m.group(0), setCurDate, tem);
+                    Firebaseinfo fire = new Firebaseinfo(car, "fuel", m.group(0), setCurDate, tem);
                     mDatebase.child("inform").push().setValue(fire);
-                   // f_main.bcnt++;
-                    // if (isApplicationInBackground(context)) {
-                   /* Intent i = new Intent(context, f_main.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("name", "0866224021558365");
-                    bundle.putString("cate", "fuel");
-                    bundle.putString("place", m.group(0));
-                    bundle.putString("date", setCurDate);
-                    bundle.putString("price", tem);
-                    i.putExtras(bundle);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(i);*/
-                    //}
+
                 }
                 if(mmm.find() && mm.find()){
                     setDate();
                     String tem = mm.group(0);
                     tem = tem.replaceAll("[^0-9]", "");
-                    Firebaseinfo fire = new Firebaseinfo("0866224021558365", "fix", mmm.group(0), setCurDate, tem);
+                    Firebaseinfo fire = new Firebaseinfo(car, "fix", mmm.group(0), setCurDate, tem);
                     mDatebase.child("inform").push().setValue(fire);
-                    //ser.Insertfuel("0866224021558365","fix",m.group(0), setCurDate, tem);
-                    /*f_main.bcnt++;
-                    Intent i = new Intent(context, f_main.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("name", "0866224021558365");
-                    bundle.putString("cate", "fix");
-                    bundle.putString("place", mmm.group(0));
-                    bundle.putString("date", setCurDate);
-                    bundle.putString("price", tem);
-                    i.putExtras(bundle);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(i);*/
                 }
             }
         }
     }
-
     private void setDate() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat SettingFormat = new SimpleDateFormat("yyyy.MM.dd");
         setCurDate = SettingFormat.format(date);
-    }
-
-    public static boolean isApplicationInBackground(Context context) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (!tasks.isEmpty()) {
-            ComponentName topActivity = tasks.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(context.getPackageName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

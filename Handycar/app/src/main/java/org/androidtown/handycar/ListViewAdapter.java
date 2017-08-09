@@ -21,8 +21,12 @@ public class ListViewAdapter extends BaseAdapter {
     public ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter() {
-
+    public ListViewAdapter(ArrayList<ListViewItem> itemList) {
+        if (itemList == null) {
+            listViewItemList = new ArrayList<ListViewItem>();
+        } else {
+            listViewItemList = itemList;
+        }
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현

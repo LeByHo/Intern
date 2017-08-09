@@ -1,7 +1,9 @@
 package org.androidtown.handycar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,8 @@ public class SpendAdapter extends BaseAdapter {
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
 
+        if(listViewItem.getSetting()==1)
+            textText.setBackgroundColor(Color.BLUE);
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(listViewItem.getIcon());
         textTextView.setText(listViewItem.getText());
@@ -90,12 +94,13 @@ public class SpendAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String date, String place, String price) {
+    public void addItem(Drawable icon, String date, String place, String price,int num) {
         ListViewItem item = new ListViewItem();
         item.setIcon(icon);
         item.setText(date);
         item.setPlace(place);
         item.setPrice(price);
+        item.setSetting(num);
         listViewItemList.add(item);
     }
     public void addf(String date, String price){
