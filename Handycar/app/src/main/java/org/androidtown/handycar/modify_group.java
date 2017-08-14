@@ -82,18 +82,18 @@ public class modify_group extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (check == 0) {
+               // if (check == 0) {
                     for (int i = 0; i < adapter.getCount(); i++) {
                         listview.setItemChecked(i, true);
                     }
-                    check = 1;
-                } else {
-                    for (int i = 0; i < adapter.getCount(); i++) {
-                        listview.setItemChecked(i, false);
-                    }
-                    check = 0;
-                }
-            }
+                   // check = 1;
+                } //else {
+                  //  for (int i = 0; i < adapter.getCount(); i++) {
+                    //    listview.setItemChecked(i, false);
+                   // }
+                   // check = 0;
+              //  }
+           // }
         });
         mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
             @Override
@@ -133,10 +133,8 @@ public class modify_group extends AppCompatActivity {
                     hashMap = ginfo.getHashMap();
                 }
                 for ( String key : hashMap.keySet() ) {
-                    Log.d("enf",key+"/"+i);
                     for (int a = 0; a < adapter.getCount(); a++) {
                         if (adapter.listViewItemList.get(a).getText().equals(key)) {
-                            Log.d("true",adapter.listViewItemList.get(a).getText()+"/"+i);
                             listview.setItemChecked(a, true);
                             break;
                         }

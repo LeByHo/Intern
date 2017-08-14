@@ -44,7 +44,7 @@ public class f_main extends AppCompatActivity {
     String str1, str2, str3, str4;
     public static HashMap<String, String> location = new HashMap<String, String>();
     ListView listview;
-
+    public static double lati=37.400741,logi=127.112140;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,8 @@ public class f_main extends AppCompatActivity {
         Mainactivity.f2adapter.notifyDataSetChanged();
 
         if (Mainactivity.chk == 0) {
-            GeoPoint in_pt = new GeoPoint(127.112140, 37.400741);
+
+            GeoPoint in_pt = new GeoPoint(logi, lati);
             GeoPoint tm_pt = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, in_pt);
             GeoPoint katec_pt = GeoTrans.convert(GeoTrans.TM, GeoTrans.KATEC, tm_pt);
 

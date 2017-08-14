@@ -44,7 +44,6 @@ public class m_main extends AppCompatActivity {
         text1.setBackgroundColor(Color.rgb(25,147,168));
         text2.setBackgroundColor(Color.rgb(25,147,168));
 
-        //adapter = new SpendAdapter();
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(Mainactivity.m2adapter);
         for (int i = 0; i < 2; i ++){
@@ -52,7 +51,7 @@ public class m_main extends AppCompatActivity {
         }
         Mainactivity.m2adapter.change(list);
         Mainactivity.m2adapter.notifyDataSetChanged();
-
+        fm = getFragmentManager();
         FragmentTransaction tr = fm.beginTransaction();
         tr.add(R.id.Linear,Frag,"repair");
         tr.commit();

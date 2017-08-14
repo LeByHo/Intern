@@ -184,7 +184,7 @@ public class StartActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = info.position;
-        String tem = adapter.listViewItemList.get(index).getText();
+        final String tem = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.select:
                 adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
@@ -227,7 +227,7 @@ public class StartActivity extends AppCompatActivity {
             case R.id.delete:
                 Query applesQuery = mDatebase.child("cinform").orderByChild("name").equalTo(tem);
                 Query informQuery = mDatebase.child("inform").orderByChild("name").equalTo(tem);
-                Query groupQuery = mDatebase.child("group").orderByChild("cname").equalTo(tem);
+                Query groupQuery = mDatebase.child("group");
                 applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -258,7 +258,8 @@ public class StartActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
-                            appleSnapshot.getRef().removeValue();
+                            String str = appleSnapshot.getRef().getKey();
+                            mDatebase.child("group").child(str).child("hashMap").child(tem).removeValue();
                         }
                     }
 

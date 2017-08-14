@@ -1,11 +1,9 @@
 package org.androidtown.handycar;
 
+import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by LEE on 2017-07-25.
@@ -51,11 +46,11 @@ public class maintenacne_fragment extends Fragment {
         labels.add("Oct");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
-        Iterator<String> iterator = SpendAdapter.tm2.keySet().iterator();
+        Iterator<String> iterator = Mainactivity.tm2.keySet().iterator();
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry((Integer) SpendAdapter.tm2.get(s),i));
+            group1.add(new BarEntry((Integer) Mainactivity.tm2.get(s),i));
             i++;
         }
 

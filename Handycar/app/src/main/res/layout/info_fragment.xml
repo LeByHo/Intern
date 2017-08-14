@@ -19,7 +19,7 @@
         android:text="전체보기"
         android:background="@drawable/btn_shape"
         android:id="@+id/all_day"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="120dp"
     />
     <Button
         android:layout_marginTop="5sp"

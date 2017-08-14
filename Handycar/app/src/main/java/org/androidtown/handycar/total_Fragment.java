@@ -45,19 +45,19 @@ public class total_Fragment extends Fragment { BarChart barChart;
         labels.add("Oct");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
-        Iterator<String> iterator = SpendAdapter.tm.keySet().iterator();
+        Iterator<String> iterator = Mainactivity.tm.keySet().iterator();
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry((Integer) SpendAdapter.tm.get(s),i));
+            group1.add(new BarEntry((Integer) Mainactivity.tm.get(s),i));
             i++;
         }
         ArrayList<BarEntry> group2 = new ArrayList<>();
-        Iterator<String> iterator2 = SpendAdapter.tm2.keySet().iterator();
+        Iterator<String> iterator2 = Mainactivity.tm2.keySet().iterator();
         i =0 ;
         while (iterator2.hasNext()) {
             String s = (String) iterator2.next();
-            group2.add(new BarEntry((Integer) SpendAdapter.tm2.get(s),i));
+            group2.add(new BarEntry((Integer) Mainactivity.tm2.get(s),i));
             i++;
         }
 

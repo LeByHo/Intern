@@ -45,11 +45,11 @@ public class fuel_Fragment extends Fragment{
         labels.add("Oct");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
-        Iterator<String> iterator = SpendAdapter.tm.keySet().iterator();
+        Iterator<String> iterator = Mainactivity.tm.keySet().iterator();
         int i =0 ;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry((Integer)SpendAdapter.tm.get(s),i));
+            group1.add(new BarEntry((Integer) Mainactivity.tm.get(s),i));
             i++;
         }
 
