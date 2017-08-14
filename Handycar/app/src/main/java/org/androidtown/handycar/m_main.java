@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Created by LEE on 2017-07-27.
@@ -34,7 +35,7 @@ public class m_main extends AppCompatActivity {
     Server server = new Server();
     //SpendAdapter adapter;
     ListView listview;
-
+    ArrayList<ListViewItem> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,12 @@ public class m_main extends AppCompatActivity {
 
         //adapter = new SpendAdapter();
         listview = (ListView) findViewById(R.id.listview);
-        listview.setAdapter(Mainactivity.madapter);
+        listview.setAdapter(Mainactivity.m2adapter);
+        for (int i = 0; i < 2; i ++){
+            list.add(Mainactivity.itemList1.get(i));
+        }
+        Mainactivity.m2adapter.change(list);
+        Mainactivity.m2adapter.notifyDataSetChanged();
         new Thread() {
             @Override
             public void run() {

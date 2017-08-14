@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.actions.ItemListIntents;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -34,11 +37,11 @@ import java.util.HashMap;
 
 public class f_main extends AppCompatActivity {
     FragmentManager fm;
-    Button btn1, btn2, btn4;
+    Button btn1, btn2, btn4 ;
     TextView text1, text2;
     f_price_fragment Frag;
-    f_Record_fragment Frag2;
-    Intent intent, gintent;
+
+    Intent intent;
     Server server = new Server();
     String str1, str2, str3, str4;
     public static HashMap<String, String> location = new HashMap<String, String>();
@@ -56,8 +59,13 @@ public class f_main extends AppCompatActivity {
         text2.setBackgroundColor(Color.rgb(25, 147, 168));
 
         listview = (ListView) findViewById(R.id.listview);
-        listview.setAdapter(Mainactivity.fadapter);
-
+        listview.setAdapter(Mainactivity.f2adapter);
+        ArrayList<ListViewItem> list = new ArrayList<>();
+        for (int i = 0; i < 2; i ++){
+            list.add(Mainactivity.itemList.get(i));
+        }
+        Mainactivity.f2adapter.change(list);
+        Mainactivity.f2adapter.notifyDataSetChanged();
         new Thread() {
             @Override
             public void run() {

@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * Created by LEE on 2017-07-25.
  */
 
-public class info_fragment2 extends Fragment implements Button.OnClickListener{
+public class info_fragment3 extends Fragment implements Button.OnClickListener{
     ArrayList<ListViewItem> list = new ArrayList<>();
     Button three, six, all;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.info_fragment2, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.info_fragment3, container, false);
         six = (Button)rootView.findViewById(R.id.six_month);
         three = (Button)rootView.findViewById(R.id.three_month);
         all = (Button)rootView.findViewById(R.id.all_day);
@@ -28,11 +28,11 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
         six.setOnClickListener(this);
         three.setOnClickListener(this);
         list.clear();
-        for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
-            list.add(Mainactivity.itemList1.get(i));
+        for (int i = 0; i < Mainactivity.itemList2.size(); i ++){
+            list.add(Mainactivity.itemList2.get(i));
         }
-        Mainactivity.madapter.change(list);
-        Mainactivity.madapter.notifyDataSetChanged();
+        Mainactivity.tadapter.change(list);
+        Mainactivity.tadapter.notifyDataSetChanged();
 
         return rootView;
     }
@@ -48,9 +48,9 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 six.setBackgroundColor(Color.rgb(255, 255, 255));
                 three.setBackgroundColor(Color.rgb(25, 147, 168));
                 temp = new String[3];
-                temp[0] = Mainactivity.itemList1.get(0).getText().substring(0,4);
-                temp[1] = Mainactivity.itemList1.get(0).getText().substring(5,7);
-                temp[2] = Mainactivity.itemList1.get(0).getText().substring(8);
+                temp[0] = Mainactivity.itemList2.get(0).getText().substring(0,4);
+                temp[1] = Mainactivity.itemList2.get(0).getText().substring(5,7);
+                temp[2] = Mainactivity.itemList2.get(0).getText().substring(8);
 
                 year = Integer.parseInt(temp[0]);
                 month = Integer.parseInt(temp[1]);
@@ -64,14 +64,14 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                     Temp = year+".0"+month+"."+temp[2];
                 else if(month>=10)
                     Temp = year+"."+month+"."+temp[2];
-                for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
-                    if(Temp.compareTo(Mainactivity.itemList1.get(i).getText())<1)
-                        list.add(Mainactivity.itemList1.get(i));
+                for (int i = 0; i < Mainactivity.itemList2.size(); i ++){
+                    if(Temp.compareTo(Mainactivity.itemList2.get(i).getText())<1)
+                        list.add(Mainactivity.itemList2.get(i));
                     else
                         break;
                 }
-                Mainactivity.madapter.change(list);
-                Mainactivity.madapter.notifyDataSetChanged();
+                Mainactivity.tadapter.change(list);
+                Mainactivity.tadapter.notifyDataSetChanged();
                 break ;
             case R.id.six_month :
                 list.clear();
@@ -79,9 +79,9 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
                 six.setBackgroundColor(Color.rgb(25, 147, 168));
                 temp = new String[3];
-                temp[0] = Mainactivity.itemList1.get(0).getText().substring(0,4);
-                temp[1] = Mainactivity.itemList1.get(0).getText().substring(5,7);
-                temp[2] = Mainactivity.itemList1.get(0).getText().substring(8);
+                temp[0] = Mainactivity.itemList2.get(0).getText().substring(0,4);
+                temp[1] = Mainactivity.itemList2.get(0).getText().substring(5,7);
+                temp[2] = Mainactivity.itemList2.get(0).getText().substring(8);
                 year = Integer.parseInt(temp[0]);
                 month = Integer.parseInt(temp[1]);
                 month = month -6;
@@ -94,25 +94,25 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                     Temp = year+".0"+month+"."+temp[2];
                 else if(month>=10)
                     Temp = year+"."+month+"."+temp[2];
-                for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
-                    if(Temp.compareTo(Mainactivity.itemList1.get(i).getText())<1)
-                        list.add(Mainactivity.itemList1.get(i));
+                for (int i = 0; i < Mainactivity.itemList2.size(); i ++){
+                    if(Temp.compareTo(Mainactivity.itemList2.get(i).getText())<1)
+                        list.add(Mainactivity.itemList2.get(i));
                     else
                         break;
                 }
-                Mainactivity.madapter.change(list);
-                Mainactivity.madapter.notifyDataSetChanged();
+                Mainactivity.tadapter.change(list);
+                Mainactivity.tadapter.notifyDataSetChanged();
                 break ;
             case R.id.all_day :
                 list.clear();
                 three.setBackgroundColor(Color.rgb(255, 255, 255));
                 six.setBackgroundColor(Color.rgb(255, 255, 255));
                 all.setBackgroundColor(Color.rgb(25, 147, 168));
-                for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
-                    list.add(Mainactivity.itemList1.get(i));
+                for (int i = 0; i < Mainactivity.itemList2.size(); i ++){
+                    list.add(Mainactivity.itemList2.get(i));
                 }
-                Mainactivity.madapter.change(list);
-                Mainactivity.madapter.notifyDataSetChanged();
+                Mainactivity.tadapter.change(list);
+                Mainactivity.tadapter.notifyDataSetChanged();
                 break ;
         }
     }

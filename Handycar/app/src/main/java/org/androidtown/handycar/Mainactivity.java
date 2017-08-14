@@ -36,10 +36,10 @@ public class Mainactivity extends AppCompatActivity {
     MainViewAdapter adapter;
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     public static String car;
-    public static SpendAdapter fadapter, madapter, tadapter;
-    ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
-    ArrayList<ListViewItem> itemList1 = new ArrayList<ListViewItem>();
-    ArrayList<ListViewItem> itemList2 = new ArrayList<ListViewItem>();
+    public static SpendAdapter fadapter, madapter, tadapter, f2adapter, m2adapter;
+   public static ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
+    public static ArrayList<ListViewItem> itemList1 = new ArrayList<ListViewItem>();
+    public static ArrayList<ListViewItem> itemList2 = new ArrayList<ListViewItem>();
     String Temp="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,13 +127,14 @@ public class Mainactivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 fadapter = new SpendAdapter(itemList);
+                f2adapter = new SpendAdapter(itemList);
                 madapter = new SpendAdapter(itemList1);
+                m2adapter = new SpendAdapter(itemList1);
                 tadapter = new SpendAdapter(itemList2);
                 Firebaseinfo fire = dataSnapshot.getValue(Firebaseinfo.class);
                 if(fire.getName().equals(car)) {
                     if (fire.getCate().equals("fuel")) {
                         fadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원",0);
-                        fadapter.addf(fire.getDate(), fire.getPrice());
                         tadapter.addItem(ContextCompat.getDrawable(Mainactivity.this, R.drawable.break_oil), fire.getDate(), fire.getPlace(), toNumFormat(Integer.parseInt(fire.getPrice())) + "원",0);
                     }
 

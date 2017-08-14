@@ -34,6 +34,7 @@ public class totalmain extends AppCompatActivity {
     m_Record_fragment Frag5;
     info_fragment Frag6;
     info_fragment2 Frag7;
+    info_fragment3 Frag8;
     FragmentManager fm;
     ScrollView scrollView;
     Button btn1, btn2, btn3, btn4, btn5, btn6;
@@ -82,12 +83,14 @@ public class totalmain extends AppCompatActivity {
         tr.add(R.id.fragment, Frag3, "total");
         tr.add(R.id.relativelayout2, Frag6, "info");
         tr.add(R.id.relativelayout2, Frag7, "info");
+        tr.add(R.id.relativelayout2, Frag8, "info");
         relativeLayout.setBackgroundColor(Color.rgb(246, 246, 246));
         if (flag == 1) {
             주유.setChecked(true);
             tr.hide(Frag2);
             tr.hide(Frag3);
             tr.hide(Frag7);
+            tr.hide(Frag8);
             tr.commit();
             listview.setAdapter(Mainactivity.fadapter);
             //listview.setAdapter(fadapter);
@@ -97,6 +100,7 @@ public class totalmain extends AppCompatActivity {
             tr.hide(Frag);
             tr.hide(Frag3);
             tr.hide(Frag6);
+            tr.hide(Frag8);
             tr.commit();
             listview.setAdapter(Mainactivity.madapter);
             //listview.setAdapter(madapter);
@@ -105,6 +109,8 @@ public class totalmain extends AppCompatActivity {
             통합.setChecked(true);
             tr.hide(Frag);
             tr.hide(Frag2);
+            tr.hide(Frag6);
+            tr.hide(Frag7);
             tr.commit();
             listview.setAdapter(Mainactivity.tadapter);
             //listview.setAdapter(tadapter);
@@ -121,6 +127,7 @@ public class totalmain extends AppCompatActivity {
                 tr.replace(R.id.relativelayout2, Frag6);
                 tr.show(Frag6);
                 tr.hide(Frag7);
+                tr.hide(Frag8);
                 tr.commit();
                 listview.setAdapter(Mainactivity.fadapter);
                 //listview.setAdapter(fadapter);
@@ -137,6 +144,7 @@ public class totalmain extends AppCompatActivity {
                 tr.replace(R.id.relativelayout2, Frag7);
                 tr.show(Frag7);
                 tr.hide(Frag6);
+                tr.hide(Frag8);
                 tr.commit();
                 listview.setAdapter(Mainactivity.madapter);
                // listview.setAdapter(madapter);
@@ -150,6 +158,9 @@ public class totalmain extends AppCompatActivity {
                 tr.show(Frag3);
                 tr.hide(Frag);
                 tr.hide(Frag2);
+                tr.show(Frag8);
+                tr.hide(Frag6);
+                tr.hide(Frag7);
                 tr.commit();
                 listview.setAdapter(Mainactivity.tadapter);
                // listview.setAdapter(tadapter);
@@ -168,8 +179,7 @@ public class totalmain extends AppCompatActivity {
     }
 
     void setup() {
-        btn1 = (Button) findViewById(R.id.btn);
-        btn2 = (Button) findViewById(R.id.btn2);
+
         btn3 = (Button) findViewById(R.id.button3);
         btn4 = (Button) findViewById(R.id.button4);
         btn5 = (Button) findViewById(R.id.button5);
@@ -180,6 +190,7 @@ public class totalmain extends AppCompatActivity {
         Frag3 = new total_Fragment();
         Frag6 = new info_fragment();
         Frag7 = new info_fragment2();
+        Frag8 = new info_fragment3();
         // scrollView = (ScrollView)findViewById(R.id.scroll);
         listview = (ListView) findViewById(R.id.listview);
         relativeLayout = (RelativeLayout) findViewById(R.id.mainlayout);
