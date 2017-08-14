@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="차량이름"
+            android:textColor="#0066FF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+        <EditText
+            android:id="@+id/dialog_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.5"
+            android:hint="input car number"
+            android:textSize="12sp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:text="차량종류"
+            android:textColor="#0066FF"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center"/>
+
+
+        <RadioGroup
+            android:id="@+id/dialog_rg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.5"
+            android:orientation="vertical">
+
+
+
+            <RadioButton
+                android:id="@+id/dialog_rb_korea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BMW"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/dialog_rb_canada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AUDI"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/dialog_rb_france"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BENZ"
+                android:textSize="12sp"/>
+
+
+
+            <RadioButton
+                android:id="@+id/dialog_rb_mexico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="K5"
+                android:textSize="12sp"/>
+
+
+
+            <RadioButton
+                android:id="@+id/dialog_rb_poland"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FERRARI"
+                android:textSize="12sp"/>
+
+
+            <RadioButton
+
+                android:id="@+id/dialog_rb_saudi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JENESIS"
+                android:textSize="12sp"/>
+
+
+
+        </RadioGroup>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="스코어"
+            android:textColor="#0066FF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+
+        <EditText
+
+            android:id="@+id/distance_driven"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.5"
+            android:hint="input car distance driven"
+            android:textSize="12sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>
