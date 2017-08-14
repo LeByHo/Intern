@@ -195,7 +195,14 @@ public class Group extends AppCompatActivity {
                     Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
                     if(ginfo.getGname().equals(str)){
                         Group_total.totalMap = ginfo.getHashMap();
+
                     }
+                    Groupinfo sinfo = dataSnapshot.getValue(Groupinfo.class);
+                    if(sinfo.getGname().equals(str)){
+                        Group_total.scoreMap= sinfo.getHashMap();
+
+                    }
+
                 }
 
                 @Override

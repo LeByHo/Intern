@@ -3,6 +3,7 @@ package org.androidtown.handycar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by LEE on 2017-08-01.
@@ -24,35 +26,27 @@ public class Group_fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.group_fragment,container,false);
         /*barChart = (BarChart)rootView.findViewById(R.id.chart);
-        barChart.zoom(2,1,50,50);
+        */
+
+         HorizontalBarChart barChart= (HorizontalBarChart)rootView.findViewById(R.id.chart);
+        barChart.zoom(3,1,50,50);
         barChart.setDescription("");
-        barChart.getAxisLeft(). setLabelCount(10,true);
+        barChart.getAxisLeft(). setLabelCount(10,false);
         barChart.getAxisRight().setDrawGridLines(false);
         barChart.getAxisRight().setDrawLabels(false);
-        barChart.getAxisRight().setDrawAxisLine(false);*/
-         HorizontalBarChart barChart= (HorizontalBarChart)rootView.findViewById(R.id.chart);
+        barChart.getAxisRight().setDrawAxisLine(false);
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4f, 0));
-        entries.add(new BarEntry(8f, 1));
-        entries.add(new BarEntry(6f, 2));
-        entries.add(new BarEntry(12f, 3));
-        entries.add(new BarEntry(18f, 4));
-        entries.add(new BarEntry(9f, 5));
+        ArrayList<String> labels = new ArrayList<String>();
 
+        int i =0 ;
+        for ( final String key : Group_total.totalMap.keySet() ) {
+            labels.add(key);
+            entries.add(new BarEntry(Group_total.totalMap.get(key),i));
+            i++;
+        }
         BarDataSet dataset = new BarDataSet(entries, "Score");
 
-      ArrayList<String> labels = new ArrayList<String>();
-        labels.add("January");
-        labels.add("February");
-        labels.add("March");
-        labels.add("April");
-        labels.add("May");
-        labels.add("June");
-        labels.add("May");
-        labels.add("June");
-        labels.add("May");
-        labels.add("June");
 /*
         ArrayList<BarEntry> group1 = new ArrayList<>();
         group1.add(new BarEntry(4f, 0));
@@ -101,7 +95,6 @@ public class Group_fragment extends Fragment{
         BarData data = new BarData(labels, dataset);
         // dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
         barChart.setData(data);
-        barChart.animateY(3000);
 
 
         return rootView;

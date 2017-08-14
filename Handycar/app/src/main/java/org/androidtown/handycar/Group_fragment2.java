@@ -3,11 +3,13 @@ package org.androidtown.handycar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -25,37 +27,26 @@ public class Group_fragment2 extends Fragment {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.group_fragment2,container,false);
       lineChart = (LineChart) rootView.findViewById(R.id.chart);
         // HorizontalBarChart barChart= (HorizontalBarChart) findViewById(R.id.chart);
-
+      lineChart.setDescription("");
         ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(4f, 0));
-        entries.add(new Entry(8f, 1));
-        entries.add(new Entry(6f, 2));
-        entries.add(new Entry(2f, 3));
-        entries.add(new Entry(18f, 4));
-        entries.add(new Entry(9f, 5));
-
+      ArrayList<String> labels = new ArrayList<String>();
+      int i =0 ;
+      for ( final String key : Group_total.scoreMap.keySet() ) {
+        labels.add(key);
+        entries.add(new BarEntry(Group_total.scoreMap.get(key),i));
+        i++;
+      }
 
         //BarDataSet dataset = new BarDataSet(entries, "# of Calls");*/
 
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("January");
-        labels.add("February");
-        labels.add("March");
-        labels.add("April");
-        labels.add("May");
-        labels.add("June");
-        labels.add("May");
-        labels.add("June");
-        labels.add("May");
-        labels.add("June");
-        LineDataSet lineDataSet = new LineDataSet(entries, "# of Ex-Rates");
+        LineDataSet lineDataSet = new LineDataSet(entries, "Driving Score");
         lineDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
 
         lineDataSet.setDrawCubic(true);
 
         lineDataSet.setDrawFilled(true); //선아래로 색상표시
 
-        lineDataSet.setDrawValues(false);
+        lineDataSet.setDrawValues(true);
         LineData lineData = new LineData(labels, lineDataSet);
 
         lineChart.setData(lineData); // set the data and list of lables into chart
