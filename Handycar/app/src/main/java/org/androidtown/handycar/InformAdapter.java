@@ -2,7 +2,6 @@ package org.androidtown.handycar;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by GE62 on 2017-07-27.
+ * Created by GE62 on 2017-08-14.
  */
 
-public class ListViewAdapter extends BaseAdapter {
+public class InformAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     public ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter(ArrayList<ListViewItem> itemList) {
+    public InformAdapter(ArrayList<ListViewItem> itemList) {
         if (itemList == null) {
             listViewItemList = new ArrayList<ListViewItem>();
         } else {
@@ -74,11 +73,12 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title) {
+    public void addItem(Drawable icon, String title, String cate, String price) {
         ListViewItem item = new ListViewItem();
         item.setIcon(icon);
         item.setText(title);
+        item.setPlace(cate);
+        item.setPrice(price);
         listViewItemList.add(item);
     }
 }
-

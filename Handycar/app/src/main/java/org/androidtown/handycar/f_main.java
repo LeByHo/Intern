@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.actions.ItemListIntents;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +26,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,19 +64,6 @@ public class f_main extends AppCompatActivity {
         }
         Mainactivity.f2adapter.change(list);
         Mainactivity.f2adapter.notifyDataSetChanged();
-        new Thread() {
-            @Override
-            public void run() {
-                HttpURLConnection con = server.getConnection("GET", "/info/" + Mainactivity.car + "/fuel");
-                System.out.println("Connection donee");
-                try {
-                    con.getResponseCode();
-                    infoarrayToobject(server.readJson(con));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
 
         if (Mainactivity.chk == 0) {
             GeoPoint in_pt = new GeoPoint(127.112140, 37.400741);
@@ -157,13 +142,6 @@ public class f_main extends AppCompatActivity {
             tr.commit();
         }
     };
-
-    private void infoarrayToobject(JSONArray jsonArray) throws JSONException {
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject order = jsonArray.getJSONObject(i);
-            //fadapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil), order.getString("date"), order.getString("place"), toNumFormat(Integer.parseInt(order.getString("price"))) + "원");
-        }
-    }
 
     public void setup() {
         Frag = new f_price_fragment();

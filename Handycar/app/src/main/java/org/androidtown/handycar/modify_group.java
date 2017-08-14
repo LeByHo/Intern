@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,11 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +33,8 @@ public class modify_group extends AppCompatActivity {
     ListView listview;
     CustomChoiceListViewAdapter adapter;
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
-
+    Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+    int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +58,7 @@ public class modify_group extends AppCompatActivity {
                     listViewItem = adapter.listViewItemList.get(i);
                     if(listview.isItemChecked(i)==true)
                         list.put(listViewItem.getText(),1);
-                    else
-                        list.put(listViewItem.getText(),0);
+
                 }
                 Query applesQuery1 =  mDatebase.child("group").orderByChild("gname").equalTo(gname);
                 final Groupinfo ginfo = new Groupinfo(gname,list);
@@ -72,7 +66,6 @@ public class modify_group extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                            //Log.d("zxcc","AA");
                             appleSnapshot.getRef().setValue(ginfo);
                         }
                     }
@@ -102,23 +95,52 @@ public class modify_group extends AppCompatActivity {
                 }
             }
         });
+        mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
+                listview.setItemChecked(i, false);
+                adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car), car1.getName());
+                ++i;
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         mDatebase.child("group").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+                hashMap.clear();
                 int i=0;
                 Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
                 if(ginfo.getGname().equals(gname)){
                     hashMap = ginfo.getHashMap();
                 }
                 for ( String key : hashMap.keySet() ) {
-                    Log.d("zxc","방법1) key : " + key +" / value : " + hashMap.get(key));
-                    if (hashMap.get(key) == 1)
-                        listview.setItemChecked(i, true);
-                    else
-                        listview.setItemChecked(i, false);
-                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car), key);
+                    Log.d("enf",key+"/"+i);
+                    for (int a = 0; a < adapter.getCount(); a++) {
+                        if (adapter.listViewItemList.get(a).getText().equals(key)) {
+                            Log.d("true",adapter.listViewItemList.get(a).getText()+"/"+i);
+                            listview.setItemChecked(a, true);
+                            break;
+                        }
+                    }
                     ++i;
                 }
                 adapter.notifyDataSetChanged();
@@ -144,7 +166,6 @@ public class modify_group extends AppCompatActivity {
             }
         });
     }
-
     public void setup() {
         b1 = (Button) findViewById(R.id.add);
         b2 = (Button) findViewById(R.id.selectAll);
