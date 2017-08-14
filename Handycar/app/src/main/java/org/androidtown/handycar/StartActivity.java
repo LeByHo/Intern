@@ -20,7 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -49,7 +52,7 @@ public class StartActivity extends AppCompatActivity {
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     ImageButton plus;
-    int cnt=0;
+    int cnt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +79,21 @@ public class StartActivity extends AppCompatActivity {
                 alert.setMessage("No Space, Special character!");
                 LayoutInflater inflater = getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.customdialog, null);
+                final EditText editname = (EditText) dialogView.findViewById(R.id.dialog_edit);
+                final EditText score = (EditText) dialogView.findViewById(R.id.distance_driven);
+                final RadioGroup rg = (RadioGroup)dialogView.findViewById(R.id.dialog_rg);
                 //alert.setView(name);
                 alert.setView(dialogView);
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String str = name.getText().toString();
+                        String str = editname.getText().toString();
+                        int id = rg.getCheckedRadioButtonId();
+                        Log.d("zxc",id+"");
+                        RadioButton rb = (RadioButton)dialogView.findViewById(id);
+                        //Toast.makeText(getApplication(),rb.getText().toString(),Toast.LENGTH_SHORT).show();
                         FirebaseCar car;
-                        int check=0;
-                        if(str.length()>0) {
+                        int check = 0;
+                        if (str.length() > 0) {
                             for (int a = 0; a < adapter.getCount(); a++) {
                                 if (adapter.listViewItemList.get(a).getText().equals(str))
                                     break;
@@ -92,12 +102,12 @@ public class StartActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        if(check==adapter.getCount()){
-                            if (adapter.getCount() == 0&&cnt==0) {
+                        if (check == adapter.getCount()) {
+                            if (adapter.getCount() == 0 && cnt == 0) {
                                 carname.setText(str);
-                                car = new FirebaseCar(str, 1,0);
+                                car = new FirebaseCar(str, 1, Integer.parseInt(score.getText().toString()));
                             } else {
-                                car = new FirebaseCar(str, 0,0);
+                                car = new FirebaseCar(str, 0, Integer.parseInt(score.getText().toString()));
                             }
                             mDatebase.child("cinform").push().setValue(car);
                         }
@@ -167,22 +177,24 @@ public class StartActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         super.onCreateContextMenu(menu, v, menuInfo);
     }
+
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = info.position;
-        String tem  = adapter.listViewItemList.get(index).getText();
+        String tem = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.select:
                 adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString());
-                Query applesQuery1 =  mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
-                final FirebaseCar car = new FirebaseCar(carname.getText().toString(),0,0);
+                Query applesQuery1 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
+                final FirebaseCar car = new FirebaseCar(carname.getText().toString(), 0, 0);
                 applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().setValue(car);
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());
@@ -190,16 +202,17 @@ public class StartActivity extends AppCompatActivity {
                 });
                 carname.setText(tem);
                 org.androidtown.handycar.Group.carchk++;
-                org.androidtown.handycar.Group.scar=tem;
-                Query applesQuery2 =  mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
-                final FirebaseCar car1 = new FirebaseCar(tem,1,0);
+                org.androidtown.handycar.Group.scar = tem;
+                Query applesQuery2 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
+                final FirebaseCar car1 = new FirebaseCar(tem, 1, 0);
                 applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().setValue(car1);
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());
@@ -215,10 +228,11 @@ public class StartActivity extends AppCompatActivity {
                 applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().removeValue();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());
@@ -227,10 +241,11 @@ public class StartActivity extends AppCompatActivity {
                 informQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().removeValue();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());
@@ -239,10 +254,11 @@ public class StartActivity extends AppCompatActivity {
                 groupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().removeValue();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());
@@ -259,7 +275,8 @@ public class StartActivity extends AppCompatActivity {
 class FirebaseCar {
     String name;
     int check = 0;
-    int score =0;
+    int score = 0;
+
     public FirebaseCar() {
     }
 
