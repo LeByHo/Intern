@@ -36,6 +36,10 @@ public class f_main extends AppCompatActivity {
     Button btn1, btn2, btn4 ;
     TextView text1, text2;
     f_price_fragment Frag;
+<<<<<<< HEAD
+=======
+    int f_count=0;
+>>>>>>> origin/master
     Intent intent;
     Server server = new Server();
     String str1, str2, str3, str4;
@@ -56,14 +60,20 @@ public class f_main extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(Mainactivity.f2adapter);
         ArrayList<ListViewItem> list = new ArrayList<>();
-        for (int i = 0; i < 2; i ++){
+        f_count=0;
+        for (int i = 0; i < Mainactivity.itemList.size(); i ++){
+            if(i>1)
+                break;
             list.add(Mainactivity.itemList.get(i));
+            f_count++;
         }
+        if(f_count==0)
+            Mainactivity.f2adapter.addItem(null,"기록이 없습니다",null,null,0);
+        else
         Mainactivity.f2adapter.change(list);
         Mainactivity.f2adapter.notifyDataSetChanged();
 
         if (Mainactivity.chk == 0) {
-
             GeoPoint in_pt = new GeoPoint(logi, lati);
             GeoPoint tm_pt = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, in_pt);
             GeoPoint katec_pt = GeoTrans.convert(GeoTrans.TM, GeoTrans.KATEC, tm_pt);

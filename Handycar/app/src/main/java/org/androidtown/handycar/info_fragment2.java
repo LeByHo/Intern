@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by LEE on 2017-07-25.
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 public class info_fragment2 extends Fragment implements Button.OnClickListener{
     ArrayList<ListViewItem> list = new ArrayList<>();
     Button three, six, all;
+    String setCurDate;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.info_fragment2, container, false);
         six = (Button)rootView.findViewById(R.id.six_month);
@@ -31,6 +34,9 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
         for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
             list.add(Mainactivity.itemList1.get(i));
         }
+        if(Mainactivity.itemList1.size()==0)
+            Mainactivity.madapter.addItem(null,"기록이 없습니다",null,null,0);
+        else
         Mainactivity.madapter.change(list);
         Mainactivity.madapter.notifyDataSetChanged();
 
@@ -40,18 +46,19 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
     public void onClick(View view) {
         String Temp = null;
         String[] temp;
-        int year = 0 ,month=0,day=0;
+        int year = 0 ,month=0,day=0,count =0;
         switch (view.getId()) {
             case R.id.three_month :
+                count = 0;
+                setDate();
                 list.clear();
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
                 six.setBackgroundColor(Color.rgb(255, 255, 255));
                 three.setBackgroundColor(Color.rgb(25, 147, 168));
                 temp = new String[3];
-                temp[0] = Mainactivity.itemList1.get(0).getText().substring(0,4);
-                temp[1] = Mainactivity.itemList1.get(0).getText().substring(5,7);
-                temp[2] = Mainactivity.itemList1.get(0).getText().substring(8);
-
+                temp[0] = setCurDate.substring(0,4);
+                temp[1] =  setCurDate.substring(5,7);
+                temp[2] = setCurDate.substring(8);
                 year = Integer.parseInt(temp[0]);
                 month = Integer.parseInt(temp[1]);
                 month = month -3;
@@ -65,23 +72,30 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 else if(month>=10)
                     Temp = year+"."+month+"."+temp[2];
                 for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
-                    if(Temp.compareTo(Mainactivity.itemList1.get(i).getText())<1)
+                    if(Temp.compareTo(Mainactivity.itemList1.get(i).getText())<1) {
                         list.add(Mainactivity.itemList1.get(i));
+                        count++;
+                    }
                     else
                         break;
                 }
-                Mainactivity.madapter.change(list);
+                if(count == 0)
+                    Mainactivity.madapter.addItem(null,"기록이 없습니다.",null,null,0);
+                else
+                    Mainactivity.madapter.change(list);
                 Mainactivity.madapter.notifyDataSetChanged();
                 break ;
             case R.id.six_month :
+                count=0;
+                setDate();
                 list.clear();
                 three.setBackgroundColor(Color.rgb(255, 255, 255));
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
                 six.setBackgroundColor(Color.rgb(25, 147, 168));
                 temp = new String[3];
-                temp[0] = Mainactivity.itemList1.get(0).getText().substring(0,4);
-                temp[1] = Mainactivity.itemList1.get(0).getText().substring(5,7);
-                temp[2] = Mainactivity.itemList1.get(0).getText().substring(8);
+                temp[0] = setCurDate.substring(0,4);
+                temp[1] =  setCurDate.substring(5,7);
+                temp[2] = setCurDate.substring(8);
                 year = Integer.parseInt(temp[0]);
                 month = Integer.parseInt(temp[1]);
                 month = month -6;
@@ -95,12 +109,17 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 else if(month>=10)
                     Temp = year+"."+month+"."+temp[2];
                 for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
-                    if(Temp.compareTo(Mainactivity.itemList1.get(i).getText())<1)
+                    if(Temp.compareTo(Mainactivity.itemList1.get(i).getText())<1) {
                         list.add(Mainactivity.itemList1.get(i));
+                        count++;
+                    }
                     else
                         break;
                 }
-                Mainactivity.madapter.change(list);
+                if(count == 0)
+                    Mainactivity.madapter.addItem(null,"기록이 없습니다.",null,null,0);
+                else
+                    Mainactivity.madapter.change(list);
                 Mainactivity.madapter.notifyDataSetChanged();
                 break ;
             case R.id.all_day :
@@ -115,5 +134,11 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 Mainactivity.madapter.notifyDataSetChanged();
                 break ;
         }
+    }
+    private void setDate() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat SettingFormat = new SimpleDateFormat("yyyy.MM.dd");
+        setCurDate = SettingFormat.format(date);
     }
 }

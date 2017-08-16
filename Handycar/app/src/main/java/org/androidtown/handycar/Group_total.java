@@ -26,7 +26,11 @@ public class Group_total extends AppCompatActivity {
     public static Map<String, Integer> scoreMap = new HashMap<String, Integer>();
     public static Map<String, Integer> totalMap = new HashMap<String, Integer>();
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+<<<<<<< HEAD
+      int cnt = 0;
+=======
     DatabaseReference fDatebase = FirebaseDatabase.getInstance().getReference();
+>>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class Group_total extends AppCompatActivity {
             }
         });
 
-        fDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
+        mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
