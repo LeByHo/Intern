@@ -11,20 +11,16 @@ import android.widget.LinearLayout;
  */
 
 public class CheckableLinearLayout extends LinearLayout implements Checkable {
-
     // 만약 CheckBox가 아닌 View를 추가한다면 아래의 변수 사용 가능.
     // private boolean mIsChecked ;
-
     public CheckableLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         // mIsChecked = false ;
     }
 
     @Override
     public boolean isChecked() {
         CheckBox cb = (CheckBox) findViewById(R.id.checkBox1);
-
         return cb.isChecked();
         // return mIsChecked ;
     }
@@ -32,7 +28,6 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     @Override
     public void toggle() {
         CheckBox cb = (CheckBox) findViewById(R.id.checkBox1);
-
         setChecked(cb.isChecked() ? false : true);
         // setChecked(mIsChecked ? false : true) ;
     }
@@ -40,11 +35,9 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     @Override
     public void setChecked(boolean checked) {
         CheckBox cb = (CheckBox) findViewById(R.id.checkBox1);
-
         if (cb.isChecked() != checked) {
             cb.setChecked(checked);
         }
-
         // CheckBox 가 아닌 View의 상태 변경.
     }
 }

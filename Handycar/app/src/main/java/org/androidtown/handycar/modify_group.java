@@ -18,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +36,7 @@ public class modify_group extends AppCompatActivity {
     ListView listview;
     CustomChoiceListViewAdapter adapter;
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
     Map<String, Integer> hashMap =  new HashMap<String, Integer>();
     int i=0;
     @Override
@@ -44,7 +48,7 @@ public class modify_group extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         gname = bundle.getString("name");
         t1.setText(gname);
-        adapter = new CustomChoiceListViewAdapter() ;
+        adapter = new CustomChoiceListViewAdapter(itemList) ;
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(adapter);
 
@@ -58,7 +62,6 @@ public class modify_group extends AppCompatActivity {
                     listViewItem = adapter.listViewItemList.get(i);
                     if(listview.isItemChecked(i)==true)
                         list.put(listViewItem.getText(),1);
-
                 }
                 Query applesQuery1 =  mDatebase.child("group").orderByChild("gname").equalTo(gname);
                 final Groupinfo ginfo = new Groupinfo(gname,list);
@@ -82,18 +85,10 @@ public class modify_group extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // if (check == 0) {
                     for (int i = 0; i < adapter.getCount(); i++) {
                         listview.setItemChecked(i, true);
                     }
-                   // check = 1;
-                } //else {
-                  //  for (int i = 0; i < adapter.getCount(); i++) {
-                    //    listview.setItemChecked(i, false);
-                   // }
-                   // check = 0;
-              //  }
-           // }
+                }
         });
         mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
             @Override
@@ -102,6 +97,14 @@ public class modify_group extends AppCompatActivity {
                 listview.setItemChecked(i, false);
                 adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car), car1.getName());
                 ++i;
+                Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
+                    @Override
+                    public int compare(ListViewItem item1, ListViewItem item2) {
+                        return (item1.getText().compareTo(item2.getText()));
+                    }
+                };
+                Collections.sort(itemList, noDesc);
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {

@@ -6,21 +6,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.androidtown.handycar.R.drawable.car1;
 
 /**
  * Created by GE62 on 2017-07-28.
@@ -34,7 +27,6 @@ public class Group_total extends AppCompatActivity {
     public static Map<String, Integer> totalMap = new HashMap<String, Integer>();
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference fDatebase = FirebaseDatabase.getInstance().getReference();
-    int cnt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +77,6 @@ public class Group_total extends AppCompatActivity {
                 for (final String key : scoreMap.keySet()) {
                     if (car1.getName().equals(key)) {
                         scoreMap.put(key, car1.getScore());
-                        Log.d("!@#$", key + " " + totalMap.get(key));
                     }
                 }
                 setUP();

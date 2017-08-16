@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 public class m_repair_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.repair_fragment, container, false);
-
-
         return rootView;
     }
 }

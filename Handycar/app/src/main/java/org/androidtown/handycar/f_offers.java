@@ -26,7 +26,6 @@ import java.util.Iterator;
 
 public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
     Button b1, b2;
-    Intent intent;
     String arr = "";
     String name[] = new String[10];
     Double pointX[] = new Double[10];

@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +53,13 @@ public class Carinfo extends AppCompatActivity {
                     if (hashMap.get(key) == 1)
                      adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.car), key);
                 }
+                Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
+                    @Override
+                    public int compare(ListViewItem item1, ListViewItem item2) {
+                        return (item1.getText().compareTo(item2.getText()));
+                    }
+                };
+                Collections.sort(itemList, noDesc);
                 adapter.notifyDataSetChanged();
             }
             @Override

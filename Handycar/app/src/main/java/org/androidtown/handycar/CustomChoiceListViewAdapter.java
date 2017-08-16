@@ -21,10 +21,13 @@ class CustomChoiceListViewAdapter extends BaseAdapter {
     public ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
     // ListViewAdapter의 생성자
-    public CustomChoiceListViewAdapter() {
-
+    public CustomChoiceListViewAdapter(ArrayList<ListViewItem> itemList) {
+        if (itemList == null) {
+            listViewItemList = new ArrayList<ListViewItem>();
+        } else {
+            listViewItemList = itemList;
+        }
     }
-
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
     public int getCount() {
@@ -76,7 +79,6 @@ class CustomChoiceListViewAdapter extends BaseAdapter {
         ListViewItem item = new ListViewItem();
         item.setIcon(icon);
         item.setText(text);
-       // item.setCheck(check);
         listViewItemList.add(item);
     }
 }
