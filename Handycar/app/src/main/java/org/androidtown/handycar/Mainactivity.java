@@ -1,8 +1,12 @@
 package org.androidtown.handycar;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yalantis.phoenix.PullToRefreshView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +59,6 @@ public class Mainactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
@@ -62,6 +69,20 @@ public class Mainactivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.graph));
+
+        showDialog(1);
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    removeDialog(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -98,6 +119,15 @@ public class Mainactivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        getinform();
+    }
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("정보를 가져오는 중...");
+        return dialog;
+    }
+    public void getinform(){
         itemList.clear();
         itemList1.clear();
         itemList2.clear();
@@ -185,7 +215,6 @@ public class Mainactivity extends AppCompatActivity {
             }
         });
     }
-
     public void addf(String date, String price) {
         String temp;
         temp = date.substring(0, 7);

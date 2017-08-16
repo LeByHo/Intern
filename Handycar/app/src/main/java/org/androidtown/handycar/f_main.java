@@ -1,10 +1,17 @@
 package org.androidtown.handycar;
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.json.JSONArray;
@@ -35,16 +43,18 @@ import java.util.HashMap;
 
 public class f_main extends AppCompatActivity {
     FragmentManager fm;
-    Button btn1, btn2, btn4 ;
+    Button btn1, btn2, btn4;
     TextView text1, text2;
     f_price_fragment Frag;
-    int f_count=0;
     Intent intent;
     Server server = new Server();
     String str1, str2, str3, str4;
     public static HashMap<String, String> location = new HashMap<String, String>();
     ListView listview;
-    public static double lati=37.400741,logi=127.112140;
+    Double latitude = 0.0;
+    Double longitude = 0.0;
+    public static double lati =37.439816, logi = 127.127789;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,20 +70,25 @@ public class f_main extends AppCompatActivity {
         listview.setAdapter(Mainactivity.f2adapter);
         ArrayList<ListViewItem> list = new ArrayList<>();
 
-        Log.d("AAA",Mainactivity.itemList.size()+"");
-        for (int i = 0; i < Mainactivity.itemList.size(); i ++){
-            if(i>1)
+        Log.d("AAA", Mainactivity.itemList.size() + "");
+        for (int i = 0; i < Mainactivity.itemList.size(); i++) {
+            if (i > 1)
                 break;
             list.add(Mainactivity.itemList.get(i));
         }
 
-        if(Mainactivity.itemList.size()==0)
-            Mainactivity.f2adapter.addItem(null,"기록이 없습니다",null,null,0);
+        if (Mainactivity.itemList.size() == 0)
+            Mainactivity.f2adapter.addItem(null, "기록이 없습니다", null, null, 0);
         else
             Mainactivity.f2adapter.change(list);
         Mainactivity.f2adapter.notifyDataSetChanged();
 
         if (Mainactivity.chk == 0) {
+            startLocationService();
+            if (latitude != 0.0 && longitude != 0.0) {
+                logi = longitude;
+                lati = latitude;
+            }
             GeoPoint in_pt = new GeoPoint(logi, lati);
             GeoPoint tm_pt = GeoTrans.convert(GeoTrans.GEO, GeoTrans.TM, in_pt);
             GeoPoint katec_pt = GeoTrans.convert(GeoTrans.TM, GeoTrans.KATEC, tm_pt);
@@ -81,7 +96,8 @@ public class f_main extends AppCompatActivity {
             str1 = "http://www.opinet.co.kr/api/avgAllPrice.do?out=json&code=F191170721";
             str2 = "http://www.opinet.co.kr/api/avgSidoPrice.do?out=json&prodcd=B027&sido=01&code=F191170721";
             str3 = "http://www.opinet.co.kr/api/avgRecentPrice.do?out=json&prodcd=B027&code=F191170721";
-            str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x=" + katec_pt.getX() + "&y=" + katec_pt.getY() + "&radius=500&sort=1&prodcd=B027&out=json";
+            str4 = "http://www.opinet.co.kr/api/aroundAll.do?code=F191170721&x=" + katec_pt.getX() + "&y=" + katec_pt.getY() + "&radius=1000&sort=1&prodcd=B027&out=json";
+            showDialog(1);
             new Thread() {
                 @Override
                 public void run() {
@@ -103,6 +119,7 @@ public class f_main extends AppCompatActivity {
                         JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
                         parseJSON(json3, 4);
                         handler.sendMessage(message);
+                        removeDialog(1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -204,5 +221,72 @@ public class f_main extends AppCompatActivity {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        ProgressDialog dialog = new ProgressDialog(this); // 사용자에게 보여줄 대화상자
+        //dialog.setTitle("작업중...");
+        dialog.setMessage("정보를 가져오는 중...");
+//        dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "취소",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                }
+//        );
+
+        return dialog;
+    }
+
+    private void startLocationService() {
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GPSListener gpsListener = new GPSListener();
+        long minTime = 10000;
+        float minDistance = 0;
+        try {
+            manager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    minTime,
+                    minDistance,
+                    gpsListener);
+            Location lastLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (lastLocation != null) {
+                latitude = lastLocation.getLatitude();
+                longitude = lastLocation.getLongitude();
+                Toast.makeText(getApplicationContext(), "Last Known Location : " + "Latitude : " + latitude + "\nLongitude:" + longitude, Toast.LENGTH_LONG).show();
+            }
+        } catch (SecurityException ex) {
+            ex.printStackTrace();
+        }
+        Toast.makeText(getApplicationContext(), "위치 확인이 시작되었습니다. 로그를 확인하세요." + "Latitude : " + latitude + "\nLongitude:" + longitude, Toast.LENGTH_SHORT).show();
+    }
+
+    private class GPSListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Double latitude = location.getLatitude();
+            Double longitude = location.getLongitude();
+            String msg = "Latitude : " + latitude + "\nLongitude:" + longitude;
+            Log.i("GPSListener", msg);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
     }
 }

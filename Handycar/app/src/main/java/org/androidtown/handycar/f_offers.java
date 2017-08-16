@@ -75,8 +75,8 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MarkerOptions makerOptions = new MarkerOptions();
-        LatLng place = new LatLng(37.400741, 127.112140);
-        makerOptions.position(new LatLng(37.400741, 127.112140));
+        LatLng place = new LatLng(f_main.lati, f_main.logi);
+        makerOptions.position(new LatLng(f_main.lati, f_main.logi));
         googleMap.addMarker(makerOptions);
         for (int idx = 0; idx < cnt; idx++) {
             // 1. 마커 옵션 설정 (만드는 과정)

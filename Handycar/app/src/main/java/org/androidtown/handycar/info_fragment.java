@@ -47,10 +47,10 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
     public void onClick(View view) {
         String Temp = null;
         String[] temp;
-        int month=0,day=0, count =0;
+        int month=0,day=0;
         switch (view.getId()) {
             case R.id.seven_day :
-                count = 0;
+
                 setDate();
                 list.clear();
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
@@ -69,14 +69,12 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 else if(month>=10)
                     Temp = temp[0]+"."+month+"."+temp[2];
                 for (int i = 0; i < Mainactivity.itemList.size(); i ++){
-                    if(Temp.compareTo(Mainactivity.itemList.get(i).getText())<1) {
+                    if(Temp.compareTo(Mainactivity.itemList.get(i).getText())<1)
                         list.add(Mainactivity.itemList.get(i));
-                        count ++;
-                    }
                     else
                         break;
                 }
-                if(count == 0){
+                if(list.size()== 0){
                     Mainactivity.fadapter.addItem(null,"기록이 없습니다.",null,null,0);
                 }
                 else
@@ -84,7 +82,6 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 Mainactivity.fadapter.notifyDataSetChanged();
                 break ;
             case R.id.three_day :
-                count = 0;
                 setDate();
                 list.clear();
                 Month.setBackgroundColor(Color.rgb(255, 255, 255));
@@ -111,15 +108,15 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 else if(month>=10 && day<10)
                     Temp = temp[0]+"."+month+".0"+day;
                 for (int i = 0; i < Mainactivity.itemList.size(); i ++){
-                    if(Temp.compareTo(Mainactivity.itemList.get(i).getText())<1) {
+                    if(Temp.compareTo(Mainactivity.itemList.get(i).getText())<1)
                         list.add(Mainactivity.itemList.get(i));
-                        count++;
-                    }
+
                     else
                         break;
                 }
-                if(count == 0)
+                if(list.size()== 0){
                     Mainactivity.fadapter.addItem(null,"기록이 없습니다.",null,null,0);
+                }
                 else
                     Mainactivity.fadapter.change(list);
                 Mainactivity.fadapter.notifyDataSetChanged();
@@ -132,6 +129,10 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 for (int i = 0; i < Mainactivity.itemList.size(); i ++){
                     list.add(Mainactivity.itemList.get(i));
                 }
+                if(list.size()== 0){
+                    Mainactivity.fadapter.addItem(null,"기록이 없습니다.",null,null,0);
+                }
+                else
                 Mainactivity.fadapter.change(list);
                 Mainactivity.fadapter.notifyDataSetChanged();
                 break ;

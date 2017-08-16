@@ -34,7 +34,6 @@ public class m_main extends AppCompatActivity {
     Intent intent;
     ListView listview;
     ArrayList<ListViewItem> list = new ArrayList<>();
-    int m_count =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +52,8 @@ public class m_main extends AppCompatActivity {
             if(i>1)
                 break;
             list.add(Mainactivity.itemList1.get(i));
-            m_count++;
         }
-        if(m_count==0)
+        if(Mainactivity.itemList1.size()==0)
             Mainactivity.m2adapter.addItem(null,"기록이없습니다",null,null,0);
         else
             Mainactivity.m2adapter.change(list);
