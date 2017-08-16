@@ -200,7 +200,6 @@ public class Group extends AppCompatActivity {
                     Groupinfo sinfo = dataSnapshot.getValue(Groupinfo.class);
                     if(sinfo.getGname().equals(str)){
                         Group_total.scoreMap= sinfo.getHashMap();
-
                     }
 
                 }

@@ -24,11 +24,11 @@ import java.util.ArrayList;
 public class Group_fragment2 extends Fragment {
     LineChart lineChart;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.group_fragment2,container,false);
+      ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.group_fragment2,container,false);
       lineChart = (LineChart) rootView.findViewById(R.id.chart);
-        // HorizontalBarChart barChart= (HorizontalBarChart) findViewById(R.id.chart);
+      // HorizontalBarChart barChart= (HorizontalBarChart) findViewById(R.id.chart);
       lineChart.setDescription("");
-        ArrayList<Entry> entries = new ArrayList<>();
+      ArrayList<Entry> entries = new ArrayList<>();
       ArrayList<String> labels = new ArrayList<String>();
       int i =0 ;
       for ( final String key : Group_total.scoreMap.keySet() ) {
@@ -37,12 +37,10 @@ public class Group_fragment2 extends Fragment {
         i++;
       }
 
-        //BarDataSet dataset = new BarDataSet(entries, "# of Calls");*/
-
         LineDataSet lineDataSet = new LineDataSet(entries, "Driving Score");
-        lineDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        lineDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        lineDataSet.setDrawCubic(true);
+        lineDataSet.setDrawCubic(false);
 
         lineDataSet.setDrawFilled(true); //선아래로 색상표시
 
