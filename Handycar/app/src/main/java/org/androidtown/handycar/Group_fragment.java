@@ -32,7 +32,8 @@ public class Group_fragment extends Fragment {
         */
 
         HorizontalBarChart barChart = (HorizontalBarChart) rootView.findViewById(R.id.chart);
-        barChart.zoom(3, 1, 50, 50);
+        //barChart.zoom(3, 1, 50, 50);
+        barChart.zoomOut();
         barChart.setDescription("");
         barChart.getAxisLeft().setLabelCount(10, false);
         barChart.getAxisRight().setDrawGridLines(false);
@@ -45,6 +46,7 @@ public class Group_fragment extends Fragment {
 
         TreeMap<String, Integer> treeMapReverse = new TreeMap<String, Integer>(Collections.reverseOrder());
         treeMapReverse.putAll(Group_total.totalMap);
+
         Iterator<String> treeMapReverseIter = treeMapReverse.keySet().iterator();
         int i = 0;
         while (treeMapReverseIter.hasNext()) {

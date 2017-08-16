@@ -41,7 +41,7 @@ public class Group_fragment2 extends Fragment {
       while( treeMapIter.hasNext()) {
         String key = treeMapIter.next();
         labels.add(key);
-        entries.add(new BarEntry(treeMap.get( key )-1,i));
+        entries.add(new BarEntry(treeMap.get( key ),i));
         i++;
       }
 

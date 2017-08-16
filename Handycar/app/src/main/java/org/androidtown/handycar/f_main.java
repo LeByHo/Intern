@@ -36,7 +36,6 @@ public class f_main extends AppCompatActivity {
     Button btn1, btn2, btn4 ;
     TextView text1, text2;
     f_price_fragment Frag;
-
     Intent intent;
     Server server = new Server();
     String str1, str2, str3, str4;
