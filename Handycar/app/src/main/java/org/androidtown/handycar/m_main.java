@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -47,6 +48,7 @@ public class m_main extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(Mainactivity.m2adapter);
+        Log.d("AAA",Mainactivity.itemList1.size()+"");
         for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
             if(i>1)
                 break;

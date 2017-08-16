@@ -28,7 +28,6 @@ public class Group_fragment2 extends Fragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
     ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.group_fragment2,container,false);
     lineChart = (LineChart) rootView.findViewById(R.id.chart);
-    // HorizontalBarChart barChart= (HorizontalBarChart) findViewById(R.id.chart);
     lineChart.setDescription("");
     ArrayList<Entry> entries = new ArrayList<>();
     ArrayList<String> labels = new ArrayList<String>();

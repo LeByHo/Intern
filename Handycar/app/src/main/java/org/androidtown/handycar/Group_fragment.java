@@ -24,11 +24,8 @@ import java.util.TreeMap;
  */
 
 public class Group_fragment extends Fragment{
-    BarChart barChart;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.group_fragment,container,false);
-        /*barChart = (BarChart)rootView.findViewById(R.id.chart);
-        */
 
         BarChart barChart= (BarChart)rootView.findViewById(R.id.chart);
         barChart.zoom(1,1,40,40);
@@ -54,7 +51,6 @@ public class Group_fragment extends Fragment{
 
         BarData data = new BarData(labels, dataset);
         barChart.setData(data);
-
 
         return rootView;
     }

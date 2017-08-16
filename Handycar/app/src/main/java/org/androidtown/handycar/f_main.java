@@ -59,14 +59,15 @@ public class f_main extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(Mainactivity.f2adapter);
         ArrayList<ListViewItem> list = new ArrayList<>();
-        f_count=0;
+
+        Log.d("AAA",Mainactivity.itemList.size()+"");
         for (int i = 0; i < Mainactivity.itemList.size(); i ++){
             if(i>1)
                 break;
             list.add(Mainactivity.itemList.get(i));
-            f_count++;
         }
-        if(f_count==0)
+
+        if(Mainactivity.itemList.size()==0)
             Mainactivity.f2adapter.addItem(null,"기록이 없습니다",null,null,0);
         else
             Mainactivity.f2adapter.change(list);
@@ -88,22 +89,18 @@ public class f_main extends AppCompatActivity {
                         Message message = handler.obtainMessage();
                         InputStream in = new BufferedInputStream(server.getConnectionurl(str1).getInputStream());
                         JSONObject json = new JSONObject(getStringFromInputStream(in));
-                        Log.d("ASD", json + "");
                         parseJSON(json, 1);
 
                         InputStream in1 = new BufferedInputStream(server.getConnectionurl(str2).getInputStream());
                         JSONObject json1 = new JSONObject(getStringFromInputStream(in1));
-                        Log.d("ASD2", json1 + "");
                         parseJSON(json1, 2);
 
                         InputStream in2 = new BufferedInputStream(server.getConnectionurl(str3).getInputStream());
                         JSONObject json2 = new JSONObject(getStringFromInputStream(in2));
-                        Log.d("ASD2", json2 + "");
                         parseJSON(json2, 3);
 
                         InputStream in3 = new BufferedInputStream(server.getConnectionurl(str4).getInputStream());
                         JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
-                        Log.d("ASD3", json3 + "");
                         parseJSON(json3, 4);
                         handler.sendMessage(message);
                     } catch (Exception e) {

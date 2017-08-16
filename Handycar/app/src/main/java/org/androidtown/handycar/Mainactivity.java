@@ -46,7 +46,7 @@ public class Mainactivity extends AppCompatActivity {
     public static TreeMap tm;
     public static Map<String, Integer> hashMap2 = new HashMap<String, Integer>();
     public static TreeMap tm2;
-
+    public static String cate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +108,7 @@ public class Mainactivity extends AppCompatActivity {
                 FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
                 if (car1.getCheck() == 1) {
                     car = car1.getName();
+                    cate = car1.getCate();
                 }
             }
 

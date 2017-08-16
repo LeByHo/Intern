@@ -54,7 +54,7 @@ public class maintenacne_fragment extends Fragment {
             i++;
         }
 
-        final BarDataSet barDataSet1 = new BarDataSet(group1, "아우디");
+        final BarDataSet barDataSet1 = new BarDataSet(group1, Mainactivity.cate);
         barDataSet1.setColor(Color.rgb(032, 178, 170));
         barDataSet1.setDrawValues(true);
 
