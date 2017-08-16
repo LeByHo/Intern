@@ -10,12 +10,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,22 +86,18 @@ public class f_main extends AppCompatActivity {
                         Message message = handler.obtainMessage();
                         InputStream in = new BufferedInputStream(server.getConnectionurl(str1).getInputStream());
                         JSONObject json = new JSONObject(getStringFromInputStream(in));
-                        Log.d("ASD", json + "");
                         parseJSON(json, 1);
 
                         InputStream in1 = new BufferedInputStream(server.getConnectionurl(str2).getInputStream());
                         JSONObject json1 = new JSONObject(getStringFromInputStream(in1));
-                        Log.d("ASD2", json1 + "");
                         parseJSON(json1, 2);
 
                         InputStream in2 = new BufferedInputStream(server.getConnectionurl(str3).getInputStream());
                         JSONObject json2 = new JSONObject(getStringFromInputStream(in2));
-                        Log.d("ASD2", json2 + "");
                         parseJSON(json2, 3);
 
                         InputStream in3 = new BufferedInputStream(server.getConnectionurl(str4).getInputStream());
                         JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
-                        Log.d("ASD3", json3 + "");
                         parseJSON(json3, 4);
                         handler.sendMessage(message);
                     } catch (Exception e) {

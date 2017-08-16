@@ -11,6 +11,7 @@ public class Firebaseinfo {
     String date;
     String price;
     public Firebaseinfo() { }
+
     public Firebaseinfo(String name, String cate, String place, String date, String price) {
         this.name = name;
         this.cate = cate;

@@ -23,6 +23,4 @@ public class MainListItem {
     public String getText() {
         return this.text ;
     }
-
-
 }

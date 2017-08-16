@@ -16,6 +16,9 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.TreeMap;
 
 /**
  * Created by LEE on 2017-08-01.
@@ -30,10 +33,15 @@ public class Group_fragment2 extends Fragment {
       lineChart.setDescription("");
       ArrayList<Entry> entries = new ArrayList<>();
       ArrayList<String> labels = new ArrayList<String>();
+
+
+      TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>( Group_total.scoreMap);
+      Iterator<String> treeMapIter = treeMap.keySet().iterator();
       int i =0 ;
-      for ( final String key : Group_total.scoreMap.keySet() ) {
+      while( treeMapIter.hasNext()) {
+        String key = treeMapIter.next();
         labels.add(key);
-        entries.add(new BarEntry(Group_total.scoreMap.get(key),i));
+        entries.add(new BarEntry(treeMap.get( key )-1,i));
         i++;
       }
 
@@ -47,7 +55,7 @@ public class Group_fragment2 extends Fragment {
         lineDataSet.setDrawValues(true);
         LineData lineData = new LineData(labels, lineDataSet);
 
-        lineChart.setData(lineData); // set the data and list of lables into chart
+        lineChart.setData(lineData);
 
         return rootView;
     }
