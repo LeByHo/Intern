@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,11 +27,7 @@ public class Group_total extends AppCompatActivity {
     public static Map<String, Integer> scoreMap = new HashMap<String, Integer>();
     public static Map<String, Integer> totalMap = new HashMap<String, Integer>();
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
-<<<<<<< HEAD
-      int cnt = 0;
-=======
     DatabaseReference fDatebase = FirebaseDatabase.getInstance().getReference();
->>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +71,7 @@ public class Group_total extends AppCompatActivity {
             }
         });
 
-        mDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
+        fDatebase.child("cinform").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);

@@ -38,7 +38,7 @@ public class info_fragment3 extends Fragment implements Button.OnClickListener{
         if(Mainactivity.itemList2.size()==0)
             Mainactivity.tadapter.addItem(null,"기록이 없습니다",null,null,0);
         else
-        Mainactivity.tadapter.change(list);
+            Mainactivity.tadapter.change(list);
         Mainactivity.tadapter.notifyDataSetChanged();
 
         return rootView;
@@ -82,7 +82,7 @@ public class info_fragment3 extends Fragment implements Button.OnClickListener{
                 if(count==0)
                     Mainactivity.tadapter.addItem(null,"기록이 없습니다.",null,null,0);
                 else
-                Mainactivity.tadapter.change(list);
+                    Mainactivity.tadapter.change(list);
                 Mainactivity.tadapter.notifyDataSetChanged();
                 break ;
             case R.id.six_month :
@@ -116,9 +116,9 @@ public class info_fragment3 extends Fragment implements Button.OnClickListener{
                         break;
                 }
                 if(count==0)
-                Mainactivity.tadapter.addItem(null,"기록이 없습니다.",null,null,0);
-            else
-                Mainactivity.tadapter.change(list);
+                    Mainactivity.tadapter.addItem(null,"기록이 없습니다.",null,null,0);
+                else
+                    Mainactivity.tadapter.change(list);
                 Mainactivity.tadapter.notifyDataSetChanged();
                 break ;
             case R.id.all_day :

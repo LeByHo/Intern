@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 public class info_fragment extends Fragment  implements Button.OnClickListener {
     Button seven, Month, all;
-   ArrayList<ListViewItem> list = new ArrayList<>();
+    ArrayList<ListViewItem> list = new ArrayList<>();
     String setCurDate;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.info_fragment, container, false);
@@ -37,7 +38,7 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
         if(Mainactivity.itemList.size()==0)
             Mainactivity.fadapter.addItem(null,"기록이 없습니다",null,null,0);
         else
-        Mainactivity.fadapter.change(list);
+            Mainactivity.fadapter.change(list);
         Mainactivity.fadapter.notifyDataSetChanged();
         return rootView;
     }

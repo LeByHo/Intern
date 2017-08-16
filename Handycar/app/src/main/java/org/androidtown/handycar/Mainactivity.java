@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.text.DecimalFormat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

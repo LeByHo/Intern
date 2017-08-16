@@ -37,7 +37,7 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
         if(Mainactivity.itemList1.size()==0)
             Mainactivity.madapter.addItem(null,"기록이 없습니다",null,null,0);
         else
-        Mainactivity.madapter.change(list);
+            Mainactivity.madapter.change(list);
         Mainactivity.madapter.notifyDataSetChanged();
 
         return rootView;

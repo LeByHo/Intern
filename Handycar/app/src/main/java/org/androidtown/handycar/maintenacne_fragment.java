@@ -65,6 +65,8 @@ public class maintenacne_fragment extends Fragment {
         // dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
         barChart.setData(data);
         barChart.animateY(1000);
+
         return rootView;
     }
+
 }

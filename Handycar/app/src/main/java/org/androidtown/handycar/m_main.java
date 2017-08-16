@@ -56,7 +56,7 @@ public class m_main extends AppCompatActivity {
         if(m_count==0)
             Mainactivity.m2adapter.addItem(null,"기록이없습니다",null,null,0);
         else
-        Mainactivity.m2adapter.change(list);
+            Mainactivity.m2adapter.change(list);
         Mainactivity.m2adapter.notifyDataSetChanged();
         fm = getFragmentManager();
         FragmentTransaction tr = fm.beginTransaction();
@@ -75,7 +75,7 @@ public class m_main extends AppCompatActivity {
     public void setup(){
         Frag= new m_repair_fragment();
         btn1 = (Button)findViewById(R.id.button1);
-            btn1.setBackgroundColor(Color.rgb(25,147,168));
+        btn1.setBackgroundColor(Color.rgb(25,147,168));
         btn2 = (Button)findViewById(R.id.button2);
         btn3 =(Button)findViewById(R.id.button3);
         btn4 = (Button)findViewById(R.id.button4);
