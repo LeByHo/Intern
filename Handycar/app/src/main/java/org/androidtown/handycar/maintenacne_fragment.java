@@ -44,6 +44,8 @@ public class maintenacne_fragment extends Fragment {
         labels.add("Aug");
         labels.add("Sep");
         labels.add("Oct");
+        labels.add("Nov");
+        labels.add("Dec");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
         Iterator<String> iterator = Mainactivity.tm2.keySet().iterator();
@@ -62,7 +64,6 @@ public class maintenacne_fragment extends Fragment {
         dataset.add(barDataSet1);
 
         BarData data = new BarData(labels, dataset);
-        // dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
         barChart.setData(data);
         barChart.animateY(1000);
 

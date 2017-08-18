@@ -14,14 +14,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
 
 public class totalmain extends AppCompatActivity {
     RelativeLayout relativeLayout;
@@ -39,8 +31,6 @@ public class totalmain extends AppCompatActivity {
     int flag = 1;
     int b6 = 0;
     Bundle bundle = new Bundle();
-
-
     ListView listview;
 
     @Override
@@ -172,6 +162,5 @@ public class totalmain extends AppCompatActivity {
         주유 = (RadioButton) findViewById(R.id.주유);
         정비 = (RadioButton) findViewById(R.id.정비);
         통합 = (RadioButton) findViewById(R.id.통합);
-
     }
 }

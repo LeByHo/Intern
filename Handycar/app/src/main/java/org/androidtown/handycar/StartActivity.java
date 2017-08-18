@@ -73,7 +73,6 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(StartActivity.this);
-                final EditText name = new EditText(StartActivity.this);
                 alert.setTitle("Input your Car name");
                 alert.setMessage("No Space, Special character!");
                 LayoutInflater inflater = getLayoutInflater();
@@ -81,7 +80,6 @@ public class StartActivity extends AppCompatActivity {
                 final EditText editname = (EditText) dialogView.findViewById(R.id.dialog_edit);
                 final EditText score = (EditText) dialogView.findViewById(R.id.distance_driven);
                 final RadioGroup rg = (RadioGroup)dialogView.findViewById(R.id.dialog_rg);
-                //alert.setView(name);
                 alert.setView(dialogView);
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -261,7 +259,6 @@ public class StartActivity extends AppCompatActivity {
                             mDatebase.child("group").child(str).child("hashMap").child(tem).removeValue();
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());

@@ -59,7 +59,6 @@ public class SpendAdapter extends BaseAdapter {
         textTextView1.setText(listViewItem.getPlace());
         textTextView2.setText(listViewItem.getPrice());
 
-
         return convertView;
     }
 

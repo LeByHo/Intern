@@ -31,7 +31,6 @@ import java.util.Map;
 public class modify_group extends AppCompatActivity {
     Button b1, b2;
     TextView t1;
-    int check = 0;
     String gname;
     ListView listview;
     CustomChoiceListViewAdapter adapter;
@@ -60,8 +59,11 @@ public class modify_group extends AppCompatActivity {
                 ListViewItem listViewItem;
                 for (int i = 0; i < adapter.getCount(); i++) {
                     listViewItem = adapter.listViewItemList.get(i);
-                    if(listview.isItemChecked(i)==true)
-                        list.put(listViewItem.getText(),1);
+                    Log.d("check2",listViewItem.getText());
+                    if (listview.isItemChecked(i) == true) {
+                        list.put(listViewItem.getText(), 1);
+                        Log.d("check3",listViewItem.getText());
+                    }
                 }
                 Query applesQuery1 =  mDatebase.child("group").orderByChild("gname").equalTo(gname);
                 final Groupinfo ginfo = new Groupinfo(gname,list);
@@ -94,6 +96,7 @@ public class modify_group extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
+                Log.d("check0",car1.getName());
                 listview.setItemChecked(i, false);
                 adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car), car1.getName());
                 ++i;
@@ -130,19 +133,18 @@ public class modify_group extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 hashMap.clear();
-                int i=0;
                 Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
                 if(ginfo.getGname().equals(gname)){
                     hashMap = ginfo.getHashMap();
                 }
                 for ( String key : hashMap.keySet() ) {
+                    Log.d("check2",key);
                     for (int a = 0; a < adapter.getCount(); a++) {
                         if (adapter.listViewItemList.get(a).getText().equals(key)) {
                             listview.setItemChecked(a, true);
                             break;
                         }
                     }
-                    ++i;
                 }
                 adapter.notifyDataSetChanged();
             }

@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,8 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +31,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,7 +46,6 @@ public class f_main extends AppCompatActivity {
     TextView text1, text2;
     f_price_fragment Frag;
     Intent intent;
-    Server server = new Server();
     String str1, str2, str3, str4;
     public static HashMap<String, String> location = new HashMap<String, String>();
     ListView listview;
@@ -103,20 +101,21 @@ public class f_main extends AppCompatActivity {
                 public void run() {
                     try {
                         Message message = handler.obtainMessage();
-                        InputStream in = new BufferedInputStream(server.getConnectionurl(str1).getInputStream());
+                        InputStream in = new BufferedInputStream(getConnectionurl(str1).getInputStream());
                         JSONObject json = new JSONObject(getStringFromInputStream(in));
                         parseJSON(json, 1);
 
-                        InputStream in1 = new BufferedInputStream(server.getConnectionurl(str2).getInputStream());
+                        InputStream in1 = new BufferedInputStream(getConnectionurl(str2).getInputStream());
                         JSONObject json1 = new JSONObject(getStringFromInputStream(in1));
                         parseJSON(json1, 2);
 
-                        InputStream in2 = new BufferedInputStream(server.getConnectionurl(str3).getInputStream());
+                        InputStream in2 = new BufferedInputStream(getConnectionurl(str3).getInputStream());
                         JSONObject json2 = new JSONObject(getStringFromInputStream(in2));
                         parseJSON(json2, 3);
 
-                        InputStream in3 = new BufferedInputStream(server.getConnectionurl(str4).getInputStream());
+                        InputStream in3 = new BufferedInputStream(getConnectionurl(str4).getInputStream());
                         JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
+                        Log.d("QWE",json3+"");
                         parseJSON(json3, 4);
                         handler.sendMessage(message);
                         removeDialog(1);
@@ -129,6 +128,7 @@ public class f_main extends AppCompatActivity {
         } else {
             Message message = handler.obtainMessage();
             handler.sendMessage(message);
+
         }
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +160,7 @@ public class f_main extends AppCompatActivity {
             bundle.putString("csum", ctem);
             Frag.setArguments(bundle);
             tr.add(R.id.Linear, Frag, "repair");
-            tr.commit();
+            tr.commit();  Mainactivity.chk = 0;
         }
     };
 
@@ -174,6 +174,16 @@ public class f_main extends AppCompatActivity {
         text2 = (TextView) findViewById(R.id.text2);
     }
 
+    public HttpURLConnection getConnectionurl(String str) {
+        try {
+            URL url = new URL(str);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            return con;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private void parseJSON(JSONObject json, int num) throws JSONException {
         arrayToobject(json.getJSONObject("RESULT").getJSONArray("OIL"), num);
     }
@@ -182,9 +192,7 @@ public class f_main extends AppCompatActivity {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
             if (num == 4) {
-                location.put(order.getString("OS_NM"), order.getInt("GIS_X_COOR") + " " + order.getInt("GIS_Y_COOR"));
-                f_offers.dis[f_offers.cnut] = order.getDouble("DISTANCE");
-                f_offers.pri[f_offers.cnut] = order.getInt("PRICE");
+                location.put(order.getString("OS_NM"), order.getDouble("GIS_X_COOR")+" "+order.getDouble("GIS_Y_COOR")+" "+order.getDouble("DISTANCE")+" "+order.getInt("PRICE"));
                 f_offers.csum += order.getInt("PRICE");
                 f_offers.cnut++;
             } else {
@@ -225,18 +233,8 @@ public class f_main extends AppCompatActivity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        ProgressDialog dialog = new ProgressDialog(this); // 사용자에게 보여줄 대화상자
-        //dialog.setTitle("작업중...");
-        dialog.setMessage("정보를 가져오는 중...");
-//        dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "취소",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                }
-//        );
-
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("위치 정보를 가져오는 중...");
         return dialog;
     }
 
@@ -255,23 +253,18 @@ public class f_main extends AppCompatActivity {
             if (lastLocation != null) {
                 latitude = lastLocation.getLatitude();
                 longitude = lastLocation.getLongitude();
-                Toast.makeText(getApplicationContext(), "Last Known Location : " + "Latitude : " + latitude + "\nLongitude:" + longitude, Toast.LENGTH_LONG).show();
             }
         } catch (SecurityException ex) {
             ex.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "위치 확인이 시작되었습니다. 로그를 확인하세요." + "Latitude : " + latitude + "\nLongitude:" + longitude, Toast.LENGTH_SHORT).show();
     }
 
     private class GPSListener implements LocationListener {
 
         @Override
         public void onLocationChanged(Location location) {
-            Double latitude = location.getLatitude();
-            Double longitude = location.getLongitude();
-            String msg = "Latitude : " + latitude + "\nLongitude:" + longitude;
-            Log.i("GPSListener", msg);
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
         }
 
         @Override

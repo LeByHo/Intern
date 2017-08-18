@@ -14,12 +14,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**

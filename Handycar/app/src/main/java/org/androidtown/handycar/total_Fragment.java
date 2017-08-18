@@ -31,7 +31,6 @@ public class total_Fragment extends Fragment { BarChart barChart;
         barChart.getAxisRight().setDrawLabels(false);
         barChart.getAxisRight().setDrawAxisLine(false);
 
-
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("Jan");
         labels.add("Feb");
@@ -43,6 +42,8 @@ public class total_Fragment extends Fragment { BarChart barChart;
         labels.add("Aug");
         labels.add("Sep");
         labels.add("Oct");
+        labels.add("Nov");
+        labels.add("Dec");
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
         Iterator<String> iterator = Mainactivity.tm.keySet().iterator();
@@ -64,7 +65,6 @@ public class total_Fragment extends Fragment { BarChart barChart;
         final BarDataSet barDataSet1 = new BarDataSet(group1, "주유");
         barDataSet1.setColor(Color.rgb(032, 178, 170));
         barDataSet1.setDrawValues(true);
-        //barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
 
         BarDataSet barDataSet2 = new BarDataSet(group2, "정비");
         barDataSet2.setColor(Color.rgb(0, 51, 102));

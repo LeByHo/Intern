@@ -56,11 +56,12 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
             name[cnt] = s;
             String key = f_main.location.get(s);
             String str[] = key.split(" ");
-
-            GeoPoint katec_pt = new GeoPoint(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
+            GeoPoint katec_pt = new GeoPoint(Double.parseDouble(str[0]), Double.parseDouble(str[1]));
             GeoPoint out_pt = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, katec_pt);
             pointX[cnt] = out_pt.getY();
             pointY[cnt] = out_pt.getX();
+            dis[cnt] = Double.parseDouble(str[2]);
+            pri[cnt] = Integer.parseInt(str[3]);
             cnt++;
             arr += s + "\n";
         }
@@ -81,10 +82,10 @@ public class f_offers extends AppCompatActivity implements OnMapReadyCallback {
         for (int idx = 0; idx < cnt; idx++) {
             // 1. 마커 옵션 설정 (만드는 과정)
             makerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-            makerOptions // LatLng에 대한 어레이를 만들어서 이용할 수도 있다.
+            makerOptions
                     .position(new LatLng(pointX[idx], pointY[idx]))
                     .title(name[idx]) // 타이틀.
-                    .snippet(dis[cnt - idx - 1] + "m" + " / " + pri[cnt - idx - 1] + "원");
+                    .snippet(dis[idx] + "m" + " / " + pri[idx] + "원");
             // 2. 마커 생성 (마커를 나타냄)
             googleMap.addMarker(makerOptions);
         }
