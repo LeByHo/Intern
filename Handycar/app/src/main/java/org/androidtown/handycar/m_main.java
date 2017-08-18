@@ -36,8 +36,8 @@ public class m_main extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
-        text1.setBackgroundColor(Color.rgb(25,147,168));
-        text2.setBackgroundColor(Color.rgb(25,147,168));
+        text1.setBackgroundColor(Color.rgb(30, 154, 207));
+        text2.setBackgroundColor(Color.rgb(30, 154, 207));
 
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(Mainactivity.m2adapter);
@@ -69,7 +69,7 @@ public class m_main extends AppCompatActivity {
     public void setup(){
         Frag= new m_repair_fragment();
         btn1 = (Button)findViewById(R.id.button1);
-        btn1.setBackgroundColor(Color.rgb(25,147,168));
+        btn1.setBackgroundColor(Color.rgb(30, 154, 207));
         btn2 = (Button)findViewById(R.id.button2);
         btn3 =(Button)findViewById(R.id.button3);
         btn4 = (Button)findViewById(R.id.button4);

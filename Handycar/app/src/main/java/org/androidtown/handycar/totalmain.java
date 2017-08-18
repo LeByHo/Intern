@@ -149,7 +149,7 @@ public class totalmain extends AppCompatActivity {
         btn4 = (Button) findViewById(R.id.button4);
         btn5 = (Button) findViewById(R.id.button5);
         btn6 = (Button) findViewById(R.id.button6);
-        btn6.setBackgroundColor(Color.rgb(25, 147, 168));
+        btn6.setBackgroundColor(Color.rgb(30, 154, 207));
         Frag = new fuel_Fragment();
         Frag2 = new maintenacne_fragment();
         Frag3 = new total_Fragment();

@@ -105,7 +105,7 @@ public class Group extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
-                adapter.addItem(ContextCompat.getDrawable(Group.this, R.drawable.car), ginfo.getGname());
+                adapter.addItem(ContextCompat.getDrawable(Group.this, R.drawable.groupcar), ginfo.getGname());
                 adapter.notifyDataSetChanged();
             }
 
@@ -131,7 +131,7 @@ public class Group extends AppCompatActivity {
     public void setup() {
         b1 = (Button)findViewById(R.id.car_management);
         b2 = (Button)findViewById(R.id.group);
-        b2.setBackgroundColor(Color.rgb(25,147,168));
+        b2.setBackgroundColor(Color.rgb(30, 154, 207));
         i1 = (ImageButton) findViewById(R.id.imageButton);
     }
 

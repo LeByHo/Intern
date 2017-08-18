@@ -12,10 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="4dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="27dp"
         android:layout_marginStart="27dp"
         android:layout_alignParentTop="true"
@@ -26,7 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:layout_marginRight="62dp"
         android:layout_marginEnd="27dp"
         android:layout_alignBaseline="@+id/textView"
@@ -38,7 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:layout_below="@+id/textView"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
@@ -49,16 +52,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textSize="25sp"
         android:layout_alignTop="@+id/textView3"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView5"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView2"
+
+        android:layout_marginLeft="23dp"
         android:layout_alignStart="@+id/textView"
         android:text="전국 평균" />
 
@@ -67,6 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="서울 평균"
+        android:layout_marginLeft="23dp"
+        android:textStyle="bold"
         android:layout_above="@+id/textView2"
         android:layout_alignStart="@+id/textView2" />
 
@@ -74,6 +83,8 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         android:layout_above="@+id/textView4"
         android:layout_alignStart="@+id/textView3"
         android:text="최근 1주 평균" />
@@ -82,6 +93,8 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         android:layout_above="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
         android:text="반경 주유소 평균" />

@@ -55,7 +55,9 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 list.clear();
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
                 seven.setBackgroundColor(Color.rgb(255, 255, 255));
-                Month.setBackgroundColor(Color.rgb(25, 147, 168));
+                Month.setBackgroundColor(Color.rgb(30, 154, 207));
+                all.setBackgroundResource(R.drawable.btn_shape);
+                seven.setBackgroundResource(R.drawable.btn_shape);
                 temp = new String[3];
                 temp[0] = setCurDate.substring(0,4);
                 temp[1] =  setCurDate.substring(5,7);
@@ -86,7 +88,9 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 list.clear();
                 Month.setBackgroundColor(Color.rgb(255, 255, 255));
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
-                seven.setBackgroundColor(Color.rgb(25, 147, 168));
+                all.setBackgroundResource(R.drawable.btn_shape);
+                Month.setBackgroundResource(R.drawable.btn_shape);
+                seven.setBackgroundColor(Color.rgb(30, 154, 207));
                 temp = new String[3];
                 temp[0] = setCurDate.substring(0,4);
                 temp[1] =  setCurDate.substring(5,7);
@@ -125,7 +129,9 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
                 list.clear();
                 Month.setBackgroundColor(Color.rgb(255, 255, 255));
                 seven.setBackgroundColor(Color.rgb(255, 255, 255));
-                all.setBackgroundColor(Color.rgb(25, 147, 168));
+                Month.setBackgroundResource(R.drawable.btn_shape);
+                seven.setBackgroundResource(R.drawable.btn_shape);
+                all.setBackgroundColor(Color.rgb(30, 154, 207));
                 for (int i = 0; i < Mainactivity.itemList.size(); i ++){
                     list.add(Mainactivity.itemList.get(i));
                 }

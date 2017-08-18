@@ -1,12 +1,15 @@
 package org.androidtown.handycar;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +32,7 @@ import java.util.Map;
  */
 
 public class modify_group extends AppCompatActivity {
-    Button b1, b2;
+    ImageButton b1, b2;
     TextView t1;
     String gname;
     ListView listview;
@@ -42,6 +45,9 @@ public class modify_group extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modifygroup);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -98,7 +104,7 @@ public class modify_group extends AppCompatActivity {
                 FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
                 Log.d("check0",car1.getName());
                 listview.setItemChecked(i, false);
-                adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car), car1.getName());
+                adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.groupcar), car1.getName());
                 ++i;
                 Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
                     @Override
@@ -170,8 +176,8 @@ public class modify_group extends AppCompatActivity {
         });
     }
     public void setup() {
-        b1 = (Button) findViewById(R.id.add);
-        b2 = (Button) findViewById(R.id.selectAll);
+        b1 = (ImageButton) findViewById(R.id.add);
+        b2 = (ImageButton) findViewById(R.id.selectAll);
         t1 = (TextView)findViewById(R.id.textView);
     }
 }

@@ -130,7 +130,7 @@ public class StartActivity extends AppCompatActivity {
                     ++cnt;
                 }
                 if (fire.getCheck() == 0) {
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.groupcar), fire.getName(),fire.getCate(),fire.getScore()+"");
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -156,7 +156,7 @@ public class StartActivity extends AppCompatActivity {
 
     public void setup() {
         management = (Button) findViewById(R.id.car_management);
-        management.setBackgroundColor(Color.rgb(25, 147, 168));
+        management.setBackgroundColor(Color.rgb(30, 154, 207));
         distance = (TextView) findViewById(R.id.distance_driven);
         point = (TextView) findViewById(R.id.my_point);
         carimg = (ImageView) findViewById(R.id.carkind);
@@ -184,7 +184,7 @@ public class StartActivity extends AppCompatActivity {
         final String tem = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.select:
-                adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+                adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.groupcar), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
                 Query applesQuery1 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
                 final FirebaseCar car = new FirebaseCar(carname.getText().toString(), 0, distance.getText().toString(),Integer.parseInt(point.getText().toString()));
                 applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {

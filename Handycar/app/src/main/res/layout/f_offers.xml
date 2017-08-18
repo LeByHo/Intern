@@ -4,17 +4,20 @@
     android:layout_height="match_parent">
     <Button
         android:layout_width="190dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:text="Report"
-        android:textSize="8sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
         android:id="@+id/button1"
         android:layout_alignParentTop="true"
         android:background="@drawable/btn_shape"/>
     <Button
         android:layout_width="190dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:text="Offers"
-        android:textSize="8sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+      android:textColor="#fff"
         android:id="@+id/button2"
         android:background="@drawable/btn_shape"
         android:layout_toRightOf="@+id/button1"/>

@@ -5,39 +5,49 @@
 
     <Button
         android:layout_width="190dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:text="Report"
-        android:textSize="8sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#FFF"
         android:id="@+id/button1"
         android:layout_alignParentTop="true"
         android:background="@drawable/btn_shape"/>
     <Button
         android:layout_width="190dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:text="Offers"
-        android:textSize="8sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+
         android:id="@+id/button2"
         android:background="@drawable/btn_shape"
         android:layout_toRightOf="@+id/button1"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:id="@+id/text"
         android:text="information"
+       android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:textStyle="bold"
+        android:textColor="#FFF"
         android:gravity="center"
         android:textSize="20sp"
-        android:layout_marginTop="28dp"
         android:layout_below="@+id/button1"
         android:background="@drawable/btn_shape"/>
+
     <LinearLayout
         android:background="@drawable/btn_shape"
         android:id="@+id/Linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_width="320dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/text"
         android:orientation="vertical">
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,27 +55,35 @@
         android:id="@+id/relativeLayout">
         <TextView
             android:id="@+id/text2"
-            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_width="320dp"
+            android:layout_marginLeft="25dp"
             android:layout_height="wrap_content"
             android:text="Recent"
+            android:textStyle="bold"
+            android:textColor="#FFF"
             android:gravity="center"
             android:textSize="20sp"
             android:background="@drawable/btn_shape"/>
         <Button
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="15sp"
             android:background="@drawable/btn_shape"
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:text="detail"
-            android:layout_marginLeft="280dp"/>
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="250dp"/>
 
     </RelativeLayout>
 
     <ListView
         android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="320dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/btn_shape"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout" />
 
 

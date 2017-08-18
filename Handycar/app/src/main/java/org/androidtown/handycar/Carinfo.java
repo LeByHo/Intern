@@ -1,8 +1,10 @@
 package org.androidtown.handycar;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
@@ -33,6 +35,9 @@ public class Carinfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         gname = bundle.getString("name");
@@ -51,7 +56,7 @@ public class Carinfo extends AppCompatActivity {
                 }
                 for ( String key : hashMap.keySet() ) {
                     if (hashMap.get(key) == 1)
-                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.car), key);
+                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.groupcar), key);
                 }
                 Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
                     @Override

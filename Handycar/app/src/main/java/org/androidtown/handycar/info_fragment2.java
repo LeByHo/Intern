@@ -53,7 +53,9 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 list.clear();
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
                 six.setBackgroundColor(Color.rgb(255, 255, 255));
-                three.setBackgroundColor(Color.rgb(25, 147, 168));
+                all.setBackgroundResource(R.drawable.btn_shape);
+                six.setBackgroundResource(R.drawable.btn_shape);
+                three.setBackgroundColor(Color.rgb(30, 154, 207));
                 temp = new String[3];
                 temp[0] = setCurDate.substring(0,4);
                 temp[1] =  setCurDate.substring(5,7);
@@ -89,7 +91,9 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 list.clear();
                 three.setBackgroundColor(Color.rgb(255, 255, 255));
                 all.setBackgroundColor(Color.rgb(255, 255, 255));
-                six.setBackgroundColor(Color.rgb(25, 147, 168));
+                all.setBackgroundResource(R.drawable.btn_shape);
+                three.setBackgroundResource(R.drawable.btn_shape);
+                six.setBackgroundColor(Color.rgb(30, 154, 207));
                 temp = new String[3];
                 temp[0] = setCurDate.substring(0,4);
                 temp[1] =  setCurDate.substring(5,7);
@@ -124,7 +128,9 @@ public class info_fragment2 extends Fragment implements Button.OnClickListener{
                 list.clear();
                 three.setBackgroundColor(Color.rgb(255, 255, 255));
                 six.setBackgroundColor(Color.rgb(255, 255, 255));
-                all.setBackgroundColor(Color.rgb(25, 147, 168));
+                six.setBackgroundResource(R.drawable.btn_shape);
+                three.setBackgroundResource(R.drawable.btn_shape);
+                all.setBackgroundColor(Color.rgb(30, 154, 207));
                 for (int i = 0; i < Mainactivity.itemList1.size(); i ++){
                     list.add(Mainactivity.itemList1.get(i));
                 }

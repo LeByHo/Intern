@@ -61,14 +61,15 @@ public class f_main extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
-        text1.setBackgroundColor(Color.rgb(25, 147, 168));
-        text2.setBackgroundColor(Color.rgb(25, 147, 168));
+        text1.setBackgroundColor(Color.rgb(30, 154, 207));
+        text2.setBackgroundColor(Color.rgb(30, 154, 207));
 
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(Mainactivity.f2adapter);
         ArrayList<ListViewItem> list = new ArrayList<>();
 
-        Log.d("AAA", Mainactivity.itemList.size() + "");
+       if(f_offers.sum>0)
+           f_offers.sum=0.0;
         for (int i = 0; i < Mainactivity.itemList.size(); i++) {
             if (i > 1)
                 break;
@@ -115,7 +116,6 @@ public class f_main extends AppCompatActivity {
 
                         InputStream in3 = new BufferedInputStream(getConnectionurl(str4).getInputStream());
                         JSONObject json3 = new JSONObject(getStringFromInputStream(in3));
-                        Log.d("QWE",json3+"");
                         parseJSON(json3, 4);
                         handler.sendMessage(message);
                         removeDialog(1);
@@ -124,7 +124,6 @@ public class f_main extends AppCompatActivity {
                     }
                 }
             }.start();
-            Mainactivity.chk++;
         } else {
             Message message = handler.obtainMessage();
             handler.sendMessage(message);
@@ -160,14 +159,14 @@ public class f_main extends AppCompatActivity {
             bundle.putString("csum", ctem);
             Frag.setArguments(bundle);
             tr.add(R.id.Linear, Frag, "repair");
-            tr.commit();  Mainactivity.chk = 0;
+            tr.commit();
         }
     };
 
     public void setup() {
         Frag = new f_price_fragment();
         btn1 = (Button) findViewById(R.id.button1);
-        btn1.setBackgroundColor(Color.rgb(25, 147, 168));
+        btn1.setBackgroundColor(Color.rgb(30, 154, 207));
         btn2 = (Button) findViewById(R.id.button2);
         btn4 = (Button) findViewById(R.id.button4);
         text1 = (TextView) findViewById(R.id.text);

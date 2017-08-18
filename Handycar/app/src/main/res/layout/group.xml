@@ -2,6 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#1E9ACF"
+        android:text="그룹지출"
+        android:textColor="#fff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
     <LinearLayout
         android:background="@drawable/btn_shape"
         android:id="@+id/Linear"
@@ -9,6 +18,15 @@
         android:layout_height="253dp"
         android:orientation="vertical">
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#1E9ACF"
+        android:text="Driving Score"
+        android:textColor="#fff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
     <LinearLayout
         android:background="@drawable/btn_shape"
         android:id="@+id/Linear2"
