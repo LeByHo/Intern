@@ -50,7 +50,6 @@ public class info_fragment extends Fragment  implements Button.OnClickListener {
         int month=0,day=0;
         switch (view.getId()) {
             case R.id.seven_day :
-
                 setDate();
                 list.clear();
                 all.setBackgroundColor(Color.rgb(255, 255, 255));

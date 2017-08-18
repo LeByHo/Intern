@@ -79,16 +79,6 @@
                 android:textSize="12sp"/>
 
 
-
-            <RadioButton
-                android:id="@+id/dialog_rb_mexico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="K5"
-                android:textSize="12sp"/>
-
-
-
             <RadioButton
                 android:id="@+id/dialog_rb_poland"
                 android:layout_width="wrap_content"

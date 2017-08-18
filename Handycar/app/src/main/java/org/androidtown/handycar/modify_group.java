@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,10 +64,8 @@ public class modify_group extends AppCompatActivity {
                 ListViewItem listViewItem;
                 for (int i = 0; i < adapter.getCount(); i++) {
                     listViewItem = adapter.listViewItemList.get(i);
-                    Log.d("check2",listViewItem.getText());
                     if (listview.isItemChecked(i) == true) {
                         list.put(listViewItem.getText(), 1);
-                        Log.d("check3",listViewItem.getText());
                     }
                 }
                 Query applesQuery1 =  mDatebase.child("group").orderByChild("gname").equalTo(gname);
@@ -102,9 +99,17 @@ public class modify_group extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseCar car1 = dataSnapshot.getValue(FirebaseCar.class);
-                Log.d("check0",car1.getName());
                 listview.setItemChecked(i, false);
-                adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.groupcar), car1.getName());
+                if(car1.getCate().equals("BMW"))
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.bmw), car1.getName());
+                if(car1.getCate().equals("AUDI"))
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.audi), car1.getName());
+                if(car1.getCate().equals("BENZ"))
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.benz), car1.getName());
+                if(car1.getCate().equals("FERRARI"))
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.ferrari), car1.getName());
+                if(car1.getCate().equals("JENESIS"))
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.jenesis), car1.getName());
                 ++i;
                 Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
                     @Override

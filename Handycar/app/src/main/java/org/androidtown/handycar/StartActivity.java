@@ -127,10 +127,20 @@ public class StartActivity extends AppCompatActivity {
                     carname.setText(fire.getName());
                     distance.setText(fire.getCate());
                     point.setText(fire.getScore()+"");
+                    insertitem(fire.getCate());
                     ++cnt;
                 }
                 if (fire.getCheck() == 0) {
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.groupcar), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    if(fire.getCate().equals("BMW"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.bmw), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    if(fire.getCate().equals("AUDI"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.audi), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    if(fire.getCate().equals("BENZ"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.benz), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    if(fire.getCate().equals("FERRARI"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.ferrari), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    if(fire.getCate().equals("JENESIS"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.jenesis), fire.getName(),fire.getCate(),fire.getScore()+"");
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -152,6 +162,18 @@ public class StartActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void insertitem(String str){
+            if(str.equals("BMW"))
+                carimg.setImageResource(R.drawable.bmw);
+            if(str.equals("AUDI"))
+                carimg.setImageResource(R.drawable.audi);
+            if(str.equals("BENZ"))
+                carimg.setImageResource(R.drawable.benz);
+            if(str.equals("FERRARI"))
+                carimg.setImageResource(R.drawable.ferrari);
+            if(str.equals("JENESIS"))
+                carimg.setImageResource(R.drawable.jenesis);
     }
 
     public void setup() {
@@ -184,7 +206,17 @@ public class StartActivity extends AppCompatActivity {
         final String tem = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.select:
-                adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.groupcar), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+                if(distance.getText().toString().equals("BMW"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.bmw), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+                if(distance.getText().toString().equals("AUDI"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.audi), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+                if(distance.getText().toString().equals("BENZ"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.benz), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+                if(distance.getText().toString().equals("FERRARI"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.ferrari), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+                if(distance.getText().toString().equals("JENESIS"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.jenesis), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
+
                 Query applesQuery1 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
                 final FirebaseCar car = new FirebaseCar(carname.getText().toString(), 0, distance.getText().toString(),Integer.parseInt(point.getText().toString()));
                 applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,6 +235,7 @@ public class StartActivity extends AppCompatActivity {
                 carname.setText(tem);
                 distance.setText(adapter.listViewItemList.get(index).getPlace());
                 point.setText(adapter.listViewItemList.get(index).getPrice());
+                insertitem(adapter.listViewItemList.get(index).getPlace());
                 Query applesQuery2 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
                 final FirebaseCar car1 = new FirebaseCar(tem, 1,adapter.listViewItemList.get(index).getPlace(),Integer.parseInt(adapter.listViewItemList.get(index).getPrice()));
                 applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
