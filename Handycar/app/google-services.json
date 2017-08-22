@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "51453844849",
+    //"firebase_url": "https://myapplication-ba1ed.firebaseio.com",
     "firebase_url": "https://handycar-c8cf9.firebaseio.com",
     "project_id": "handycar-c8cf9",
     "storage_bucket": "handycar-c8cf9.appspot.com"
@@ -29,6 +30,7 @@
       ],
       "api_key": [
         {
+          //"current_key": "AIzaSyBktOkcjWZq-_uOG-F35mwrdZZ6m8KXg1c"
           "current_key": "AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E"
         }
       ],

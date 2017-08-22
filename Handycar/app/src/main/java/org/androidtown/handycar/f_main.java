@@ -51,7 +51,7 @@ public class f_main extends AppCompatActivity {
     ListView listview;
     Double latitude = 0.0;
     Double longitude = 0.0;
-    public static double lati =37.439816, logi = 127.127789;
+    public static double lati =37.400622, logi = 127.112162;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +68,8 @@ public class f_main extends AppCompatActivity {
         listview.setAdapter(Mainactivity.f2adapter);
         ArrayList<ListViewItem> list = new ArrayList<>();
 
-       if(f_offers.sum>0)
-           f_offers.sum=0.0;
+        if(f_offers.sum>0)
+            f_offers.sum=0.0;
         for (int i = 0; i < Mainactivity.itemList.size(); i++) {
             if (i > 1)
                 break;
