@@ -20,14 +20,15 @@ import java.util.Iterator;
  * Created by LEE on 2017-07-25.
  */
 
-public class fuel_Fragment extends Fragment{
+public class fuel_Fragment extends Fragment {
     BarChart barChart;
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fuel_fragment,container,false);
-        barChart = (BarChart)rootView.findViewById(R.id.chart);
-        barChart.zoom(2,1,50,50);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fuel_fragment, container, false);
+        barChart = (BarChart) rootView.findViewById(R.id.chart);
+        barChart.zoom(2, 1, 50, 50);
         barChart.setDescription("");
-        barChart.getAxisLeft(). setLabelCount(10,false);
+        barChart.getAxisLeft().setLabelCount(10, false);
         barChart.getAxisRight().setDrawGridLines(false);
         barChart.getAxisRight().setDrawLabels(false);
         barChart.getAxisRight().setDrawAxisLine(false);
@@ -48,10 +49,10 @@ public class fuel_Fragment extends Fragment{
 
         ArrayList<BarEntry> group1 = new ArrayList<>();
         Iterator<String> iterator = Mainactivity.tm.keySet().iterator();
-        int i =0 ;
+        int i = 0;
         while (iterator.hasNext()) {
             String s = (String) iterator.next();
-            group1.add(new BarEntry((Integer) Mainactivity.tm.get(s),i));
+            group1.add(new BarEntry((Integer) Mainactivity.tm.get(s), i));
             i++;
         }
 

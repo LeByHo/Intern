@@ -57,11 +57,8 @@
             android:background="@android:color/transparent"
             android:padding="0sp"
             android:scaleType="centerCrop"
-<<<<<<< HEAD
+
             />
-=======
-             />
->>>>>>> origin/master
 
         <TextView
             android:id="@+id/distance_driven"

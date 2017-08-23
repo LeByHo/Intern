@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -63,7 +62,6 @@ public class Carinfo extends AppCompatActivity {
                             FirebaseCar fire = dataSnapshot.getValue(FirebaseCar.class);
                             if (fire.getName().equals(key)) {
                                 if (fire.getCate().equals("BMW")) {
-                                    Log.d("ASDASD","Qwe");
                                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.bmw), key);
                                 }
                                 if (fire.getCate().equals("AUDI"))

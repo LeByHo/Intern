@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -51,7 +50,7 @@ public class f_main extends AppCompatActivity {
     ListView listview;
     Double latitude = 0.0;
     Double longitude = 0.0;
-    public static double lati =37.400622, logi = 127.112162;
+    public static double lati = 37.400622, logi = 127.112162;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +67,8 @@ public class f_main extends AppCompatActivity {
         listview.setAdapter(Mainactivity.f2adapter);
         ArrayList<ListViewItem> list = new ArrayList<>();
 
-        if(f_offers.sum>0)
-            f_offers.sum=0.0;
+        if (f_offers.sum > 0)
+            f_offers.sum = 0.0;
         for (int i = 0; i < Mainactivity.itemList.size(); i++) {
             if (i > 1)
                 break;
@@ -191,7 +190,7 @@ public class f_main extends AppCompatActivity {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
             if (num == 4) {
-                location.put(order.getString("OS_NM"), order.getDouble("GIS_X_COOR")+" "+order.getDouble("GIS_Y_COOR")+" "+order.getDouble("DISTANCE")+" "+order.getInt("PRICE"));
+                location.put(order.getString("OS_NM"), order.getDouble("GIS_X_COOR") + " " + order.getDouble("GIS_Y_COOR") + " " + order.getDouble("DISTANCE") + " " + order.getInt("PRICE"));
                 f_offers.csum += order.getInt("PRICE");
                 f_offers.cnut++;
             } else {
@@ -234,6 +233,7 @@ public class f_main extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage("위치 정보를 가져오는 중...");
+        dialog.setCancelable(false);
         return dialog;
     }
 

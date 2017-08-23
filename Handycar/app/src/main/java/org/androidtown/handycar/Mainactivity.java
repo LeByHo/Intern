@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -63,7 +65,6 @@ public class Mainactivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.graph));
-
         showDialog(1);
         new Thread() {
             @Override
@@ -119,6 +120,7 @@ public class Mainactivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage("정보를 가져오는 중...");
+        dialog.setCancelable(false);
         return dialog;
     }
     public void getinform(){

@@ -40,10 +40,10 @@ public class Group extends AppCompatActivity {
     ListViewAdapter adapter;
     ListView listview;
     ImageButton i1;
-    Button b1,b2;
+    Button b1, b2;
     DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
-    Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+    Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
 
     @Override
@@ -72,8 +72,8 @@ public class Group extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = name.getText().toString();
                         Groupinfo ginfo;
-                        int check=0;
-                        if(str.length()>0) {
+                        int check = 0;
+                        if (str.length() > 0) {
                             for (int a = 0; a < adapter.getCount(); a++) {
                                 if (adapter.listViewItemList.get(a).getText().equals(str))
                                     break;
@@ -82,8 +82,8 @@ public class Group extends AppCompatActivity {
                                 }
                             }
                         }
-                        if(check==adapter.getCount()){
-                            ginfo = new Groupinfo(str,hashMap);
+                        if (check == adapter.getCount()) {
+                            ginfo = new Groupinfo(str, hashMap);
                             mDatebase.child("group").push().setValue(ginfo);
                         }
                     }
@@ -129,8 +129,8 @@ public class Group extends AppCompatActivity {
     }
 
     public void setup() {
-        b1 = (Button)findViewById(R.id.car_management);
-        b2 = (Button)findViewById(R.id.group);
+        b1 = (Button) findViewById(R.id.car_management);
+        b2 = (Button) findViewById(R.id.group);
         b2.setBackgroundColor(Color.rgb(30, 154, 207));
         i1 = (ImageButton) findViewById(R.id.imageButton);
     }
@@ -146,7 +146,7 @@ public class Group extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = info.position;
-        String tem  = adapter.listViewItemList.get(index).getText();
+        String tem = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.modify:
                 Intent intent = new Intent(Group.this, modify_group.class);
@@ -160,10 +160,11 @@ public class Group extends AppCompatActivity {
                 applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().removeValue();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());
@@ -174,7 +175,7 @@ public class Group extends AppCompatActivity {
                 break;
             case R.id.info:
                 Intent intent2 = new Intent(Group.this, Carinfo.class);
-                Bundle bundle2= new Bundle();
+                Bundle bundle2 = new Bundle();
                 bundle2.putString("name", tem);
                 intent2.putExtras(bundle2);
                 startActivity(intent2);
@@ -193,13 +194,13 @@ public class Group extends AppCompatActivity {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Groupinfo ginfo = dataSnapshot.getValue(Groupinfo.class);
-                    if(ginfo.getGname().equals(str)){
+                    if (ginfo.getGname().equals(str)) {
                         Group_total.totalMap = ginfo.getHashMap();
 
                     }
                     Groupinfo sinfo = dataSnapshot.getValue(Groupinfo.class);
-                    if(sinfo.getGname().equals(str)){
-                        Group_total.scoreMap= sinfo.getHashMap();
+                    if (sinfo.getGname().equals(str)) {
+                        Group_total.scoreMap = sinfo.getHashMap();
 
                     }
 
@@ -227,9 +228,9 @@ public class Group extends AppCompatActivity {
     };
 }
 
-class Groupinfo{
+class Groupinfo {
     String gname;
-    Map<String, Integer> hashMap =  new HashMap<String, Integer>();
+    Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
     public Groupinfo() {
     }

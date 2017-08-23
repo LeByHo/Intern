@@ -87,6 +87,7 @@ public class Login extends AppCompatActivity  implements GoogleApiClient.OnConne
                 Intent intent = new Intent(Login.this,Mainactivity.class);
                 startActivity(intent);
             } else {
+
             }
         }
     }
@@ -109,14 +110,7 @@ public class Login extends AppCompatActivity  implements GoogleApiClient.OnConne
     }
     private void signOut() {
         mAuth.signOut();
-
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        //updateUI(null);
-                    }
-                });
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient);
     }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

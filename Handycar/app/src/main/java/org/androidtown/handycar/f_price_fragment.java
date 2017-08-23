@@ -3,7 +3,6 @@ package org.androidtown.handycar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ public class f_price_fragment extends Fragment {
         t4 = (TextView) rootView.findViewById(R.id.textView4);
 
         extra = getArguments();
-        Log.d("ASD",extra+"");
         t1.setText(extra.getString("Allavg").toString()+"원");
         t2.setText(extra.getString("Silavg").toString()+"원");
         t3.setText(extra.getString("sum").toString()+"원");

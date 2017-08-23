@@ -8,12 +8,14 @@ public class GeoPoint {
     double x;
     double y;
     double z;
+
     /**
      *
      */
     public GeoPoint() {
         super();
     }
+
     /**
      * @param x
      * @param y
@@ -24,6 +26,7 @@ public class GeoPoint {
         this.y = y;
         this.z = 0;
     }
+
     /**
      * @param x
      * @param y
@@ -35,6 +38,7 @@ public class GeoPoint {
         this.y = y;
         this.z = 0;
     }
+
     public double getX() {
         return x;
     }

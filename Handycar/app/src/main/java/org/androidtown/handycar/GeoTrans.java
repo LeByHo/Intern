@@ -6,11 +6,11 @@ package org.androidtown.handycar;
 
 public class GeoTrans {
 
-    public static final int GEO=0;
-    public static final int KATEC=1;
-    public static final int TM=2;
-    public static final int GRS80=3;
-    public static final int UTMK=4;
+    public static final int GEO = 0;
+    public static final int KATEC = 1;
+    public static final int TM = 2;
+    public static final int GRS80 = 3;
+    public static final int UTMK = 4;
 
     private static double[] m_Ind = new double[5];
     private static double[] m_Es = new double[5];
@@ -141,7 +141,7 @@ public class GeoTrans {
     }
 
     private static double D2R(double degree) {
-        return degree* Math.PI / 180.0;
+        return degree * Math.PI / 180.0;
     }
 
     private static double R2D(double radian) {
@@ -169,7 +169,7 @@ public class GeoTrans {
     }
 
     private static double asinz(double value) {
-        if (Math.abs(value) > 1.0) value = (value > 0 ? 1: -1);
+        if (Math.abs(value) > 1.0) value = (value > 0 ? 1 : -1);
         return Math.asin(value);
     }
 
@@ -348,11 +348,11 @@ public class GeoTrans {
     }
 
     public static long getTimebyMin(double distance) {
-        return (long)(Math.ceil(getTimebySec(distance) / 60));
+        return (long) (Math.ceil(getTimebySec(distance) / 60));
     }
 
 	/*
-	Author:       Richard Greenwood rich@greenwoodmap.com
+    Author:       Richard Greenwood rich@greenwoodmap.com
 	License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 	*/
 
@@ -364,8 +364,8 @@ public class GeoTrans {
 
     // following constants from geocent.c
     private static final double HALF_PI = 0.5 * Math.PI;
-    private static final double COS_67P5  = 0.38268343236508977;  /* cosine of 67.5 degrees */
-    private static final double AD_C      = 1.0026000 ;
+    private static final double COS_67P5 = 0.38268343236508977;  /* cosine of 67.5 degrees */
+    private static final double AD_C = 1.0026000;
 	/* Toms region 1 constant */
 
     private static void transform(int srctype, int dsttype, GeoPoint point) {
@@ -390,7 +390,7 @@ public class GeoTrans {
         }
     }
 
-    private static boolean geodetic_to_geocentric (int type, GeoPoint p) {
+    private static boolean geodetic_to_geocentric(int type, GeoPoint p) {
 
 	/*
 	 * The function Convert_Geodetic_To_Geocentric converts geodetic coordinates
@@ -423,9 +423,9 @@ public class GeoTrans {
 	  ** range as it may just be a rounding issue.  Also removed longitude
 	  ** test, it should be wrapped by Math.cos() and Math.sin().  NFW for PROJ.4, Sep/2001.
 	  */
-        if (Latitude < -HALF_PI && Latitude > -1.001 * HALF_PI )
-            Latitude = -HALF_PI ;
-        else if (Latitude > HALF_PI && Latitude < 1.001 * HALF_PI )
+        if (Latitude < -HALF_PI && Latitude > -1.001 * HALF_PI)
+            Latitude = -HALF_PI;
+        else if (Latitude > HALF_PI && Latitude < 1.001 * HALF_PI)
             Latitude = HALF_PI;
         else if ((Latitude < -HALF_PI) || (Latitude > HALF_PI)) { /* Latitude out of range */
             return true;
@@ -433,7 +433,7 @@ public class GeoTrans {
 
 	  /* no errors */
         if (Longitude > Math.PI)
-            Longitude -= (2*Math.PI);
+            Longitude -= (2 * Math.PI);
         Sin_Lat = Math.sin(Latitude);
         Cos_Lat = Math.cos(Latitude);
         Sin2_Lat = Sin_Lat * Sin_Lat;
@@ -449,11 +449,12 @@ public class GeoTrans {
     } // cs_geodetic_to_geocentric()
 
 
-    /** Convert_Geocentric_To_Geodetic
+    /**
+     * Convert_Geocentric_To_Geodetic
      * The method used here is derived from 'An Improved Algorithm for
      * Geocentric to Geodetic Coordinate Conversion', by Ralph Toms, Feb 1996
      */
-    private static void geocentric_to_geodetic (int type, GeoPoint p) {
+    private static void geocentric_to_geodetic(int type, GeoPoint p) {
 
         double X = p.x;
         double Y = p.y;
@@ -479,32 +480,27 @@ public class GeoTrans {
 
         At_Pole = false;
         if (X != 0.0) {
-            Longitude = Math.atan2(Y,X);
-        }
-        else {
+            Longitude = Math.atan2(Y, X);
+        } else {
             if (Y > 0) {
                 Longitude = HALF_PI;
-            }
-            else if (Y < 0) {
+            } else if (Y < 0) {
                 Longitude = -HALF_PI;
-            }
-            else {
+            } else {
                 At_Pole = true;
                 Longitude = 0.0;
                 if (Z > 0.0) {  /* north pole */
                     Latitude = HALF_PI;
-                }
-                else if (Z < 0.0) {  /* south pole */
+                } else if (Z < 0.0) {  /* south pole */
                     Latitude = -HALF_PI;
-                }
-                else {  /* center of earth */
+                } else {  /* center of earth */
                     Latitude = HALF_PI;
                     Height = -m_arMinor[type];
                     return;
                 }
             }
         }
-        W2 = X*X + Y*Y;
+        W2 = X * X + Y * Y;
         W = Math.sqrt(W2);
         T0 = Z * AD_C;
         S0 = Math.sqrt(T0 * T0 + W2);
@@ -513,17 +509,15 @@ public class GeoTrans {
         Sin3_B0 = Sin_B0 * Sin_B0 * Sin_B0;
         T1 = Z + m_arMinor[type] * m_Esp[type] * Sin3_B0;
         Sum = W - m_arMajor[type] * m_Es[type] * Cos_B0 * Cos_B0 * Cos_B0;
-        S1 = Math.sqrt(T1*T1 + Sum * Sum);
+        S1 = Math.sqrt(T1 * T1 + Sum * Sum);
         Sin_p1 = T1 / S1;
         Cos_p1 = Sum / S1;
         Rn = m_arMajor[type] / Math.sqrt(1.0 - m_Es[type] * Sin_p1 * Sin_p1);
         if (Cos_p1 >= COS_67P5) {
             Height = W / Cos_p1 - Rn;
-        }
-        else if (Cos_p1 <= -COS_67P5) {
+        } else if (Cos_p1 <= -COS_67P5) {
             Height = W / -Cos_p1 - Rn;
-        }
-        else {
+        } else {
             Height = Z / Sin_p1 + Rn * (m_Es[type] - 1.0);
         }
         if (At_Pole == false) {
@@ -531,11 +525,10 @@ public class GeoTrans {
         }
 
         p.x = Longitude;
-        p.y =Latitude;
+        p.y = Latitude;
         p.z = Height;
         return;
     } // geocentric_to_geodetic()
-
 
 
     /****************************************************************/
