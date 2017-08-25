@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.androidtown.handycar">
+    package="com.handycar.b2c">
 
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,25 +17,25 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAR03YIFEVkC-xrh9BXzkguU3wfhpxzyjg"/>
-        <activity android:name=".Login">
+        <activity android:name="com.handycar.b2c.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Mainactivity"/>
-        <activity android:name=".totalmain"/>
-        <activity android:name=".m_main"/>
-        <activity android:name=".f_main" />
-        <activity android:name=".Group"/>
-        <activity android:name=".Group_total"/>
-        <activity android:name=".modify_group"/>
-        <activity android:name=".Carinfo"/>
-        <activity android:name=".StartActivity"/>
-        <activity android:name=".f_offers"/>
+        <activity android:name="com.handycar.b2c.Mainactivity"/>
+        <activity android:name="com.handycar.b2c.totalmain"/>
+        <activity android:name="com.handycar.b2c.m_main"/>
+        <activity android:name="com.handycar.b2c.f_main" />
+        <activity android:name="com.handycar.b2c.Group"/>
+        <activity android:name="com.handycar.b2c.Group_total"/>
+        <activity android:name="com.handycar.b2c.modify_group"/>
+        <activity android:name="com.handycar.b2c.Carinfo"/>
+        <activity android:name="com.handycar.b2c.StartActivity"/>
+        <activity android:name="com.handycar.b2c.f_offers"/>
         <receiver
-            android:name=".MyBroadcastReceiver"
+            android:name="com.handycar.b2c.MyBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

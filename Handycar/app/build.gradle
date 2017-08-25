@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "org.androidtown.handycar"
+        applicationId "com.handycar.b2c"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

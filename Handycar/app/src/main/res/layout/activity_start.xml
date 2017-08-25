@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.androidtown.handycar.StartActivity">
+    tools:context="org.androidtown.handycar.com.androidtown.handycar.StartActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
