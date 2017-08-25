@@ -27,10 +27,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -143,9 +145,13 @@ public class Mainactivity extends AppCompatActivity {
             json.put("access_token", Login.token);
 
             OutputStream out = con.getOutputStream();
-            out.write(json.toString().getBytes());
-            out.flush();
-            Log.d("suc",con.getResponseCode()+"");
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(json.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+            Log.d("QWEQWe", "firebaseAuthWithGoogle:" + Login.token);
+            Log.d("suc1",con.getResponseCode()+"");
             return con;
         } catch (Exception e) {
             return null;
@@ -159,7 +165,7 @@ public class Mainactivity extends AppCompatActivity {
             con.setRequestProperty("Authorization", "Bearer "+Login.token);
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
-            Log.d("suc",con.getResponseCode()+"");
+            Log.d("suc2",con.getResponseCode()+"");
             return con;
         } catch (Exception e) {
             return null;

@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
@@ -83,8 +85,6 @@ public class Login extends AppCompatActivity  implements GoogleApiClient.OnConne
             if (result.isSuccess()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 firebaseAuthWithGoogle(acct);
-                Intent intent = new Intent(Login.this,Mainactivity.class);
-                startActivity(intent);
             } else {
 
             }
@@ -93,8 +93,6 @@ public class Login extends AppCompatActivity  implements GoogleApiClient.OnConne
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getIdToken());
-        token = acct.getIdToken();
-        t1.setText(acct.getIdToken());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -104,6 +102,25 @@ public class Login extends AppCompatActivity  implements GoogleApiClient.OnConne
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(Login.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            FirebaseUser mUser =  mAuth.getCurrentUser();
+                            mUser.getToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                token = task.getResult().getToken();
+                                                t1.setText(token);
+                                                Log.d("QWE", "firebaseAuthWithGoogle:" + token);
+                                                // Send token to your backend via HTTPS
+                                                // ...
+                                                Intent intent = new Intent(Login.this,Mainactivity.class);
+                                                startActivity(intent);
+                                            } else {
+                                                // Handle error -> task.getException();
+                                            }
+                                        }
+                                    });
                         }
                     }
                 });
