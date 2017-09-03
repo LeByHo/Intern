@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +38,12 @@ public class modify_group extends AppCompatActivity {
     String gname;
     ListView listview;
     CustomChoiceListViewAdapter adapter;
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
     Map<String, Integer> hashMap =  new HashMap<String, Integer>();
     int i=0;
@@ -47,6 +54,10 @@ public class modify_group extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
+        FirebaseApp.initializeApp(this /* Context */, options, "modi");
+        FirebaseApp secondary = FirebaseApp.getInstance("modi");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
         setup();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

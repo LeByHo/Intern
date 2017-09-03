@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,7 +55,12 @@ public class Mainactivity extends AppCompatActivity {
     PullToRefreshView mPullToRefreshView;
     public static int chk = 0;
     MainViewAdapter adapter;
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
     public static String car;
     public static SpendAdapter fadapter, madapter, tadapter, f2adapter, m2adapter;
     public static ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
@@ -64,7 +71,9 @@ public class Mainactivity extends AppCompatActivity {
     public static Map<String, Integer> hashMap2 = new HashMap<String, Integer>();
     public static TreeMap tm2;
     public static String cate;
-    String str1,str2;
+    String str1,str2,str3;
+    int count;
+    String[] deviceID = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +89,13 @@ public class Mainactivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.graph));
 
+        FirebaseApp.initializeApp(this /* Context */, options, "secondary");
+        FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
         str1 = "https://api-uat.fs-dev.uk/handycar/account/v2/device";
         str2 = "https://api-uat.fs-dev.uk/firebase/authorise";
+
         showDialog(1);
         new Thread() {
             @Override
@@ -89,9 +103,16 @@ public class Mainactivity extends AppCompatActivity {
                 try {
                     getConnect(str2);
                     InputStream in = new BufferedInputStream(getConnectionurl(str1).getInputStream());
-                    JSONObject json = new JSONObject(getStringFromInputStream(in));
-                    parseJSON(json);
-                    Log.d("JSON",json+"");
+                    JSONArray json = new JSONArray(getStringFromInputStream(in));
+                    arrayToobject(json);
+
+                    for(int i=0;i<count;i++) {
+                        str3 = "https://api-uat.fs-dev.uk/handycar/telematics/v1/device/" + deviceID[i] + "/score/week";
+                        Log.d("ID",deviceID[i]);
+                        InputStream in1 = new BufferedInputStream(getConnectionurl(str3).getInputStream());
+                        JSONArray json1 = new JSONArray(getStringFromInputStream(in1));
+                        arrayToobject1(json1);
+                    }
                     removeDialog(1);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -172,16 +193,21 @@ public class Mainactivity extends AppCompatActivity {
         }
     }
 
-    private void parseJSON(JSONObject json) throws JSONException {
-        arrayToobject(json.getJSONObject("RESULT").getJSONArray("OIL"));
-    }
-
     private void arrayToobject(JSONArray jsonArray) throws JSONException {
+        count = jsonArray.length();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
+            Log.d("QWEQWE",order+"\n");
+            deviceID[i] = order.getString("deviceId");
         }
     }
-
+    private void arrayToobject1(JSONArray jsonArray) throws JSONException {
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject order = jsonArray.getJSONObject(i);
+            if(i==jsonArray.length()-1)
+            Log.d("QWE2",order+"\n");
+        }
+    }
     private static String getStringFromInputStream(InputStream is) {
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();

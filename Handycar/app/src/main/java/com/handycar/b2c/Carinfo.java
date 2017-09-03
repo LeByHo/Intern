@@ -8,6 +8,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +31,12 @@ public class Carinfo extends AppCompatActivity {
     ListView listview;
     String gname;
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
     Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
     @Override
@@ -39,6 +46,10 @@ public class Carinfo extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
+        FirebaseApp.initializeApp(this /* Context */, options, "cinfo");
+        FirebaseApp secondary = FirebaseApp.getInstance("cinfo");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         gname = bundle.getString("name");

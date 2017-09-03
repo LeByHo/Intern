@@ -24,6 +24,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +51,12 @@ public class StartActivity extends AppCompatActivity {
     InformAdapter adapter;
     ListView listview;
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
     ImageButton plus;
     int cnt = 0;
 
@@ -61,7 +68,10 @@ public class StartActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
-
+        FirebaseApp.initializeApp(this /* Context */, options, "second");
+        FirebaseApp secondary = FirebaseApp.getInstance("second");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
 
         Group.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

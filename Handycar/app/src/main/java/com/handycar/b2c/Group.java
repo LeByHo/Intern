@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,7 +43,12 @@ public class Group extends AppCompatActivity {
     ListView listview;
     ImageButton i1;
     Button b1, b2;
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
     Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
@@ -53,6 +60,10 @@ public class Group extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
+        FirebaseApp.initializeApp(this /* Context */, options, "group");
+        FirebaseApp secondary = FirebaseApp.getInstance("group");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
         setup();
         adapter = new ListViewAdapter(itemList);
         listview = (ListView) findViewById(R.id.listview);

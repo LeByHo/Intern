@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +30,18 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     StringBuilder sms;
     String setCurDate;
     String car;
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
     @Override
     public void onReceive(Context context, Intent intent) {
+        FirebaseApp.initializeApp(context /* Context */, options, "SMS");
+        FirebaseApp secondary = FirebaseApp.getInstance("SMS");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             sms = new StringBuilder();
             Bundle bundle = intent.getExtras();

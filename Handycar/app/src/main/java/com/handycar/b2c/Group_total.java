@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +28,13 @@ public class Group_total extends AppCompatActivity {
     Group_fragment2 Frag2;
     public static Map<String, Integer> scoreMap = new HashMap<String, Integer>();
     public static Map<String, Integer> totalMap = new HashMap<String, Integer>();
-    DatabaseReference mDatebase = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference fDatebase = FirebaseDatabase.getInstance().getReference();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:51453844849:android:51579fa183019e0b") // Required for Analytics.
+            .setApiKey("AIzaSyBVMO8soca7w7qQ9vsQhhHTD-L6JQphA2E") // Required for Auth.
+            .setDatabaseUrl("https://handycar-c8cf9.firebaseio.com") // Required for RTDB.
+            .build();
+    DatabaseReference mDatebase;
+    DatabaseReference fDatebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,15 @@ public class Group_total extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
+        FirebaseApp.initializeApp(this /* Context */, options, "totalo");
+        FirebaseApp secondary = FirebaseApp.getInstance("totalo");
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        mDatebase = secondaryDatabase.getReference();
+
+        FirebaseApp.initializeApp(this /* Context */, options, "totalt");
+        FirebaseApp secondar= FirebaseApp.getInstance("totalt");
+        FirebaseDatabase Database = FirebaseDatabase.getInstance(secondar);
+        fDatebase = secondaryDatabase.getReference();
 
         mDatebase.child("inform").addChildEventListener(new ChildEventListener() {
             @Override
