@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by GE62 on 2017-07-28.
@@ -46,8 +47,10 @@ public class Carinfo extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
-        FirebaseApp.initializeApp(this /* Context */, options, "cinfo");
-        FirebaseApp secondary = FirebaseApp.getInstance("cinfo");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(this /* Context */, options, "cinfo"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("cinfo"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         mDatebase = secondaryDatabase.getReference();
         Intent intent = getIntent();
@@ -72,17 +75,18 @@ public class Carinfo extends AppCompatActivity {
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             FirebaseCar fire = dataSnapshot.getValue(FirebaseCar.class);
                             if (fire.getName().equals(key)) {
-                                if (fire.getCate().equals("BMW")) {
+                                if (fire.getCate().equals("BMW"))
                                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.bmw), key);
-                                }
-                                if (fire.getCate().equals("AUDI"))
+                                else if (fire.getCate().equals("AUDI"))
                                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.audi), key);
-                                if (fire.getCate().equals("BENZ"))
+                                else if (fire.getCate().equals("BENZ"))
                                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.benz), key);
-                                if (fire.getCate().equals("FERRARI"))
+                                else if (fire.getCate().equals("FERRARI"))
                                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.ferrari), key);
-                                if (fire.getCate().equals("JENESIS"))
+                                else if (fire.getCate().equals("JENESIS"))
                                     adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.jenesis), key);
+                                else
+                                    adapter.addItem(ContextCompat.getDrawable(Carinfo.this, R.drawable.car2), key);
                             }
                             Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
                                 @Override

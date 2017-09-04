@@ -35,6 +35,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by GE62 on 2017-07-28.
@@ -68,8 +69,10 @@ public class StartActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
         setup();
-        FirebaseApp.initializeApp(this /* Context */, options, "second");
-        FirebaseApp secondary = FirebaseApp.getInstance("second");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(this /* Context */, options, "second"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("second"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         mDatebase = secondaryDatabase.getReference();
 
@@ -89,13 +92,13 @@ public class StartActivity extends AppCompatActivity {
                 final View dialogView = inflater.inflate(R.layout.customdialog, null);
                 final EditText editname = (EditText) dialogView.findViewById(R.id.dialog_edit);
                 final EditText score = (EditText) dialogView.findViewById(R.id.distance_driven);
-                final RadioGroup rg = (RadioGroup)dialogView.findViewById(R.id.dialog_rg);
+                final RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.dialog_rg);
                 alert.setView(dialogView);
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = editname.getText().toString();
                         int id = rg.getCheckedRadioButtonId();
-                        RadioButton rb = (RadioButton)dialogView.findViewById(id);
+                        RadioButton rb = (RadioButton) dialogView.findViewById(id);
                         String tem = rb.getText().toString();
                         FirebaseCar car;
                         int check = 0;
@@ -113,9 +116,9 @@ public class StartActivity extends AppCompatActivity {
                                 carname.setText(str);
                                 distance.setText(tem);
                                 point.setText(score.getText().toString());
-                                car = new FirebaseCar(str, 1, tem,Integer.parseInt(score.getText().toString()));
+                                car = new FirebaseCar(str, 1, tem, Integer.parseInt(score.getText().toString()));
                             } else {
-                                car = new FirebaseCar(str, 0, tem,Integer.parseInt(score.getText().toString()));
+                                car = new FirebaseCar(str, 0, tem, Integer.parseInt(score.getText().toString()));
                             }
                             mDatebase.child("cinform").push().setValue(car);
                         }
@@ -136,21 +139,23 @@ public class StartActivity extends AppCompatActivity {
                 if (fire.getCheck() == 1) {
                     carname.setText(fire.getName());
                     distance.setText(fire.getCate());
-                    point.setText(fire.getScore()+"");
+                    point.setText(fire.getScore() + "");
                     insertitem(fire.getCate());
                     ++cnt;
                 }
                 if (fire.getCheck() == 0) {
-                    if(fire.getCate().equals("BMW"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.bmw), fire.getName(),fire.getCate(),fire.getScore()+"");
-                    if(fire.getCate().equals("AUDI"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.audi), fire.getName(),fire.getCate(),fire.getScore()+"");
-                    if(fire.getCate().equals("BENZ"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.benz), fire.getName(),fire.getCate(),fire.getScore()+"");
-                    if(fire.getCate().equals("FERRARI"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.ferrari), fire.getName(),fire.getCate(),fire.getScore()+"");
-                    if(fire.getCate().equals("JENESIS"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.jenesis), fire.getName(),fire.getCate(),fire.getScore()+"");
+                    if (fire.getCate().equals("BMW"))
+                        adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.bmw), fire.getName(), fire.getCate(), fire.getScore() + "");
+                    else if (fire.getCate().equals("AUDI"))
+                        adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.audi), fire.getName(), fire.getCate(), fire.getScore() + "");
+                    else if (fire.getCate().equals("BENZ"))
+                        adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.benz), fire.getName(), fire.getCate(), fire.getScore() + "");
+                    else if (fire.getCate().equals("FERRARI"))
+                        adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.ferrari), fire.getName(), fire.getCate(), fire.getScore() + "");
+                    else if (fire.getCate().equals("JENESIS"))
+                        adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.jenesis), fire.getName(), fire.getCate(), fire.getScore() + "");
+                    else
+                        adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), fire.getName(), fire.getCate(), fire.getScore() + "");
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -173,17 +178,20 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
-    public void insertitem(String str){
-            if(str.equals("BMW"))
-                carimg.setImageResource(R.drawable.bmw);
-            if(str.equals("AUDI"))
-                carimg.setImageResource(R.drawable.audi);
-            if(str.equals("BENZ"))
-                carimg.setImageResource(R.drawable.benz);
-            if(str.equals("FERRARI"))
-                carimg.setImageResource(R.drawable.ferrari);
-            if(str.equals("JENESIS"))
-                carimg.setImageResource(R.drawable.jenesis);
+
+    public void insertitem(String str) {
+        if (str.equals("BMW"))
+            carimg.setImageResource(R.drawable.bmw);
+        else if (str.equals("AUDI"))
+            carimg.setImageResource(R.drawable.audi);
+        else if (str.equals("BENZ"))
+            carimg.setImageResource(R.drawable.benz);
+        else if (str.equals("FERRARI"))
+            carimg.setImageResource(R.drawable.ferrari);
+        else if (str.equals("JENESIS"))
+            carimg.setImageResource(R.drawable.jenesis);
+        else
+            carimg.setImageResource(R.drawable.car);
     }
 
     public void setup() {
@@ -216,19 +224,20 @@ public class StartActivity extends AppCompatActivity {
         final String tem = adapter.listViewItemList.get(index).getText();
         switch (item.getItemId()) {
             case R.id.select:
-                if(distance.getText().toString().equals("BMW"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.bmw), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
-                if(distance.getText().toString().equals("AUDI"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.audi), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
-                if(distance.getText().toString().equals("BENZ"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.benz), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
-                if(distance.getText().toString().equals("FERRARI"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.ferrari), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
-                if(distance.getText().toString().equals("JENESIS"))
-                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.jenesis), carname.getText().toString(),distance.getText().toString(),point.getText().toString());
-
+                if (distance.getText().toString().equals("BMW"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.bmw), carname.getText().toString(), distance.getText().toString(), point.getText().toString());
+                else if (distance.getText().toString().equals("AUDI"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.audi), carname.getText().toString(), distance.getText().toString(), point.getText().toString());
+                else if (distance.getText().toString().equals("BENZ"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.benz), carname.getText().toString(), distance.getText().toString(), point.getText().toString());
+                else if (distance.getText().toString().equals("FERRARI"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.ferrari), carname.getText().toString(), distance.getText().toString(), point.getText().toString());
+                else if (distance.getText().toString().equals("JENESIS"))
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.jenesis), carname.getText().toString(), distance.getText().toString(), point.getText().toString());
+                else
+                    adapter.addItem(ContextCompat.getDrawable(StartActivity.this, R.drawable.car2), carname.getText().toString(), distance.getText().toString(), point.getText().toString());
                 Query applesQuery1 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
-                final FirebaseCar car = new FirebaseCar(carname.getText().toString(), 0, distance.getText().toString(),Integer.parseInt(point.getText().toString()));
+                final FirebaseCar car = new FirebaseCar(carname.getText().toString(), 0, distance.getText().toString(), Integer.parseInt(point.getText().toString()));
                 applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -247,7 +256,7 @@ public class StartActivity extends AppCompatActivity {
                 point.setText(adapter.listViewItemList.get(index).getPrice());
                 insertitem(adapter.listViewItemList.get(index).getPlace());
                 Query applesQuery2 = mDatebase.child("cinform").orderByChild("name").equalTo(carname.getText().toString());
-                final FirebaseCar car1 = new FirebaseCar(tem, 1,adapter.listViewItemList.get(index).getPlace(),Integer.parseInt(adapter.listViewItemList.get(index).getPrice()));
+                final FirebaseCar car1 = new FirebaseCar(tem, 1, adapter.listViewItemList.get(index).getPlace(), Integer.parseInt(adapter.listViewItemList.get(index).getPrice()));
                 applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -302,6 +311,7 @@ public class StartActivity extends AppCompatActivity {
                             mDatebase.child("group").child(str).child("hashMap").child(tem).removeValue();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("TAG", "onCancelled", databaseError.toException());

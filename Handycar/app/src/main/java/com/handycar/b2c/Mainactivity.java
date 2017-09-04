@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 
@@ -71,9 +72,11 @@ public class Mainactivity extends AppCompatActivity {
     public static Map<String, Integer> hashMap2 = new HashMap<String, Integer>();
     public static TreeMap tm2;
     public static String cate;
-    String str1,str2,str3;
+    String str1, str2, str3;
     int count;
     String[] deviceID = new String[10];
+    String[] model = new String[10];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +91,10 @@ public class Mainactivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.break_oil));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.settings));
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.graph));
-
-        FirebaseApp.initializeApp(this /* Context */, options, "secondary");
-        FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(this /* Context */, options, "secondary"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("secondary"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         mDatebase = secondaryDatabase.getReference();
         str1 = "https://api-uat.fs-dev.uk/handycar/account/v2/device";
@@ -106,13 +110,12 @@ public class Mainactivity extends AppCompatActivity {
                     JSONArray json = new JSONArray(getStringFromInputStream(in));
                     arrayToobject(json);
 
-                    for(int i=0;i<count;i++) {
-                        str3 = "https://api-uat.fs-dev.uk/handycar/telematics/v1/device/" + deviceID[i] + "/score/week";
-                        Log.d("ID",deviceID[i]);
-                        InputStream in1 = new BufferedInputStream(getConnectionurl(str3).getInputStream());
-                        JSONArray json1 = new JSONArray(getStringFromInputStream(in1));
-                        arrayToobject1(json1);
-                    }
+//                    for (int i = 0; i < count; i++) {
+//                        str3 = "https://api-uat.fs-dev.uk/handycar/telematics/v1/device/" + deviceID[i] + "/score/week";
+//                        InputStream in1 = new BufferedInputStream(getConnectionurl(str3).getInputStream());
+//                        JSONArray json1 = new JSONArray(getStringFromInputStream(in1));
+//                        arrayToobject1(json1,i);
+//                    }
                     removeDialog(1);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -151,6 +154,7 @@ public class Mainactivity extends AppCompatActivity {
             }
         });
     }
+
     public HttpURLConnection getConnect(String str) {
         try {
             URL url = new URL(str);
@@ -172,7 +176,7 @@ public class Mainactivity extends AppCompatActivity {
             writer.close();
             out.close();
             Log.d("QWEQWe", "firebaseAuthWithGoogle:" + Login.token);
-            Log.d("suc1",con.getResponseCode()+"");
+            Log.d("suc1", con.getResponseCode() + "");
             return con;
         } catch (Exception e) {
             return null;
@@ -183,10 +187,10 @@ public class Mainactivity extends AppCompatActivity {
         try {
             URL url = new URL(str);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestProperty("Authorization", "Bearer "+Login.token);
+            con.setRequestProperty("Authorization", "Bearer " + Login.token);
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
-            Log.d("suc2",con.getResponseCode()+"");
+            Log.d("suc2", con.getResponseCode() + "");
             return con;
         } catch (Exception e) {
             return null;
@@ -197,17 +201,29 @@ public class Mainactivity extends AppCompatActivity {
         count = jsonArray.length();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject order = jsonArray.getJSONObject(i);
-            Log.d("QWEQWE",order+"\n");
+            Log.d("QWEQWE", order + "\n");
             deviceID[i] = order.getString("deviceId");
+            model[i] = order.getJSONObject("vehicle").getString("model");
         }
     }
-    private void arrayToobject1(JSONArray jsonArray) throws JSONException {
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject order = jsonArray.getJSONObject(i);
-            if(i==jsonArray.length()-1)
-            Log.d("QWE2",order+"\n");
+
+    private void arrayToobject1(JSONArray jsonArray,int a) throws JSONException {
+        FirebaseCar carinfo;
+        if(jsonArray.length()==0){
+            carinfo = new FirebaseCar(deviceID[a], 0, model[a], 80);
+            mDatebase.child("cinform").push().setValue(carinfo);
+        }
+        else {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject order = jsonArray.getJSONObject(i);
+                if (i == jsonArray.length() - 1) {
+                    carinfo = new FirebaseCar(deviceID[a], 0, model[a], order.getInt("total"));
+                    mDatebase.child("cinform").push().setValue(carinfo);
+                }
+            }
         }
     }
+
     private static String getStringFromInputStream(InputStream is) {
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
@@ -236,6 +252,7 @@ public class Mainactivity extends AppCompatActivity {
         super.onStart();
         getinform();
     }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         ProgressDialog dialog = new ProgressDialog(this);
@@ -243,7 +260,8 @@ public class Mainactivity extends AppCompatActivity {
         //dialog.setCancelable(false);
         return dialog;
     }
-    public void getinform(){
+
+    public void getinform() {
         itemList.clear();
         itemList1.clear();
         itemList2.clear();
@@ -331,6 +349,7 @@ public class Mainactivity extends AppCompatActivity {
             }
         });
     }
+
     public void addf(String date, String price) {
         String temp;
         temp = date.substring(0, 7);

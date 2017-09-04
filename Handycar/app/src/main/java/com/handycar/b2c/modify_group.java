@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by GE62 on 2017-07-25.
@@ -54,9 +55,12 @@ public class modify_group extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
-        FirebaseApp.initializeApp(this /* Context */, options, "modi");
-        FirebaseApp secondary = FirebaseApp.getInstance("modi");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(this /* Context */, options,"modi"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("modi"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+
         mDatebase = secondaryDatabase.getReference();
         setup();
         Intent intent = getIntent();
@@ -113,14 +117,16 @@ public class modify_group extends AppCompatActivity {
                 listview.setItemChecked(i, false);
                 if(car1.getCate().equals("BMW"))
                     adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.bmw), car1.getName());
-                if(car1.getCate().equals("AUDI"))
+                else if(car1.getCate().equals("AUDI"))
                     adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.audi), car1.getName());
-                if(car1.getCate().equals("BENZ"))
+                else if(car1.getCate().equals("BENZ"))
                     adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.benz), car1.getName());
-                if(car1.getCate().equals("FERRARI"))
+                else if(car1.getCate().equals("FERRARI"))
                     adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.ferrari), car1.getName());
-                if(car1.getCate().equals("JENESIS"))
+                else if(car1.getCate().equals("JENESIS"))
                     adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.jenesis), car1.getName());
+                else
+                    adapter.addItem(ContextCompat.getDrawable(modify_group.this, R.drawable.car2), car1.getName());
                 ++i;
                 Comparator<ListViewItem> noDesc = new Comparator<ListViewItem>() {
                     @Override
@@ -191,6 +197,7 @@ public class modify_group extends AppCompatActivity {
             }
         });
     }
+
     public void setup() {
         b1 = (ImageButton) findViewById(R.id.add);
         b2 = (ImageButton) findViewById(R.id.selectAll);

@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -60,8 +61,10 @@ public class Group extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
-        FirebaseApp.initializeApp(this /* Context */, options, "group");
-        FirebaseApp secondary = FirebaseApp.getInstance("group");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(this /* Context */, options, "group"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("group"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         mDatebase = secondaryDatabase.getReference();
         setup();

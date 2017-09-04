@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by GE62 on 2017-07-28.
@@ -43,13 +44,15 @@ public class Group_total extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFF));
-        FirebaseApp.initializeApp(this /* Context */, options, "totalo");
-        FirebaseApp secondary = FirebaseApp.getInstance("totalo");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(this /* Context */, options, "totalo"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("totalo"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         mDatebase = secondaryDatabase.getReference();
 
-        FirebaseApp.initializeApp(this /* Context */, options, "totalt");
-        FirebaseApp secondar= FirebaseApp.getInstance("totalt");
+        FirebaseApp.initializeApp(this /* Context */, options, "totalt"+x);
+        FirebaseApp secondar= FirebaseApp.getInstance("totalt"+x);
         FirebaseDatabase Database = FirebaseDatabase.getInstance(secondar);
         fDatebase = secondaryDatabase.getReference();
 

@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,8 +39,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     DatabaseReference mDatebase;
     @Override
     public void onReceive(Context context, Intent intent) {
-        FirebaseApp.initializeApp(context /* Context */, options, "SMS");
-        FirebaseApp secondary = FirebaseApp.getInstance("SMS");
+        Random random = new Random();
+        int x = random.nextInt(1000);
+        FirebaseApp.initializeApp(context /* Context */, options, "SMS"+x);
+        FirebaseApp secondary = FirebaseApp.getInstance("SMS"+x);
         FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         mDatebase = secondaryDatabase.getReference();
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
